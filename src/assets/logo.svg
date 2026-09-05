@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%" fill="none">
+  <!-- Outer Circular Border with White Background -->
+  <circle cx="200" cy="200" r="186" fill="#FFFFFF" stroke="#0F2942" stroke-width="12"/>
+
+  <!-- Document with Barcode Behind Bridge -->
+  <g transform="translate(138, 58)">
+    <!-- Document Body with Folded Top Right Corner -->
+    <path d="M12 0 H90 L124 34 V128 C124 134.6 118.6 140 112 140 H12 C5.4 140 0 134.6 0 128 V12 C0 5.4 5.4 0 12 0 Z" fill="#FFFFFF" stroke="#0F2942" stroke-width="7" stroke-linejoin="round"/>
+    <!-- Document Fold Line -->
+    <path d="M90 0 V34 H124" fill="#FFFFFF" stroke="#0F2942" stroke-width="7" stroke-linejoin="round"/>
+    
+    <!-- Barcode / Scan Lines -->
+    <g fill="#0F2942">
+      <rect x="22" y="32" width="7" height="66" rx="3.5"/>
+      <rect x="36" y="32" width="5" height="66" rx="2.5"/>
+      <rect x="47" y="32" width="9" height="66" rx="4.5"/>
+      <rect x="62" y="32" width="5" height="66" rx="2.5"/>
+      <rect x="73" y="32" width="8" height="66" rx="4"/>
+      <rect x="87" y="32" width="6" height="66" rx="3"/>
+      <rect x="99" y="32" width="4" height="66" rx="2"/>
+    </g>
+  </g>
+
+  <!-- Bridge (Setu) Element -->
+  <g id="bridge">
+    <!-- Teal Suspension Cables -->
+    <path d="M96 200 Q 138 232 198 232 Q 258 232 304 200" stroke="#00A896" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M96 200 Q 138 238 198 238 Q 258 238 304 200" stroke="#00A896" stroke-width="3" fill="none" opacity="0.6"/>
+
+    <!-- Left Tower & Anchor -->
+    <path d="M96 150 V225 H108 V150 Z" fill="#0F2942"/>
+    <polygon points="90,150 102,136 114,150" fill="#0F2942"/>
+
+    <!-- Center/Right Towers -->
+    <path d="M136 142 V226 H146 V142 Z" fill="#0F2942"/>
+    <polygon points="132,142 141,130 150,142" fill="#0F2942"/>
+
+    <path d="M254 142 V226 H264 V142 Z" fill="#0F2942"/>
+    <polygon points="250,142 259,130 268,142" fill="#0F2942"/>
+
+    <!-- Right Anchor Tower -->
+    <path d="M292 150 V225 H304 V150 Z" fill="#0F2942"/>
+    <polygon points="286,150 298,136 310,150" fill="#0F2942"/>
+
+    <!-- Bridge Arch Deck -->
+    <path d="M90 220 C 130 200, 270 200, 310 220 V 254 H 280 C 280 238, 258 238, 258 254 H 222 C 222 238, 178 238, 178 254 H 142 C 142 238, 120 238, 120 254 H 90 Z" fill="#0F2942"/>
+  </g>
+
+  <!-- LABEL SETU Text -->
+  <g transform="translate(200, 305)" text-anchor="middle">
+    <text font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-weight="900" font-size="40" letter-spacing="4">
+      <tspan fill="#0F2942" x="-58">LABEL</tspan>
+      <tspan fill="#00A896" x="58">SETU</tspan>
+    </text>
+  </g>
+
+  <!-- Bottom Accent: Line Dot Line -->
+  <g stroke="#0F2942" stroke-width="4" stroke-linecap="round">
+    <line x1="154" y1="340" x2="184" y2="340"/>
+    <circle cx="200" cy="340" r="5" fill="#00A896" stroke="none"/>
+    <line x1="216" y1="340" x2="246" y2="340"/>
+  </g>
+</svg>
