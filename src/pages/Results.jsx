@@ -7,6 +7,7 @@ import {
   Shield
 } from 'lucide-react';
 import { MOCK_INSPECTION_DATA } from '../data/mockResultsData';
+import { REVIEW_STORAGE_KEY } from '../data/mockReviewData';
 import { ResultsHeader } from '../components/results/ResultsHeader';
 import { ComplianceSummary } from '../components/results/ComplianceSummary';
 import { ProductImageViewer } from '../components/results/ProductImageViewer';
@@ -39,7 +40,16 @@ export const Results = () => {
   const [isEvidenceModalOpen, setIsEvidenceModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [targetReviewFinding, setTargetReviewFinding] = useState(null);
-  const [savedOfficerReview, setSavedOfficerReview] = useState(null);
+  const [savedOfficerReview, setSavedOfficerReview] = useState(() => {
+    try {
+      const stored = localStorage.getItem(REVIEW_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed.reviewStatus === 'REVIEWED' ? parsed : null;
+      }
+    } catch (_) {}
+    return null;
+  });
   const [activeRegionId, setActiveRegionId] = useState(null);
 
   // Handlers
@@ -84,11 +94,7 @@ export const Results = () => {
   };
 
   const handleGenerateReport = () => {
-    addToast({
-      title: 'Report Module Staged',
-      message: 'Report generation will be available in the next module.',
-      type: 'info',
-    });
+    navigate('/reports/generate');
   };
 
   const handleBackToScanner = () => {
@@ -214,9 +220,9 @@ export const Results = () => {
       <div className="sticky bottom-4 z-20 bg-white/95 backdrop-blur-md rounded-2xl border border-slate-300/80 p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="flex items-center gap-2 text-xs text-slate-500">
           <Shield className="w-4 h-4 text-cyan-600" />
-          <span>Session: <strong className="text-slate-800 font-mono">LM-2026-00129</strong></span>
+          <span>Session: <strong className="text-slate-800 font-mono">{MOCK_INSPECTION_DATA.inspectionId}</strong></span>
           <span className="text-slate-300">|</span>
-          <span>Status: <strong className="text-amber-700">Needs Review</strong></span>
+          <span>Status: <strong className={savedOfficerReview ? "text-emerald-700" : "text-amber-700"}>{savedOfficerReview ? "Reviewed" : "Needs Review"}</strong></span>
         </div>
 
         {/* Action Buttons: [ Back to Scanner ] [ Review Findings ] [ Generate Report ] */}
@@ -232,7 +238,7 @@ export const Results = () => {
 
           <button
             type="button"
-            onClick={() => handleOpenReviewModal(null)}
+            onClick={() => navigate(`/review/${MOCK_INSPECTION_DATA.inspectionId}`)}
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-800 hover:text-slate-950 bg-slate-100 hover:bg-slate-200/80 border border-slate-300 rounded-xl transition-colors shadow-2xs cursor-pointer active:scale-98"
           >
             <span>Review Findings</span>

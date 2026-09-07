@@ -42,7 +42,6 @@ export const ExtractedDeclarations = ({ declarations = [], onSelectEvidence = nu
             extractedValue={field.extractedValue}
             confidence={field.confidence}
             status={field.status}
-            ruleRef={field.ruleRef}
             onViewEvidence={
               field.regionId && onSelectEvidence
                 ? () => onSelectEvidence(field)

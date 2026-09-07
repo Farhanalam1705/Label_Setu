@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   UserCheck, 
   X, 
@@ -7,6 +8,7 @@ import {
   ShieldCheck, 
   Clock 
 } from 'lucide-react';
+import { REVIEW_STORAGE_KEY } from '../../data/mockReviewData';
 
 export const OfficerReview = ({
   isModalOpen,
@@ -16,8 +18,23 @@ export const OfficerReview = ({
   onSaveReview,
   savedReview = null,
 }) => {
+  const navigate = useNavigate();
   const [decision, setDecision] = useState('Needs Further Review');
   const [observation, setObservation] = useState('');
+
+  // Check localStorage for a completed review
+  const localReview = (() => {
+    try {
+      const stored = localStorage.getItem(REVIEW_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed.reviewStatus === 'REVIEWED' ? parsed : null;
+      }
+    } catch (_) {}
+    return null;
+  })();
+
+  const activeReview = savedReview || localReview;
 
   const decisionsList = [
     {
@@ -82,7 +99,7 @@ export const OfficerReview = ({
           <div className="flex items-center gap-2.5 self-start sm:self-auto flex-wrap">
             <button
               type="button"
-              onClick={() => onOpenModal && onOpenModal(null)}
+              onClick={() => navigate(`/review/LM-2026-00129`)}
               className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl transition-colors shadow-2xs cursor-pointer"
             >
               <FileEdit className="w-3.5 h-3.5 text-slate-500" />
@@ -91,7 +108,7 @@ export const OfficerReview = ({
 
             <button
               type="button"
-              onClick={() => onOpenModal && onOpenModal(null)}
+              onClick={() => navigate(`/review/LM-2026-00129`)}
               className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-[#0c1e33] hover:bg-slate-800 rounded-xl transition-all shadow-xs cursor-pointer"
             >
               <MessageSquare className="w-3.5 h-3.5 text-cyan-400" />
@@ -101,25 +118,22 @@ export const OfficerReview = ({
         </div>
 
         {/* Display Saved Review if Officer Logged One */}
-        {savedReview ? (
-          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-2">
+        {activeReview ? (
+          <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
                 <span className="font-bold text-slate-900">
-                  Officer Decision: <strong className="text-cyan-800">{savedReview.decision}</strong>
+                  ✓ Officer Review Completed
                 </span>
               </div>
               <span className="text-[10px] font-mono text-slate-400">
-                Logged at {savedReview.timestamp}
+                {activeReview.reviewDate ? new Date(activeReview.reviewDate).toLocaleDateString('en-IN') : ''}
               </span>
             </div>
-            <p className="text-slate-700 italic pl-6">
-              "{savedReview.observation}"
+            <p className="text-slate-700 pl-6">
+              Final Assessment: <strong>{activeReview.finalAssessment}</strong>
             </p>
-            <div className="pt-1 text-[10px] text-slate-400 pl-6">
-              Official: {savedReview.officer}
-            </div>
           </div>
         ) : (
           <div className="text-xs text-slate-400 flex items-center gap-2 italic">

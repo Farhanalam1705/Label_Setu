@@ -13,7 +13,7 @@ export const ComplianceChecklist = ({ checks = [], onSelectEvidence = null }) =>
             <span>Compliance Checks</span>
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
-            Verification criteria under Legal Metrology (Packaged Commodities) Rules, 2011
+            Automated verification of mandatory packaging requirements
           </p>
         </div>
 
@@ -31,7 +31,6 @@ export const ComplianceChecklist = ({ checks = [], onSelectEvidence = null }) =>
             status={check.status}
             confidence={check.confidence}
             explanation={check.explanation}
-            rule={check.rule}
             onViewEvidence={
               onSelectEvidence ? () => onSelectEvidence(check) : null
             }

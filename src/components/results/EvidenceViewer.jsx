@@ -22,14 +22,11 @@ export const EvidenceViewer = ({
     status = 'NEEDS REVIEW',
     finding,
     explanation,
-    ruleRef,
-    rule,
   } = evidenceData;
 
   const displayTitle = title || fieldName || name || 'Declaration Item';
   const displayExtracted = extractedText || extractedValue || '—';
-  const displayFinding = finding || explanation || 'Evidence verified against Legal Metrology Rules (Packaged Commodities), 2011.';
-  const displayRule = ruleRef || rule || 'Legal Metrology Rules 2011';
+  const displayFinding = finding || explanation || 'Evidence verified against mandatory packaging standards.';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
@@ -78,9 +75,6 @@ export const EvidenceViewer = ({
               <h4 className="text-base font-extrabold text-slate-900">
                 {displayTitle}
               </h4>
-              <span className="text-[10px] text-slate-500 font-mono">
-                {displayRule}
-              </span>
             </div>
 
             <div className="flex items-center gap-2">
@@ -127,9 +121,6 @@ export const EvidenceViewer = ({
                       "{displayExtracted}"
                     </p>
                   </div>
-                  <p className="text-[10px] text-slate-600">
-                    Statutory Rule Reference: <strong>{displayRule}</strong>
-                  </p>
                 </div>
               )}
             </div>

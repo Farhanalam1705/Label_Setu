@@ -31,13 +31,9 @@ export const Dashboard = () => {
     navigate('/scanner');
   };
 
-  // Handle "View" Inspection placeholder
+  // Handle "View" Inspection
   const handleViewInspection = (inspection) => {
-    addToast({
-      title: `Inspection ${inspection.id}`,
-      message: `Detailed inspection viewer and violation evidence for "${inspection.product}" will be available in Phase 2.`,
-      type: 'info',
-    });
+    navigate(`/history/${inspection.id}`);
   };
 
   // Filter inspections

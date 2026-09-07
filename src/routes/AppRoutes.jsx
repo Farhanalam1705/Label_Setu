@@ -7,6 +7,12 @@ import { Processing } from '../pages/Processing';
 import { Results } from '../pages/Results';
 import { MainLayout } from '../components/layout/MainLayout';
 import { ProtectedRoute } from './ProtectedRoute';
+import { EvidenceViewer } from '../pages/EvidenceViewer';
+import { OfficerReviewPage } from '../pages/OfficerReviewPage';
+import { ReportGeneratorPage } from '../pages/ReportGeneratorPage';
+import { InspectionHistoryPage } from '../pages/InspectionHistoryPage';
+import { InspectionDetailsPage } from '../pages/InspectionDetailsPage';
+import { SettingsPage } from '../pages/SettingsPage';
 
 export const AppRoutes = () => {
   return (
@@ -31,12 +37,20 @@ export const AppRoutes = () => {
         
         {/* New Inspection / Scanner Stages 3 & 4 */}
         <Route path="scanner" element={<Scanner />} />
+        <Route path="new-inspection" element={<Scanner />} />
 
         {/* AI Analysis / Processing */}
         <Route path="processing" element={<Processing />} />
 
         {/* Compliance Results Placeholder */}
         <Route path="results" element={<Results />} />
+        <Route path="evidence" element={<EvidenceViewer />} />
+        <Route path="review/:inspectionId" element={<OfficerReviewPage />} />
+        <Route path="reports/generate" element={<ReportGeneratorPage />} />
+        <Route path="report/generate" element={<ReportGeneratorPage />} />
+        <Route path="history" element={<InspectionHistoryPage />} />
+        <Route path="history/:inspectionId" element={<InspectionDetailsPage />} />
+        <Route path="settings" element={<SettingsPage />} />
       </Route>
 
       {/* Fallback catch-all route */}

@@ -47,6 +47,13 @@ export const StatusBadge = ({ status, size = 'md' }) => {
       text: 'NEEDS REVIEW',
       style: 'bg-amber-50 text-amber-800 border-amber-300 font-bold',
     };
+  } else if (norm === 'PENDING REVIEW' || norm === 'PENDING' || norm === 'PENDING_REVIEW') {
+    config = {
+      symbol: '○',
+      icon: <span className="w-2 h-2 rounded-full border-2 border-slate-500 inline-block shrink-0" />,
+      text: 'PENDING REVIEW',
+      style: 'bg-slate-100 text-slate-700 border-slate-300 font-bold',
+    };
   }
 
   const sizeClasses = {

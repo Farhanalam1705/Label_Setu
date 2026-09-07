@@ -77,7 +77,7 @@ export const ProcessingStepper = ({ progress = 0 }) => {
       },
       {
         id: 5,
-        title: 'Rule Validation',
+        title: 'Compliance Validation',
         status:
           progress >= 85
             ? 'COMPLETED'
@@ -120,7 +120,7 @@ export const ProcessingStepper = ({ progress = 0 }) => {
             Inspection Protocol Stages
           </h3>
           <p className="text-xs text-slate-500">
-            Legal Metrology (Packaged Commodities) Rules Verification
+            Packaged Commodities Verification Pipeline
           </p>
         </div>
         <span className="text-xs font-mono font-bold text-cyan-800 bg-cyan-50 px-2.5 py-1 rounded-md border border-cyan-200/70">

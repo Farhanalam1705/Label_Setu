@@ -93,3 +93,47 @@
   transform: translateX(-100%);
   animation: shimmerEffect 3s infinite;
 }
+
+/* ── Print Styles ─────────────────────────────────────── */
+@media print {
+  /* Hide main navigation, sidebars, topbars, buttons and modals */
+  aside,
+  header,
+  nav,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  /* Target report preview */
+  #report-print-target {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Ensure tables and sections stay together */
+  table { page-break-inside: avoid; }
+  tr { page-break-inside: avoid; }
+  .print-page-break-inside-avoid { page-break-inside: avoid; }
+
+  /* Page sizing */
+  @page { size: A4 portrait; margin: 15mm; }
+
+  /* Ensure color reproduction */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+

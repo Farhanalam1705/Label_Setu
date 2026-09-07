@@ -3,6 +3,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   ScanLine, 
+  History,
+  Settings,
   LogOut, 
   Shield, 
   Scale, 
@@ -46,6 +48,18 @@ export const Sidebar = ({ isOpen, onClose }) => {
       path: '/scanner',
       icon: ScanLine,
       badge: 'Live',
+    },
+    {
+      name: 'Inspection History',
+      path: '/history',
+      icon: History,
+      badge: null,
+    },
+    {
+      name: 'Settings',
+      path: '/settings',
+      icon: Settings,
+      badge: null,
     },
   ];
 
