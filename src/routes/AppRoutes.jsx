@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from '../pages/Login';
 import { Dashboard } from '../pages/Dashboard';
 import { Scanner } from '../pages/Scanner';
+import { Processing } from '../pages/Processing';
+import { Results } from '../pages/Results';
 import { MainLayout } from '../components/layout/MainLayout';
 import { ProtectedRoute } from './ProtectedRoute';
 
@@ -29,6 +31,12 @@ export const AppRoutes = () => {
         
         {/* New Inspection / Scanner Stages 3 & 4 */}
         <Route path="scanner" element={<Scanner />} />
+
+        {/* AI Analysis / Processing */}
+        <Route path="processing" element={<Processing />} />
+
+        {/* Compliance Results Placeholder */}
+        <Route path="results" element={<Results />} />
       </Route>
 
       {/* Fallback catch-all route */}

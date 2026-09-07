@@ -20,6 +20,16 @@ export const Topbar = ({ onToggleSidebar }) => {
           title: 'Product Scanner',
           category: 'Inspections',
         };
+      case '/processing':
+        return {
+          title: 'AI Analysis & Processing',
+          category: 'New Inspection',
+        };
+      case '/results':
+        return {
+          title: 'Compliance Results',
+          category: 'Inspection Report',
+        };
       default:
         return {
           title: 'Portal',
