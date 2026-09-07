@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   CheckCircle2, 
   RotateCcw, 
@@ -7,12 +8,12 @@ import {
   HardDrive, 
   Maximize2, 
   ShieldCheck, 
-  ArrowRight,
-  Info
+  ArrowRight
 } from 'lucide-react';
 import { useToast } from '../common/Toast';
 
 export const ImagePreview = ({ file, onReplace, onRemove }) => {
+  const navigate = useNavigate();
   const [previewUrl, setPreviewUrl] = useState(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const { addToast } = useToast();
@@ -46,11 +47,54 @@ export const ImagePreview = ({ file, onReplace, onRemove }) => {
   };
 
   const handleContinueAnalysis = () => {
-    addToast({
-      title: 'Analysis Engine Staged',
-      message: 'OCR extraction, AI compliance scoring, and Legal Metrology rule verification will occur in Phase 2.',
-      type: 'info',
-    });
+    if (!file) return;
+
+    // Persist file metadata and data URL for /processing
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const dataUrl = reader.result;
+      try {
+        sessionStorage.setItem('label_setu_inspection_image', dataUrl);
+        sessionStorage.setItem(
+          'label_setu_inspection_meta',
+          JSON.stringify({
+            name: file.name,
+            size: file.size,
+            type: file.type,
+          })
+        );
+      } catch (err) {
+        console.warn('Unable to persist image in sessionStorage:', err);
+      }
+
+      addToast({
+        title: 'Starting Analysis',
+        message: 'Product image transferred to Legal Metrology analysis stage.',
+        type: 'success',
+      });
+
+      navigate('/processing', {
+        state: {
+          image: dataUrl,
+          fileName: file.name,
+          fileSize: file.size,
+          fileType: file.type,
+        },
+      });
+    };
+
+    reader.onerror = () => {
+      navigate('/processing', {
+        state: {
+          image: previewUrl,
+          fileName: file.name,
+          fileSize: file.size,
+          fileType: file.type,
+        },
+      });
+    };
+
+    reader.readAsDataURL(file);
   };
 
   if (!file || !previewUrl) return null;
@@ -155,19 +199,19 @@ export const ImagePreview = ({ file, onReplace, onRemove }) => {
             </button>
           </div>
 
-          {/* Continue to Analysis Placeholder CTA */}
+          {/* Continue to Analysis CTA */}
           <div className="w-full sm:w-auto flex flex-col sm:items-end">
             <button
               type="button"
               onClick={handleContinueAnalysis}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-xs font-bold text-slate-400 bg-slate-100 border border-slate-200 rounded-xl cursor-not-allowed opacity-80"
-              title="Next stage will implement OCR and rule compliance engine"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-xs font-bold text-white bg-[#0c1e33] hover:bg-slate-800 rounded-xl transition-all shadow-xs hover:shadow-md active:scale-98 cursor-pointer group"
+              title="Proceed to automated metrology analysis pipeline"
             >
               <span>Continue to Analysis</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform" />
             </button>
             <span className="text-[10px] text-slate-400 mt-1 text-center sm:text-right">
-              OCR & Compliance Engine will be connected in Phase 2
+              Proceed to automated metrology analysis pipeline
             </span>
           </div>
         </div>
