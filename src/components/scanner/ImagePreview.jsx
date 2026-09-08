@@ -11,12 +11,14 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { useToast } from '../common/Toast';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const ImagePreview = ({ file, onReplace, onRemove }) => {
   const navigate = useNavigate();
   const [previewUrl, setPreviewUrl] = useState(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const { addToast } = useToast();
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (!file) {
@@ -68,8 +70,8 @@ export const ImagePreview = ({ file, onReplace, onRemove }) => {
       }
 
       addToast({
-        title: 'Starting Analysis',
-        message: 'Product image transferred to Legal Metrology analysis stage.',
+        title: t('startingAnalysis', 'Starting Analysis'),
+        message: t('startingAnalysisDesc', 'Product image transferred to Legal Metrology analysis stage.'),
         type: 'success',
       });
 
@@ -109,17 +111,17 @@ export const ImagePreview = ({ file, onReplace, onRemove }) => {
           </div>
           <div>
             <h4 className="text-xs font-bold text-emerald-950 uppercase tracking-wide">
-              Image ready for inspection
+              {t('imageReadyForInspection', 'Image ready for inspection')}
             </h4>
             <p className="text-[11px] text-emerald-800">
-              Valid format and resolution verified for Packaged Commodities compliance checks.
+              {t('validFormatResolution', 'Valid format and resolution verified for Packaged Commodities compliance checks.')}
             </p>
           </div>
         </div>
 
         <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-100/70 px-2.5 py-0.5 rounded-full border border-emerald-200">
           <ShieldCheck className="w-3.5 h-3.5" />
-          Pre-validated
+          {t('preValidated', 'Pre-validated')}
         </span>
       </div>
 
@@ -134,7 +136,7 @@ export const ImagePreview = ({ file, onReplace, onRemove }) => {
 
           {/* Subtitle badge overlay */}
           <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-xs text-white text-[11px] font-semibold px-3 py-1 rounded-md border border-slate-700">
-            PRODUCT IMAGE PREVIEW
+            {t('productImagePreview', 'PRODUCT IMAGE PREVIEW')}
           </div>
         </div>
 
@@ -145,7 +147,7 @@ export const ImagePreview = ({ file, onReplace, onRemove }) => {
               <FileText className="w-4 h-4" />
             </div>
             <div className="min-w-0">
-              <span className="text-[10px] font-bold uppercase text-slate-400 block">File Name</span>
+              <span className="text-[10px] font-bold uppercase text-slate-400 block">{t('fileName', 'File Name')}</span>
               <p className="text-xs font-semibold text-slate-800 truncate" title={file.name}>
                 {file.name}
               </p>
@@ -157,7 +159,7 @@ export const ImagePreview = ({ file, onReplace, onRemove }) => {
               <HardDrive className="w-4 h-4" />
             </div>
             <div className="min-w-0">
-              <span className="text-[10px] font-bold uppercase text-slate-400 block">File Size</span>
+              <span className="text-[10px] font-bold uppercase text-slate-400 block">{t('fileSize', 'File Size')}</span>
               <p className="text-xs font-semibold text-slate-800 font-mono">
                 {formatFileSize(file.size)}
               </p>
@@ -169,7 +171,7 @@ export const ImagePreview = ({ file, onReplace, onRemove }) => {
               <Maximize2 className="w-4 h-4" />
             </div>
             <div className="min-w-0">
-              <span className="text-[10px] font-bold uppercase text-slate-400 block">Image Type & Res</span>
+              <span className="text-[10px] font-bold uppercase text-slate-400 block">{t('imageTypeRes', 'Image Type & Res')}</span>
               <p className="text-xs font-semibold text-slate-800 font-mono">
                 {file.type || 'image/jpeg'} {dimensions.width ? `(${dimensions.width}×${dimensions.height})` : ''}
               </p>
@@ -183,19 +185,19 @@ export const ImagePreview = ({ file, onReplace, onRemove }) => {
             <button
               type="button"
               onClick={onReplace}
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl transition-colors shadow-xs active:scale-98"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl transition-colors shadow-xs active:scale-98 cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5 text-slate-500" />
-              <span>Replace Image</span>
+              <span>{t('replaceImage', 'Replace Image')}</span>
             </button>
 
             <button
               type="button"
               onClick={onRemove}
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl transition-colors active:scale-98"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl transition-colors active:scale-98 cursor-pointer"
             >
               <Trash2 className="w-3.5 h-3.5 text-rose-500" />
-              <span>Remove</span>
+              <span>{t('remove', 'Remove')}</span>
             </button>
           </div>
 
@@ -205,13 +207,13 @@ export const ImagePreview = ({ file, onReplace, onRemove }) => {
               type="button"
               onClick={handleContinueAnalysis}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-xs font-bold text-white bg-[#0c1e33] hover:bg-slate-800 rounded-xl transition-all shadow-xs hover:shadow-md active:scale-98 cursor-pointer group"
-              title="Proceed to automated metrology analysis pipeline"
+              title={t('proceedToPipeline', 'Proceed to automated metrology analysis pipeline')}
             >
-              <span>Continue to Analysis</span>
+              <span>{t('continueToAnalysis', 'Continue to Analysis')}</span>
               <ArrowRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform" />
             </button>
             <span className="text-[10px] text-slate-400 mt-1 text-center sm:text-right">
-              Proceed to automated metrology analysis pipeline
+              {t('proceedToPipeline', 'Proceed to automated metrology analysis pipeline')}
             </span>
           </div>
         </div>

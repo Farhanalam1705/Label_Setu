@@ -21,22 +21,22 @@ export const Topbar = ({ onToggleSidebar }) => {
       case '/new-inspection':
         return {
           title: t('productScanner', 'Product Scanner'),
-          category: 'Inspections',
+          category: t('inspections', 'Inspections'),
         };
       case '/processing':
         return {
           title: t('aiAnalysis', 'AI Analysis & Processing'),
-          category: 'New Inspection',
+          category: t('newInspection', 'New Inspection'),
         };
       case '/results':
         return {
           title: t('complianceResults', 'Compliance Results'),
-          category: 'Inspection Report',
+          category: t('inspectionReport', 'Inspection Report'),
         };
       case '/history':
         return {
           title: t('inspectionHistory', 'Inspection History'),
-          category: 'Records',
+          category: t('records', 'Records'),
         };
       case '/settings':
         return {

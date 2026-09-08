@@ -1,8 +1,11 @@
 import React from 'react';
-import { ShieldCheck, CheckSquare, FileText } from 'lucide-react';
+import { CheckSquare } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 import { ComplianceCheck } from './ComplianceCheck';
 
 export const ComplianceChecklist = ({ checks = [], onSelectEvidence = null }) => {
+  const { t } = useLanguage();
+
   return (
     <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
       {/* Header */}
@@ -10,15 +13,15 @@ export const ComplianceChecklist = ({ checks = [], onSelectEvidence = null }) =>
         <div>
           <h3 className="text-sm font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <CheckSquare className="w-4 h-4 text-cyan-600" />
-            <span>Compliance Checks</span>
+            <span>{t('complianceChecks', 'Compliance Checks')}</span>
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
-            Automated verification of mandatory packaging requirements
+            {t('automatedVerificationMandatory', 'Automated verification of mandatory packaging requirements')}
           </p>
         </div>
 
         <span className="text-xs font-mono font-bold text-slate-600 bg-white px-2.5 py-1 rounded-md border border-slate-200">
-          {checks.length} Criteria Evaluated
+          {checks.length} {t('criteriaEvaluated', 'Criteria Evaluated')}
         </span>
       </div>
 

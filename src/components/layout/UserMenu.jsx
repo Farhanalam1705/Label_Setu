@@ -52,10 +52,12 @@ export const UserMenu = () => {
         
         <div className="hidden sm:flex flex-col items-start text-left">
           <span className="text-xs font-bold text-slate-800 leading-tight flex items-center gap-1">
-            {user.role}
+            {user.role === 'Officer' ? t('activeOfficer', 'Officer') : user.role}
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
           </span>
-          <span className="text-[11px] text-slate-500 font-medium leading-tight">{user.designation}</span>
+          <span className="text-[11px] text-slate-500 font-medium leading-tight">
+            {user.designation === 'Enforcement Official' ? t('enforcementOfficial', 'Enforcement Official') : user.designation}
+          </span>
         </div>
 
         <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -77,12 +79,12 @@ export const UserMenu = () => {
           <div className="p-1.5">
             <div className="px-3 py-2 text-[11px] text-slate-500 flex justify-between items-center">
               <span>{t('department', 'Department')}</span>
-              <span className="font-semibold text-slate-700">Legal Metrology</span>
+              <span className="font-semibold text-slate-700">{t('portalTitle', 'Legal Metrology')}</span>
             </div>
             <div className="px-3 py-1.5 text-[11px] text-slate-500 flex justify-between items-center">
-              <span>Auth Status</span>
+              <span>{t('authStatus', 'Auth Status')}</span>
               <span className="font-medium text-emerald-600 flex items-center gap-1">
-                <Check className="w-3 h-3" /> Active Session
+                <Check className="w-3 h-3" /> {t('activeSession', 'Active Session')}
               </span>
             </div>
           </div>

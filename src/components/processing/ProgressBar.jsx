@@ -1,7 +1,9 @@
 import React from 'react';
 import { Loader2, CheckCircle2 } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const ProgressBar = ({ progress = 0, statusMessage = 'Processing product image...' }) => {
+  const { t } = useLanguage();
   const isComplete = progress >= 100;
 
   return (
@@ -10,15 +12,15 @@ export const ProgressBar = ({ progress = 0, statusMessage = 'Processing product 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-sm font-bold text-slate-900 tracking-tight">
-            Analysis Progress
+            {t('analysisProgress', 'Analysis Progress')}
           </span>
           {isComplete ? (
             <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-              <CheckCircle2 className="w-3 h-3" /> Ready
+              <CheckCircle2 className="w-3 h-3" /> {t('ready', 'Ready')}
             </span>
           ) : (
             <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-cyan-700 bg-cyan-50 px-2 py-0.5 rounded-full border border-cyan-200">
-              <Loader2 className="w-2.5 h-2.5 animate-spin text-cyan-600" /> In Progress
+              <Loader2 className="w-2.5 h-2.5 animate-spin text-cyan-600" /> {t('inProgress', 'In Progress')}
             </span>
           )}
         </div>
@@ -55,7 +57,7 @@ export const ProgressBar = ({ progress = 0, statusMessage = 'Processing product 
         </div>
 
         <span className="text-[11px] text-slate-400 shrink-0 font-mono pl-2">
-          {isComplete ? '6 of 6 stages done' : 'Automated Pipeline'}
+          {isComplete ? `6 ${t('of', 'of')} 6 ${t('stagesDone', 'stages done')}` : t('automatedPipeline', 'Automated Pipeline')}
         </span>
       </div>
     </div>

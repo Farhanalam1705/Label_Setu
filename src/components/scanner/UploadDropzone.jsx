@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Camera, Upload, Image as ImageIcon, AlertCircle, FileUp } from 'lucide-react';
 import { useToast } from '../common/Toast';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const UploadDropzone = ({ onFileSelected, onOpenCamera }) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -8,6 +9,7 @@ export const UploadDropzone = ({ onFileSelected, onOpenCamera }) => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const fileInputRef = useRef(null);
   const { addToast } = useToast();
+  const { t } = useLanguage();
 
   const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
   const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -116,9 +118,9 @@ export const UploadDropzone = ({ onFileSelected, onOpenCamera }) => {
               <FileUp className="w-7 h-7" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">Validating & Loading Image</h3>
+              <h3 className="text-base font-bold text-slate-900">{t('validatingImage', 'Validating & Loading Image')}</h3>
               <p className="text-xs text-slate-500 mt-1">
-                Checking file format integrity and dimensions under Metrology standard...
+                {t('checkingFormat', 'Checking file format integrity and dimensions under Metrology standard...')}
               </p>
             </div>
 
@@ -129,7 +131,7 @@ export const UploadDropzone = ({ onFileSelected, onOpenCamera }) => {
                 style={{ width: `${uploadProgress}%` }}
               ></div>
             </div>
-            <p className="text-[11px] font-mono font-medium text-slate-500">{uploadProgress}% complete</p>
+            <p className="text-[11px] font-mono font-medium text-slate-500">{uploadProgress}% {t('complete', 'complete')}</p>
           </div>
         </div>
       ) : (
@@ -142,19 +144,19 @@ export const UploadDropzone = ({ onFileSelected, onOpenCamera }) => {
                 <div className="w-16 h-16 rounded-2xl bg-slate-100 group-hover:bg-cyan-50 border border-slate-200 group-hover:border-cyan-200 text-slate-700 group-hover:text-cyan-700 flex items-center justify-center transition-colors shadow-xs">
                   <Camera className="w-8 h-8" />
                 </div>
-                <h3 className="text-base font-bold text-slate-900">Capture Image</h3>
+                <h3 className="text-base font-bold text-slate-900">{t('captureImage', 'Capture Image')}</h3>
                 <p className="text-xs text-slate-500 max-w-xs leading-relaxed">
-                  Use your device camera to capture a clear live photo of the product label.
+                  {t('captureImageDesc', 'Use your device camera to capture a clear live photo of the product label.')}
                 </p>
               </div>
 
               <button
                 type="button"
                 onClick={onOpenCamera}
-                className="mt-6 w-full max-w-xs py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-colors shadow-xs flex items-center justify-center gap-2"
+                className="mt-6 w-full max-w-xs py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-colors shadow-xs flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Camera className="w-4 h-4" />
-                <span>Open Camera</span>
+                <span>{t('openCamera', 'Open Camera')}</span>
               </button>
             </div>
 
@@ -180,9 +182,9 @@ export const UploadDropzone = ({ onFileSelected, onOpenCamera }) => {
                 >
                   <Upload className="w-8 h-8" />
                 </div>
-                <h3 className="text-base font-bold text-slate-900">Upload Image</h3>
+                <h3 className="text-base font-bold text-slate-900">{t('uploadImage', 'Upload Image')}</h3>
                 <p className="text-xs text-slate-500 max-w-xs leading-relaxed">
-                  Upload a packaged commodity label image from your local device or drag & drop.
+                  {t('uploadImageDesc', 'Upload a packaged commodity label image from your local device or drag & drop.')}
                 </p>
               </div>
 
@@ -192,10 +194,10 @@ export const UploadDropzone = ({ onFileSelected, onOpenCamera }) => {
                   e.stopPropagation();
                   triggerFileInput();
                 }}
-                className="mt-6 w-full max-w-xs py-2.5 px-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl text-xs font-bold transition-colors shadow-xs flex items-center justify-center gap-2"
+                className="mt-6 w-full max-w-xs py-2.5 px-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl text-xs font-bold transition-colors shadow-xs flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Upload className="w-4 h-4" />
-                <span>Upload Image</span>
+                <span>{t('uploadImage', 'Upload Image')}</span>
               </button>
             </div>
           </div>
@@ -203,16 +205,16 @@ export const UploadDropzone = ({ onFileSelected, onOpenCamera }) => {
           {/* Guidelines and specs footnote */}
           <div className="bg-slate-100/80 rounded-xl border border-slate-200/80 p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-slate-800">Supported formats:</span>
+              <span className="font-semibold text-slate-800">{t('supportedFormats', 'Supported formats:')}</span>
               <span className="font-mono bg-white px-2 py-0.5 rounded border border-slate-200 text-slate-700 font-semibold text-[11px]">
                 JPG, JPEG, PNG
               </span>
               <span className="text-slate-400">|</span>
-              <span>Max: <strong>10 MB</strong></span>
+              <span>{t('maxSize', 'Max: 10 MB')}</span>
             </div>
 
             <p className="text-slate-500 text-center sm:text-right">
-              Use a clear, glare-free image for better analysis.
+              {t('clearGlareFree', 'Use a clear, glare-free image for better analysis.')}
             </p>
           </div>
         </>

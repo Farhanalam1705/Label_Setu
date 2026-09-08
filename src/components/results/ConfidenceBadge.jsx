@@ -1,10 +1,12 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 /**
  * ConfidenceBadge Component
  * Shows AI confidence percentage with color indicators
  */
 export const ConfidenceBadge = ({ value = 90, showLabel = true, size = 'sm' }) => {
+  const { t } = useLanguage();
   const num = Number(value) || 0;
 
   let colorClasses = 'text-slate-700 bg-slate-100 border-slate-200';
@@ -31,10 +33,10 @@ export const ConfidenceBadge = ({ value = 90, showLabel = true, size = 'sm' }) =
   return (
     <span
       className={`inline-flex items-center rounded-md border font-mono tracking-tight shrink-0 shadow-2xs ${colorClasses} ${sizeClasses}`}
-      title={`AI detection confidence: ${num}%`}
+      title={`${t('confidence', 'Confidence')}: ${num}%`}
     >
       <span className={`w-1.5 h-1.5 rounded-full ${dotColor}`}></span>
-      <span>{showLabel ? `Confidence ${num}%` : `${num}%`}</span>
+      <span>{showLabel ? `${t('confidence', 'Confidence')} ${num}%` : `${num}%`}</span>
     </span>
   );
 };

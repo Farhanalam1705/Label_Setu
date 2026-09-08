@@ -10,6 +10,7 @@ import {
   RotateCcw, 
   FastForward 
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 import { ProductPreview } from '../components/processing/ProductPreview';
 import { ProgressBar } from '../components/processing/ProgressBar';
 import { ProcessingStepper } from '../components/processing/ProcessingStepper';
@@ -22,6 +23,7 @@ const STAGE_INTERVAL_MS = 1300; // ~1.3 seconds per stage for a smooth, realisti
 
 export const Processing = () => {
   const location = useLocation();
+  const { t } = useLanguage();
 
   // Retrieve image from React Router state or sessionStorage fallback
   const [imageInfo] = useState(() => {
@@ -112,39 +114,39 @@ export const Processing = () => {
           {/* Breadcrumb: Dashboard / New Inspection / Analysis */}
           <nav className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
             <Link to="/dashboard" className="hover:text-slate-900 transition-colors">
-              Dashboard
+              {t('dashboard', 'Dashboard')}
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
             <Link to="/scanner" className="hover:text-slate-900 transition-colors">
-              New Inspection
+              {t('newInspection', 'New Inspection')}
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <span className="text-cyan-700 font-bold">Analysis</span>
+            <span className="text-cyan-700 font-bold">{t('analysis', 'Analysis')}</span>
           </nav>
 
           {/* Main Heading & Subtitle */}
           <div>
             <div className="flex items-center gap-2.5">
               <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight transition-all">
-                {isComplete ? 'Analysis Complete' : 'Analyzing Product'}
+                {isComplete ? t('analysisComplete', 'Analysis Complete') : t('analyzingProduct', 'Analyzing Product')}
               </h1>
               {isComplete ? (
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                  Inspection Verified
+                  {t('inspectionVerified', 'Inspection Verified')}
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cyan-50 text-cyan-800 border border-cyan-200">
                   <Sparkles className="w-3.5 h-3.5 text-cyan-600 animate-spin" />
-                  Stage 2 of 4
+                  {t('stage2of4', 'Stage 2 of 4')}
                 </span>
               )}
             </div>
 
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
               {isComplete
-                ? 'Your inspection is ready to view.'
-                : 'Please wait while your product image is being prepared for analysis.'}
+                ? t('inspectionReadyToView', 'Your inspection is ready to view.')
+                : t('analyzingWaitMessage', 'Please wait while your product image is being prepared for analysis.')}
             </p>
           </div>
         </div>
@@ -155,13 +157,13 @@ export const Processing = () => {
             <span className="text-xs font-bold text-slate-900">LABEL SETU</span>
             <span className="text-[10px] text-slate-400">|</span>
             <span className="text-[11px] text-slate-500 font-medium">
-              AI-Powered Legal Metrology Compliance Checker
+              {t('aiPoweredChecker', 'AI-Powered Legal Metrology Compliance Checker')}
             </span>
           </div>
 
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 border border-slate-200 text-slate-700 text-xs rounded-lg">
             <FileCheck2 className="w-3.5 h-3.5 text-cyan-600" />
-            <span>Inspection ID:</span>
+            <span>{t('inspectionId', 'Inspection ID')}:</span>
             <strong className="font-mono text-slate-900">LM-2026-00129</strong>
           </div>
         </div>
@@ -174,8 +176,8 @@ export const Processing = () => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-600"></span>
           </span>
-          <span className="font-bold text-slate-800 tracking-tight">Automated Inspection Pipeline</span>
-          <span className="text-slate-400 text-[11px] font-medium">(Legal Metrology Verification Session)</span>
+          <span className="font-bold text-slate-800 tracking-tight">{t('automatedInspectionPipeline', 'Automated Inspection Pipeline')}</span>
+          <span className="text-slate-400 text-[11px] font-medium">({t('legalMetrologySession', 'Legal Metrology Verification Session')})</span>
         </div>
 
         <div className="flex items-center gap-1.5">
@@ -186,7 +188,7 @@ export const Processing = () => {
               className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-md transition-colors shadow-2xs"
             >
               {isPaused ? <Play className="w-3 h-3 text-emerald-600" /> : <Pause className="w-3 h-3 text-slate-600" />}
-              <span>{isPaused ? 'Resume' : 'Pause'}</span>
+              <span>{isPaused ? t('resume', 'Resume') : t('pause', 'Pause')}</span>
             </button>
           )}
 
@@ -197,7 +199,7 @@ export const Processing = () => {
               className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium text-cyan-700 bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 rounded-md transition-colors"
             >
               <FastForward className="w-3 h-3" />
-              <span>Fast-Forward</span>
+              <span>{t('fastForward', 'Fast-Forward')}</span>
             </button>
           )}
 
@@ -207,7 +209,7 @@ export const Processing = () => {
             className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 rounded-md transition-colors shadow-2xs"
           >
             <RotateCcw className="w-3 h-3 text-slate-500" />
-            <span>Replay</span>
+            <span>{t('replay', 'Replay')}</span>
           </button>
         </div>
       </div>

@@ -1,7 +1,9 @@
 import React from 'react';
 import { CheckCircle2, AlertCircle, AlertTriangle } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const StatusBadge = ({ status, size = 'md' }) => {
+  const { t } = useLanguage();
   const normalized = (status || '').toLowerCase().trim();
 
   let config = {
@@ -14,19 +16,19 @@ export const StatusBadge = ({ status, size = 'md' }) => {
     config = {
       bg: 'bg-emerald-50 text-emerald-700 border-emerald-200 ring-1 ring-emerald-500/10',
       icon: <CheckCircle2 className={size === 'sm' ? 'w-3 h-3' : 'w-3.5 h-3.5'} />,
-      text: 'Compliant',
+      text: t('compliant', 'Compliant'),
     };
   } else if (normalized === 'violation' || normalized === 'fail' || normalized === 'non-compliant') {
     config = {
       bg: 'bg-rose-50 text-rose-700 border-rose-200 ring-1 ring-rose-500/10',
       icon: <AlertCircle className={size === 'sm' ? 'w-3 h-3' : 'w-3.5 h-3.5'} />,
-      text: 'Violation',
+      text: t('violations', 'Violation'),
     };
   } else if (normalized === 'needs review' || normalized === 'review' || normalized === 'pending') {
     config = {
       bg: 'bg-amber-50 text-amber-700 border-amber-200 ring-1 ring-amber-500/10',
       icon: <AlertTriangle className={size === 'sm' ? 'w-3 h-3' : 'w-3.5 h-3.5'} />,
-      text: 'Needs Review',
+      text: t('needsReview', 'Needs Review'),
     };
   }
 
@@ -43,3 +45,4 @@ export const StatusBadge = ({ status, size = 'md' }) => {
     </span>
   );
 };
+

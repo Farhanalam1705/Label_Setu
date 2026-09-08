@@ -12,10 +12,12 @@ import { UploadDropzone } from '../components/scanner/UploadDropzone';
 import { ImagePreview } from '../components/scanner/ImagePreview';
 import { CameraModal } from '../components/scanner/CameraModal';
 import { useToast } from '../components/common/Toast';
+import { useLanguage } from '../context/LanguageContext';
 
 export const Scanner = () => {
   const navigate = useNavigate();
   const { addToast } = useToast();
+  const { t } = useLanguage();
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
@@ -49,17 +51,17 @@ export const Scanner = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={handleBackToDashboard}
-              className="p-1.5 text-slate-500 hover:text-slate-900 hover:bg-slate-200/80 rounded-lg transition-colors mr-1"
-              title="Return to Dashboard"
+              className="p-1.5 text-slate-500 hover:text-slate-900 hover:bg-slate-200/80 rounded-lg transition-colors mr-1 cursor-pointer"
+              title={t('returnToDashboard', 'Return to Dashboard')}
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-              New Inspection
+              {t('newInspectionTitle', 'New Inspection')}
             </h1>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 pl-8">
-            Upload or capture a packaged commodity label for inspection.
+            {t('uploadOrCapture', 'Upload or capture a packaged commodity label for inspection.')}
           </p>
         </div>
 
@@ -67,7 +69,7 @@ export const Scanner = () => {
         <div className="flex items-center gap-2 self-start sm:self-auto pl-8 sm:pl-0">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold rounded-full">
             <FileCheck2 className="w-3.5 h-3.5 text-cyan-600" />
-            <span>Inspection Stage: 1 of 4</span>
+            <span>{t('inspectionStage', 'Inspection Stage: 1 of 4')}</span>
           </span>
         </div>
       </div>
@@ -85,25 +87,25 @@ export const Scanner = () => {
           <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-3">
             <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
               <Info className="w-4 h-4 text-cyan-600" />
-              <span>Inspection Guidelines for Legal Metrology Verification</span>
+              <span>{t('inspectionGuidelines', 'Inspection Guidelines for Legal Metrology Verification')}</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-600">
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                <span className="font-bold text-slate-800 block mb-0.5">1. Principal Display Panel</span>
+                <span className="font-bold text-slate-800 block mb-0.5">{t('principalDisplayPanel', '1. Principal Display Panel')}</span>
                 <p className="text-slate-500 text-[11px]">
-                  Ensure the primary commodity name, net weight/volume, and brand are in clear focus.
+                  {t('principalDisplayPanelDesc', 'Ensure the primary commodity name, net weight/volume, and brand are in clear focus.')}
                 </p>
               </div>
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                <span className="font-bold text-slate-800 block mb-0.5">2. Mandatory Declarations</span>
+                <span className="font-bold text-slate-800 block mb-0.5">{t('mandatoryDeclarationsGuide', '2. Mandatory Declarations')}</span>
                 <p className="text-slate-500 text-[11px]">
-                  MRP (incl. of all taxes), Consumer Care details, and packer address must not be obscured.
+                  {t('mandatoryDeclarationsDesc', 'MRP (incl. of all taxes), Consumer Care details, and packer address must not be obscured.')}
                 </p>
               </div>
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                <span className="font-bold text-slate-800 block mb-0.5">3. Lighting & Clarity</span>
+                <span className="font-bold text-slate-800 block mb-0.5">{t('lightingClarity', '3. Lighting & Clarity')}</span>
                 <p className="text-slate-500 text-[11px]">
-                  Avoid flash reflection, shadows, or cropped corners on the commodity package.
+                  {t('lightingClarityDesc', 'Avoid flash reflection, shadows, or cropped corners on the commodity package.')}
                 </p>
               </div>
             </div>

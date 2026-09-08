@@ -8,30 +8,32 @@ import {
   RotateCcw,
   ShieldCheck
 } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
-export const getStatusMessage = (progress) => {
-  if (progress >= 100) return 'Analysis complete.';
-  if (progress >= 90) return 'Finalizing analysis...';
-  if (progress >= 80) return 'Preparing validation...';
-  if (progress >= 65) return 'Identifying product declarations...';
-  if (progress >= 50) return 'Processing visible text...';
-  if (progress >= 35) return 'Detecting label regions...';
-  if (progress >= 20) return 'Improving image quality...';
-  return 'Preparing image...';
+export const getStatusMessage = (progress, t = (k, d) => d) => {
+  if (progress >= 100) return t('analysisComplete', 'Analysis complete.');
+  if (progress >= 90) return t('finalizingAnalysis', 'Finalizing analysis...');
+  if (progress >= 80) return t('preparingValidation', 'Preparing validation...');
+  if (progress >= 65) return t('identifyingProductDeclarations', 'Identifying product declarations...');
+  if (progress >= 50) return t('processingVisibleText', 'Processing visible text...');
+  if (progress >= 35) return t('detectingLabelRegions', 'Detecting label regions...');
+  if (progress >= 20) return t('improvingImageQuality', 'Improving image quality...');
+  return t('preparingImage', 'Preparing image...');
 };
 
 export const ProcessingStatus = ({ progress = 0, onRestart = null }) => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const isComplete = progress >= 100;
-  const currentMessage = getStatusMessage(progress);
+  const currentMessage = getStatusMessage(progress, t);
 
   const completedChecklist = [
-    'Image preprocessing complete',
-    'Label regions processed',
-    'Text processing complete',
-    'Declaration extraction stage complete',
-    'Validation stage complete',
-    'Compliance assessment stage complete',
+    t('imagePreprocessingComplete', 'Image preprocessing complete'),
+    t('labelRegionsProcessed', 'Label regions processed'),
+    t('textProcessingComplete', 'Text processing complete'),
+    t('declarationExtractionComplete', 'Declaration extraction stage complete'),
+    t('validationStageComplete', 'Validation stage complete'),
+    t('complianceAssessmentComplete', 'Compliance assessment stage complete'),
   ];
 
   const handleViewResults = () => {
@@ -47,7 +49,7 @@ export const ProcessingStatus = ({ progress = 0, onRestart = null }) => {
           </div>
           <div className="min-w-0">
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
-              Active Stage
+              {t('activeStage', 'Active Stage')}
             </span>
             <p className="text-sm font-bold text-slate-900 truncate">
               {currentMessage}
@@ -57,7 +59,7 @@ export const ProcessingStatus = ({ progress = 0, onRestart = null }) => {
 
         <div className="text-right shrink-0">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 text-xs font-mono font-bold rounded-lg border border-slate-200">
-            {progress}% Completed
+            {progress}% {t('completed', 'Completed')}
           </span>
         </div>
       </div>
@@ -76,14 +78,14 @@ export const ProcessingStatus = ({ progress = 0, onRestart = null }) => {
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-lg font-black text-slate-900 tracking-tight">
-                Analysis Complete
+                {t('analysisComplete', 'Analysis Complete')}
               </h3>
               <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                100% Verified
+                100% {t('verified', 'Verified')}
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
-              Your inspection is ready to view.
+              {t('inspectionReadyToView', 'Your inspection is ready to view.')}
             </p>
           </div>
         </div>
@@ -92,7 +94,7 @@ export const ProcessingStatus = ({ progress = 0, onRestart = null }) => {
           <button
             type="button"
             onClick={onRestart}
-            title="Replay Analysis Simulation"
+            title={t('replay', 'Replay')}
             className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
           >
             <RotateCcw className="w-4 h-4" />
@@ -104,7 +106,7 @@ export const ProcessingStatus = ({ progress = 0, onRestart = null }) => {
       <div className="bg-white rounded-xl border border-emerald-200/80 p-4 space-y-2.5 shadow-xs">
         <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-900 flex items-center gap-1.5 pb-1 border-b border-emerald-100">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Completed Metrology Verification Pipeline</span>
+          <span>{t('completedMetrologyPipeline', 'Completed Metrology Verification Pipeline')}</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
@@ -121,7 +123,7 @@ export const ProcessingStatus = ({ progress = 0, onRestart = null }) => {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
         <div className="flex items-center gap-2 text-xs text-slate-500">
           <FileCheck2 className="w-4 h-4 text-cyan-700" />
-          <span>Inspection ID: <strong className="text-slate-800 font-mono">LM-2026-00129</strong></span>
+          <span>{t('inspectionId', 'Inspection ID')}: <strong className="text-slate-800 font-mono">LM-2026-00129</strong></span>
         </div>
 
         <button
@@ -129,7 +131,7 @@ export const ProcessingStatus = ({ progress = 0, onRestart = null }) => {
           onClick={handleViewResults}
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3 bg-[#0c1e33] hover:bg-slate-800 text-white font-bold text-sm rounded-xl transition-all shadow-md hover:shadow-lg active:scale-98 cursor-pointer group"
         >
-          <span>View Results</span>
+          <span>{t('viewResults', 'View Results')}</span>
           <ArrowRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform" />
         </button>
       </div>

@@ -13,12 +13,23 @@ import { ReportGeneratorPage } from '../pages/ReportGeneratorPage';
 import { InspectionHistoryPage } from '../pages/InspectionHistoryPage';
 import { InspectionDetailsPage } from '../pages/InspectionDetailsPage';
 import { SettingsPage } from '../pages/SettingsPage';
+import { CustomerDashboard } from '../pages/CustomerDashboard';
 
 export const AppRoutes = () => {
   return (
     <Routes>
       {/* Public Route: Login */}
       <Route path="/login" element={<Login />} />
+
+      {/* Customer Dashboard Route */}
+      <Route
+        path="/customer/dashboard"
+        element={
+          <ProtectedRoute>
+            <CustomerDashboard />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Protected Routes enclosed in MainLayout */}
       <Route

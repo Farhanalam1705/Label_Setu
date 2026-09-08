@@ -1,5 +1,6 @@
 import React from 'react';
 import { AlertTriangle, AlertCircle, Eye, ArrowRight } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 import { StatusBadge } from './StatusBadge';
 import { ConfidenceBadge } from './ConfidenceBadge';
 
@@ -12,6 +13,7 @@ export const ViolationCard = ({
   extractedText,
   onViewEvidence = null,
 }) => {
+  const { t } = useLanguage();
   const isNonCompliant = status === 'NON-COMPLIANT';
 
   return (
@@ -55,7 +57,7 @@ export const ViolationCard = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
         <div className="p-3 bg-white rounded-xl border border-slate-200/80 space-y-1">
           <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
-            Finding Description
+            {t('findingDescription', 'Finding Description')}
           </span>
           <p className="text-slate-800 font-medium leading-relaxed">
             {finding}
@@ -64,7 +66,7 @@ export const ViolationCard = ({
 
         <div className="p-3 bg-white rounded-xl border border-slate-200/80 space-y-1">
           <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
-            Label Evidence Reference
+            {t('labelEvidenceReference', 'Label Evidence Reference')}
           </span>
           <p className="text-slate-600 leading-relaxed">
             {evidence}
@@ -77,7 +79,7 @@ export const ViolationCard = ({
         <div className="px-3.5 py-2 bg-slate-50 rounded-lg border border-slate-200/90 text-xs flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 truncate">
             <span className="text-[10px] uppercase font-bold text-slate-400 shrink-0">
-              Raw Extracted Text:
+              {t('rawExtractedText', 'Raw Extracted Text:')}
             </span>
             <code className="font-mono font-bold text-slate-800 truncate">
               "{extractedText}"
@@ -89,17 +91,17 @@ export const ViolationCard = ({
       {/* Action Footer */}
       <div className="flex items-center justify-between pt-1">
         <span className="text-[11px] text-slate-500 italic">
-          Requires verification before notice issuance.
+          {t('requiresVerificationNotice', 'Requires verification before notice issuance.')}
         </span>
 
         {onViewEvidence && (
           <button
             type="button"
             onClick={onViewEvidence}
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-cyan-900 bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 rounded-xl transition-colors shadow-2xs group"
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-cyan-900 bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 rounded-xl transition-colors shadow-2xs group cursor-pointer"
           >
             <Eye className="w-3.5 h-3.5 text-cyan-700" />
-            <span>View Evidence</span>
+            <span>{t('viewEvidence', 'View Evidence')}</span>
             <ArrowRight className="w-3 h-3 text-cyan-500 group-hover:translate-x-0.5 transition-transform" />
           </button>
         )}

@@ -1,5 +1,6 @@
 import React from 'react';
-import { AlertTriangle, Sparkles, ShieldAlert, CheckCircle2, FileSearch } from 'lucide-react';
+import { AlertTriangle, Sparkles, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 import { StatusBadge } from './StatusBadge';
 import { ConfidenceBadge } from './ConfidenceBadge';
 
@@ -10,6 +11,8 @@ export const ComplianceSummary = ({
   summaryText = 'Potential compliance issues were detected and require officer review.',
   onScrollToViolations = null,
 }) => {
+  const { t } = useLanguage();
+
   return (
     <div className="bg-gradient-to-br from-white via-amber-50/20 to-slate-50 rounded-2xl border-2 border-amber-300/80 p-6 sm:p-7 shadow-xs relative overflow-hidden">
       {/* Subtle top accent bar */}
@@ -21,13 +24,13 @@ export const ComplianceSummary = ({
           {/* Circular Score Gauge */}
           <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-2xl bg-white border border-amber-200 shadow-xs flex flex-col items-center justify-center shrink-0">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-              Score
+              {t('score', 'Score')}
             </span>
             <span className="text-2xl sm:text-3xl font-black font-mono tracking-tight text-slate-900">
               {score}%
             </span>
             <span className="text-[9px] font-bold text-amber-700 bg-amber-100/70 px-1.5 py-0.2 rounded-md mt-0.5">
-              Grade B
+              {t('gradeB', 'Grade B')}
             </span>
           </div>
 
@@ -35,7 +38,7 @@ export const ComplianceSummary = ({
           <div className="space-y-1.5 min-w-0">
             <div className="flex flex-wrap items-center gap-2.5">
               <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
-                Overall Compliance
+                {t('overallCompliance', 'Overall Compliance')}
               </h2>
               <StatusBadge status={status} size="md" />
             </div>
@@ -48,14 +51,14 @@ export const ComplianceSummary = ({
             <div className="flex flex-wrap items-center gap-3 pt-1 text-xs">
               <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 bg-white px-2.5 py-0.5 rounded-md border border-slate-200 shadow-2xs">
                 <Sparkles className="w-3 h-3 text-cyan-600" />
-                <span>AI-assisted assessment</span>
+                <span>{t('aiAssistedAssessment', 'AI-assisted assessment')}</span>
               </span>
 
               <ConfidenceBadge value={confidence} showLabel={true} />
 
               <span className="text-[11px] text-amber-800 font-medium flex items-center gap-1">
                 <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
-                <span>Needs Officer Review</span>
+                <span>{t('needsOfficerReview', 'Needs Officer Review')}</span>
               </span>
             </div>
           </div>
@@ -65,14 +68,14 @@ export const ComplianceSummary = ({
         <div className="flex sm:flex-col justify-between sm:justify-center gap-2 pt-3 sm:pt-0 border-t sm:border-t-0 sm:border-l border-slate-200 sm:pl-6 shrink-0">
           <div className="text-left sm:text-right">
             <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
-              Statutory Checks
+              {t('statutoryChecks', 'Statutory Checks')}
             </span>
             <div className="flex items-center gap-2 sm:justify-end mt-0.5">
               <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                <CheckCircle2 className="w-3 h-3" /> 4 Pass
+                <CheckCircle2 className="w-3 h-3" /> 4 {t('pass', 'Pass')}
               </span>
               <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-                <ShieldAlert className="w-3 h-3" /> 2 Review
+                <ShieldAlert className="w-3 h-3" /> 2 {t('review', 'Review')}
               </span>
             </div>
           </div>

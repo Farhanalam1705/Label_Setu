@@ -7,6 +7,7 @@ import {
   Eye, 
   EyeOff
 } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const ProductImageViewer = ({
   imageSrc = null,
@@ -14,6 +15,7 @@ export const ProductImageViewer = ({
   activeRegionId = null,
   onRegionClick = null,
 }) => {
+  const { t } = useLanguage();
   const [zoomLevel, setZoomLevel] = useState(1);
   const [showRegions, setShowRegions] = useState(true);
 
@@ -57,7 +59,7 @@ export const ProductImageViewer = ({
         <div className="flex items-center gap-2">
           <Scan className="w-4 h-4 text-cyan-600" />
           <span className="text-xs font-bold text-slate-800 tracking-tight">
-            Scanned Commodity & Evidence
+            {t('scannedCommodityEvidence', 'Scanned Commodity & Evidence')}
           </span>
         </div>
 
@@ -75,7 +77,7 @@ export const ProductImageViewer = ({
             title="Toggle Detected Regions Overlay"
           >
             {showRegions ? <Eye className="w-3 h-3 text-cyan-600" /> : <EyeOff className="w-3 h-3 text-slate-400" />}
-            <span>{showRegions ? 'Labels On' : 'Labels Off'}</span>
+            <span>{showRegions ? t('labelsOn', 'Labels On') : t('labelsOff', 'Labels Off')}</span>
           </button>
 
           <div className="h-4 w-px bg-slate-200 mx-0.5"></div>
@@ -85,9 +87,9 @@ export const ProductImageViewer = ({
             type="button"
             onClick={handleZoomOut}
             disabled={zoomLevel <= 0.75}
-            className="p-1.5 text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg disabled:opacity-40 transition-colors shadow-2xs"
-            title="Zoom Out"
-            aria-label="Zoom Out"
+            className="p-1.5 text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg disabled:opacity-40 transition-colors shadow-2xs cursor-pointer"
+            title={t('zoomOut', 'Zoom Out')}
+            aria-label={t('zoomOut', 'Zoom Out')}
           >
             <ZoomOut className="w-3.5 h-3.5" />
           </button>
@@ -102,9 +104,9 @@ export const ProductImageViewer = ({
             type="button"
             onClick={handleZoomIn}
             disabled={zoomLevel >= 2.5}
-            className="p-1.5 text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg disabled:opacity-40 transition-colors shadow-2xs"
-            title="Zoom In"
-            aria-label="Zoom In"
+            className="p-1.5 text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg disabled:opacity-40 transition-colors shadow-2xs cursor-pointer"
+            title={t('zoomIn', 'Zoom In')}
+            aria-label={t('zoomIn', 'Zoom In')}
           >
             <ZoomIn className="w-3.5 h-3.5" />
           </button>
@@ -113,9 +115,9 @@ export const ProductImageViewer = ({
           <button
             type="button"
             onClick={handleResetZoom}
-            className="p-1.5 text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg transition-colors shadow-2xs ml-0.5"
-            title="Reset Zoom"
-            aria-label="Reset Zoom"
+            className="p-1.5 text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg transition-colors shadow-2xs ml-0.5 cursor-pointer"
+            title={t('resetZoom', 'Reset Zoom')}
+            aria-label={t('resetZoom', 'Reset Zoom')}
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
@@ -132,7 +134,7 @@ export const ProductImageViewer = ({
             /* Uploaded Image from Scanner / Processing */
             <img
               src={imageSrc}
-              alt="Scanned Packaged Commodity"
+              alt={t('scannedCommodityEvidence', 'Scanned Packaged Commodity')}
               className="max-h-[420px] w-auto max-w-full object-contain rounded-md shadow-lg"
             />
           ) : (
@@ -164,7 +166,7 @@ export const ProductImageViewer = ({
               <div className="grid grid-cols-2 gap-2 text-center text-xs">
                 <div className="p-2 bg-amber-100/60 rounded-md border border-amber-200">
                   <span className="text-[9px] uppercase font-bold text-slate-500 block">
-                    Net Quantity
+                    {t('netQuantity', 'Net Quantity')}
                   </span>
                   <strong className="text-sm font-black text-slate-900 font-mono">
                     5 kg
@@ -181,32 +183,20 @@ export const ProductImageViewer = ({
                 </div>
               </div>
 
-              {/* MRP & Batch Row */}
-              <div className="grid grid-cols-2 gap-2 text-center text-xs">
-                <div className="p-2 bg-slate-50 rounded-md border border-slate-200">
+              {/* MRP & Consumer Care */}
+              <div className="p-2.5 bg-amber-100/30 rounded-md border border-amber-200/80 flex items-center justify-between text-xs">
+                <div>
                   <span className="text-[9px] uppercase font-bold text-slate-500 block">
-                    Maximum Retail Price
+                    {t('maximumRetailPrice', 'MRP (incl. of all taxes)')}
                   </span>
-                  <strong className="text-xs font-black text-slate-900 font-mono">
+                  <strong className="text-base font-black text-slate-900 font-mono">
                     ₹520.00
                   </strong>
-                  <span className="text-[8px] text-slate-400 block">(Taxes?)</span>
                 </div>
-
-                <div className="p-2 bg-slate-50 rounded-md border border-slate-200">
-                  <span className="text-[9px] uppercase font-bold text-slate-500 block">
-                    Batch / Lot No.
-                  </span>
-                  <strong className="text-xs font-bold text-slate-800 font-mono">
-                    AR52026
-                  </strong>
+                <div className="text-right text-[10px] text-slate-600">
+                  <p className="font-bold text-slate-700">Consumer Care:</p>
+                  <p>care@abcfoods.in</p>
                 </div>
-              </div>
-
-              {/* Consumer Care Footnote */}
-              <div className="p-2 bg-rose-50/70 border border-rose-200 rounded text-[9px] text-slate-600">
-                <span className="font-bold text-slate-800">Consumer Care: </span>
-                <span>Toll-Free 1800-XXX-XXXX | care@ [unreadable]</span>
               </div>
             </div>
           )}
@@ -243,20 +233,20 @@ export const ProductImageViewer = ({
       {/* Footer Info & Legend */}
       <div className="px-4 py-3 bg-slate-50 border-t border-slate-200 text-xs text-slate-600 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3 text-[11px]">
-          <span className="font-semibold text-slate-700">Region Legend:</span>
+          <span className="font-semibold text-slate-700">{t('regionLegend', 'Region Legend')}:</span>
           <span className="inline-flex items-center gap-1 text-emerald-700">
-            <span className="w-2 h-2 rounded-xs bg-emerald-500"></span> Compliant
+            <span className="w-2 h-2 rounded-xs bg-emerald-500"></span> {t('compliant', 'Compliant')}
           </span>
           <span className="inline-flex items-center gap-1 text-amber-700">
-            <span className="w-2 h-2 rounded-xs bg-amber-500"></span> Needs Review
+            <span className="w-2 h-2 rounded-xs bg-amber-500"></span> {t('needsReview', 'Needs Review')}
           </span>
           <span className="inline-flex items-center gap-1 text-rose-700">
-            <span className="w-2 h-2 rounded-xs bg-rose-500"></span> Non-Compliant
+            <span className="w-2 h-2 rounded-xs bg-rose-500"></span> {t('nonCompliant', 'Non-Compliant')}
           </span>
         </div>
 
         <p className="text-[10px] text-slate-400">
-          Click any highlighted box to inspect evidence snippet.
+          {t('clickHighlightedBoxMsg', 'Click any highlighted box to inspect evidence snippet.')}
         </p>
       </div>
     </div>

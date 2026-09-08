@@ -107,7 +107,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
         {/* Navigation List */}
         <div className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-            Core Modules
+            {t('coreModules', 'Core Modules')}
           </div>
 
           {navItems.map((item) => {
@@ -158,8 +158,8 @@ export const Sidebar = ({ isOpen, onClose }) => {
                 {user.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-bold text-white truncate">{user.role}</p>
-                <p className="text-[11px] text-slate-400 truncate">{user.designation}</p>
+                <p className="text-xs font-bold text-white truncate">{t('officer', user.role)}</p>
+                <p className="text-[11px] text-slate-400 truncate">{t('enforcementOfficial', user.designation)}</p>
               </div>
             </div>
 

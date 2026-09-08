@@ -1,5 +1,6 @@
 import React from 'react';
 import { CheckCircle2, Loader2, Circle } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const ProcessingStep = ({
   stepNumber,
@@ -8,6 +9,7 @@ export const ProcessingStep = ({
   status = 'PENDING', // 'COMPLETED' | 'ACTIVE' | 'PENDING'
   isLast = false,
 }) => {
+  const { t } = useLanguage();
   const isCompleted = status === 'COMPLETED';
   const isActive = status === 'ACTIVE';
   const isPending = status === 'PENDING';
@@ -59,18 +61,18 @@ export const ProcessingStep = ({
           {/* Status Badge */}
           {isCompleted && (
             <span className="text-[10px] uppercase font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80 shrink-0">
-              Completed
+              {t('completed', 'Completed')}
             </span>
           )}
           {isActive && (
             <span className="text-[10px] uppercase font-bold text-cyan-700 bg-cyan-50 px-2 py-0.5 rounded-full border border-cyan-200 shrink-0 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-600 animate-pulse"></span>
-              Active
+              {t('active', 'Active')}
             </span>
           )}
           {isPending && (
             <span className="text-[10px] uppercase font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200 shrink-0">
-              Pending
+              {t('pending', 'Pending')}
             </span>
           )}
         </div>

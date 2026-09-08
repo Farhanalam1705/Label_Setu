@@ -1,35 +1,29 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import { ProcessingStep } from './ProcessingStep';
 
 export const ProcessingStepper = ({ progress = 0 }) => {
-  // Determine step status and dynamic descriptions according to progress thresholds:
-  // 0–15%: Image Preprocessing
-  // 15–30%: Label Region Detection
-  // 30–50%: Text & Region Detection
-  // 50–65%: Information Extraction
-  // 65–85%: Rule Validation
-  // 85–100%: Compliance Assessment
-  // 100%: All completed
+  const { t } = useLanguage();
 
   const getStepData = () => {
     return [
       {
         id: 1,
-        title: 'Image Preprocessing',
+        title: t('imagePreprocessing', 'Image Preprocessing'),
         status:
           progress >= 15
             ? 'COMPLETED'
             : progress > 0
             ? 'ACTIVE'
-            : 'ACTIVE', // Active at start 0%
+            : 'ACTIVE',
         description:
           progress >= 15
-            ? 'Image preprocessing complete'
-            : 'Image prepared for analysis',
+            ? t('imagePreprocessingComplete', 'Image preprocessing complete')
+            : t('imagePreparedForAnalysis', 'Image prepared for analysis'),
       },
       {
         id: 2,
-        title: 'Label Region Detection',
+        title: t('labelRegionDetection', 'Label Region Detection'),
         status:
           progress >= 30
             ? 'COMPLETED'
@@ -38,14 +32,14 @@ export const ProcessingStepper = ({ progress = 0 }) => {
             : 'PENDING',
         description:
           progress >= 30
-            ? 'Label regions processed'
+            ? t('labelRegionsProcessed', 'Label regions processed')
             : progress >= 15
-            ? 'Relevant label regions identified'
-            : 'Waiting',
+            ? t('labelRegionsIdentified', 'Relevant label regions identified')
+            : t('waiting', 'Waiting'),
       },
       {
         id: 3,
-        title: 'Text & Region Detection',
+        title: t('textRegionDetection', 'Text & Region Detection'),
         status:
           progress >= 50
             ? 'COMPLETED'
@@ -54,14 +48,14 @@ export const ProcessingStepper = ({ progress = 0 }) => {
             : 'PENDING',
         description:
           progress >= 50
-            ? 'Text processing complete'
+            ? t('textProcessingComplete', 'Text processing complete')
             : progress >= 30
-            ? 'Processing...'
-            : 'Waiting',
+            ? t('processingEllipsis', 'Processing...')
+            : t('waiting', 'Waiting'),
       },
       {
         id: 4,
-        title: 'Information Extraction',
+        title: t('informationExtraction', 'Information Extraction'),
         status:
           progress >= 65
             ? 'COMPLETED'
@@ -70,14 +64,14 @@ export const ProcessingStepper = ({ progress = 0 }) => {
             : 'PENDING',
         description:
           progress >= 65
-            ? 'Declaration extraction stage complete'
+            ? t('declarationExtractionComplete', 'Declaration extraction stage complete')
             : progress >= 50
-            ? 'Identifying product declarations...'
-            : 'Waiting',
+            ? t('identifyingProductDeclarations', 'Identifying product declarations...')
+            : t('waiting', 'Waiting'),
       },
       {
         id: 5,
-        title: 'Compliance Validation',
+        title: t('complianceValidation', 'Compliance Validation'),
         status:
           progress >= 85
             ? 'COMPLETED'
@@ -86,14 +80,14 @@ export const ProcessingStepper = ({ progress = 0 }) => {
             : 'PENDING',
         description:
           progress >= 85
-            ? 'Validation stage complete'
+            ? t('validationStageComplete', 'Validation stage complete')
             : progress >= 65
-            ? 'Preparing validation...'
-            : 'Waiting',
+            ? t('preparingValidation', 'Preparing validation...')
+            : t('waiting', 'Waiting'),
       },
       {
         id: 6,
-        title: 'Compliance Assessment',
+        title: t('complianceAssessment', 'Compliance Assessment'),
         status:
           progress >= 100
             ? 'COMPLETED'
@@ -102,10 +96,10 @@ export const ProcessingStepper = ({ progress = 0 }) => {
             : 'PENDING',
         description:
           progress >= 100
-            ? 'Compliance assessment stage complete'
+            ? t('complianceAssessmentComplete', 'Compliance assessment stage complete')
             : progress >= 85
-            ? 'Finalizing analysis...'
-            : 'Waiting',
+            ? t('finalizingAnalysis', 'Finalizing analysis...')
+            : t('waiting', 'Waiting'),
       },
     ];
   };
@@ -117,14 +111,14 @@ export const ProcessingStepper = ({ progress = 0 }) => {
       <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
         <div>
           <h3 className="text-sm font-bold text-slate-900 tracking-tight">
-            Inspection Protocol Stages
+            {t('inspectionProtocolStages', 'Inspection Protocol Stages')}
           </h3>
           <p className="text-xs text-slate-500">
-            Packaged Commodities Verification Pipeline
+            {t('packagedCommoditiesPipeline', 'Packaged Commodities Verification Pipeline')}
           </p>
         </div>
         <span className="text-xs font-mono font-bold text-cyan-800 bg-cyan-50 px-2.5 py-1 rounded-md border border-cyan-200/70">
-          Stage {steps.filter((s) => s.status === 'COMPLETED').length + (progress >= 100 ? 0 : 1)} of 6
+          {t('stage', 'Stage')} {steps.filter((s) => s.status === 'COMPLETED').length + (progress >= 100 ? 0 : 1)} {t('of', 'of')} 6
         </span>
       </div>
 

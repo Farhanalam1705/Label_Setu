@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { MOCK_INSPECTION_DATA } from '../data/mockResultsData';
 import { REVIEW_STORAGE_KEY } from '../data/mockReviewData';
+import { useLanguage } from '../context/LanguageContext';
 import { ResultsHeader } from '../components/results/ResultsHeader';
 import { ComplianceSummary } from '../components/results/ComplianceSummary';
 import { ProductImageViewer } from '../components/results/ProductImageViewer';
@@ -21,6 +22,7 @@ import { useToast } from '../components/common/Toast';
 export const Results = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const { addToast } = useToast();
 
   // Retrieve image from React Router state or sessionStorage fallback
@@ -132,7 +134,7 @@ export const Results = () => {
           <div className="p-4 bg-white rounded-2xl border border-slate-200/90 shadow-xs text-xs space-y-2.5">
             <div className="flex items-center justify-between border-b border-slate-100 pb-2">
               <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
-                Product Profile
+                {t('productProfile', 'Product Profile')}
               </span>
               <span className="font-mono text-cyan-800 bg-cyan-50 px-2 py-0.5 rounded font-bold text-[10px]">
                 {MOCK_INSPECTION_DATA.product.category}
@@ -141,19 +143,19 @@ export const Results = () => {
 
             <div className="grid grid-cols-2 gap-2 text-slate-700">
               <div>
-                <span className="text-slate-400 text-[10px] block">Brand Name</span>
+                <span className="text-slate-400 text-[10px] block">{t('brandName', 'Brand Name')}</span>
                 <strong className="text-slate-900">{MOCK_INSPECTION_DATA.product.name}</strong>
               </div>
               <div>
-                <span className="text-slate-400 text-[10px] block">Net Quantity</span>
+                <span className="text-slate-400 text-[10px] block">{t('netQuantity', 'Net Quantity')}</span>
                 <strong className="text-slate-900 font-mono">{MOCK_INSPECTION_DATA.product.netQuantity}</strong>
               </div>
               <div>
-                <span className="text-slate-400 text-[10px] block">Maximum Retail Price</span>
+                <span className="text-slate-400 text-[10px] block">{t('maximumRetailPrice', 'Maximum Retail Price')}</span>
                 <strong className="text-slate-900 font-mono">{MOCK_INSPECTION_DATA.product.mrp}</strong>
               </div>
               <div>
-                <span className="text-slate-400 text-[10px] block">Batch Number</span>
+                <span className="text-slate-400 text-[10px] block">{t('batchNumber', 'Batch Number')}</span>
                 <strong className="text-slate-900 font-mono">{MOCK_INSPECTION_DATA.product.batchNo}</strong>
               </div>
             </div>
@@ -168,11 +170,11 @@ export const Results = () => {
               <div className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-amber-600" />
                 <h3 className="text-sm font-bold text-slate-900 tracking-tight">
-                  Potential Violations
+                  {t('potentialViolations', 'Potential Violations')}
                 </h3>
               </div>
               <span className="text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-                {MOCK_INSPECTION_DATA.potentialViolations.length} Items Flagged
+                {MOCK_INSPECTION_DATA.potentialViolations.length} {t('itemsFlagged', 'Items Flagged')}
               </span>
             </div>
 
@@ -220,9 +222,9 @@ export const Results = () => {
       <div className="sticky bottom-4 z-20 bg-white/95 backdrop-blur-md rounded-2xl border border-slate-300/80 p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="flex items-center gap-2 text-xs text-slate-500">
           <Shield className="w-4 h-4 text-cyan-600" />
-          <span>Session: <strong className="text-slate-800 font-mono">{MOCK_INSPECTION_DATA.inspectionId}</strong></span>
+          <span>{t('session', 'Session')}: <strong className="text-slate-800 font-mono">{MOCK_INSPECTION_DATA.inspectionId}</strong></span>
           <span className="text-slate-300">|</span>
-          <span>Status: <strong className={savedOfficerReview ? "text-emerald-700" : "text-amber-700"}>{savedOfficerReview ? "Reviewed" : "Needs Review"}</strong></span>
+          <span>{t('status', 'Status')}: <strong className={savedOfficerReview ? "text-emerald-700" : "text-amber-700"}>{savedOfficerReview ? t('reviewed', 'Reviewed') : t('needsReview', 'Needs Review')}</strong></span>
         </div>
 
         {/* Action Buttons: [ Back to Scanner ] [ Review Findings ] [ Generate Report ] */}
@@ -233,7 +235,7 @@ export const Results = () => {
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 border border-slate-300 rounded-xl transition-colors shadow-2xs cursor-pointer active:scale-98"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Scanner</span>
+            <span>{t('backToScanner', 'Back to Scanner')}</span>
           </button>
 
           <button
@@ -241,7 +243,7 @@ export const Results = () => {
             onClick={() => navigate(`/review/${MOCK_INSPECTION_DATA.inspectionId}`)}
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-800 hover:text-slate-950 bg-slate-100 hover:bg-slate-200/80 border border-slate-300 rounded-xl transition-colors shadow-2xs cursor-pointer active:scale-98"
           >
-            <span>Review Findings</span>
+            <span>{t('reviewFindings', 'Review Findings')}</span>
           </button>
 
           <button
@@ -250,7 +252,7 @@ export const Results = () => {
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-[#0c1e33] hover:bg-slate-800 rounded-xl transition-all shadow-xs hover:shadow-md cursor-pointer active:scale-98"
           >
             <Download className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Generate Report</span>
+            <span>{t('generateReport', 'Generate Report')}</span>
           </button>
         </div>
       </div>

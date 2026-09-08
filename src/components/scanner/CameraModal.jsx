@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Camera, X, RefreshCw, AlertCircle, Sparkles } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const CameraModal = ({ isOpen, onClose, onCapture }) => {
+  const { t } = useLanguage();
   const [stream, setStream] = useState(null);
   const [cameraError, setCameraError] = useState(null);
   const [facingMode, setFacingMode] = useState('environment'); // default to back camera
@@ -105,8 +107,8 @@ export const CameraModal = ({ isOpen, onClose, onCapture }) => {
               <Camera className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold">Capture Product Label</h3>
-              <p className="text-[11px] text-slate-400">Position the commodity label within the alignment frame</p>
+              <h3 className="text-sm font-bold">{t('captureProductLabel', 'Capture Product Label')}</h3>
+              <p className="text-[11px] text-slate-400">{t('alignLabelFrame', 'Position the commodity label within the alignment frame')}</p>
             </div>
           </div>
 
@@ -115,7 +117,7 @@ export const CameraModal = ({ isOpen, onClose, onCapture }) => {
               stopCamera();
               onClose();
             }}
-            className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
+            className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -130,7 +132,7 @@ export const CameraModal = ({ isOpen, onClose, onCapture }) => {
               <p className="text-xs text-slate-400 mb-4">{cameraError}</p>
               <button
                 onClick={startCamera}
-                className="px-4 py-2 text-xs font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg transition-colors"
+                className="px-4 py-2 text-xs font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg transition-colors cursor-pointer"
               >
                 Retry Access
               </button>
@@ -155,7 +157,7 @@ export const CameraModal = ({ isOpen, onClose, onCapture }) => {
 
                 <div className="text-center">
                   <span className="text-[11px] font-medium bg-slate-900/80 text-cyan-300 px-3 py-1 rounded-full border border-cyan-500/30 backdrop-blur-xs">
-                    Align MRP, Net Quantity & Manufacturer Label
+                    {t('alignMrpNetQty', 'Align MRP, Net Quantity & Manufacturer Label')}
                   </span>
                 </div>
 
@@ -173,19 +175,19 @@ export const CameraModal = ({ isOpen, onClose, onCapture }) => {
           <button
             onClick={toggleFacingMode}
             disabled={Boolean(cameraError)}
-            className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-lg transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-lg transition-colors disabled:opacity-50 cursor-pointer"
           >
             <RefreshCw className="w-3.5 h-3.5" />
-            <span>Switch Camera</span>
+            <span>{t('switchCamera', 'Switch Camera')}</span>
           </button>
 
           <button
             onClick={takeSnapshot}
             disabled={Boolean(cameraError) || isCapturing}
-            className="flex items-center gap-2 px-6 py-2.5 text-xs font-bold text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 rounded-xl shadow-lg shadow-cyan-900/40 transition-all active:scale-95 disabled:opacity-50"
+            className="flex items-center gap-2 px-6 py-2.5 text-xs font-bold text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 rounded-xl shadow-lg shadow-cyan-900/40 transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
           >
             <Camera className="w-4 h-4" />
-            <span>{isCapturing ? 'Capturing...' : 'Capture Image'}</span>
+            <span>{isCapturing ? t('capturing', 'Capturing...') : t('captureImage', 'Capture Image')}</span>
           </button>
 
           <button
@@ -193,9 +195,9 @@ export const CameraModal = ({ isOpen, onClose, onCapture }) => {
               stopCamera();
               onClose();
             }}
-            className="px-4 py-2 text-xs font-medium text-slate-400 hover:text-white transition-colors"
+            className="px-4 py-2 text-xs font-medium text-slate-400 hover:text-white transition-colors cursor-pointer"
           >
-            Cancel
+            {t('cancel', 'Cancel')}
           </button>
         </div>
       </div>
