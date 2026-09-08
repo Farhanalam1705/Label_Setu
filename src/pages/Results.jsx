@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
@@ -8,7 +8,11 @@ import {
 } from 'lucide-react';
 import { MOCK_INSPECTION_DATA } from '../data/mockResultsData';
 import { REVIEW_STORAGE_KEY } from '../data/mockReviewData';
+<<<<<<< Updated upstream
 import { useLanguage } from '../context/LanguageContext';
+=======
+import { saveInspectionToHistory } from '../data/mockHistoryData';
+>>>>>>> Stashed changes
 import { ResultsHeader } from '../components/results/ResultsHeader';
 import { ComplianceSummary } from '../components/results/ComplianceSummary';
 import { ProductImageViewer } from '../components/results/ProductImageViewer';
@@ -54,6 +58,27 @@ export const Results = () => {
   });
   const [activeRegionId, setActiveRegionId] = useState(null);
 
+  // Automatically save inspection to history when viewing results
+  useEffect(() => {
+    const historyRecord = {
+      inspectionId: MOCK_INSPECTION_DATA.inspectionId || 'LM-2026-00129',
+      productName: MOCK_INSPECTION_DATA.product?.name || 'ABC Premium Rice',
+      category: 'Food Grains & Pulses',
+      categoryGroup: 'Food Grains & Pulses',
+      manufacturer: MOCK_INSPECTION_DATA.product?.manufacturer || 'ABC Foods Pvt. Ltd.',
+      netQuantity: MOCK_INSPECTION_DATA.product?.netQuantity || '5 kg',
+      mrp: MOCK_INSPECTION_DATA.product?.mrp || '₹520',
+      date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+      rawDate: new Date().toISOString().split('T')[0],
+      officer: MOCK_INSPECTION_DATA.inspector?.name || 'Officer',
+      complianceScore: MOCK_INSPECTION_DATA.overall?.score || 82,
+      status: savedOfficerReview ? (savedOfficerReview.decision === 'VIOLATION' ? 'NON-COMPLIANT' : 'COMPLIANT') : (MOCK_INSPECTION_DATA.overall?.status || 'NEEDS REVIEW'),
+      hasReport: true,
+      hasEvidence: true,
+    };
+    saveInspectionToHistory(historyRecord);
+  }, [savedOfficerReview]);
+
   // Handlers
   const handleOpenEvidence = (item) => {
     setSelectedEvidence(item);
@@ -88,6 +113,23 @@ export const Results = () => {
 
   const handleSaveReview = (reviewData) => {
     setSavedOfficerReview(reviewData);
+    const historyRecord = {
+      inspectionId: MOCK_INSPECTION_DATA.inspectionId || 'LM-2026-00129',
+      productName: MOCK_INSPECTION_DATA.product?.name || 'ABC Premium Rice',
+      category: 'Food Grains & Pulses',
+      categoryGroup: 'Food Grains & Pulses',
+      manufacturer: MOCK_INSPECTION_DATA.product?.manufacturer || 'ABC Foods Pvt. Ltd.',
+      netQuantity: MOCK_INSPECTION_DATA.product?.netQuantity || '5 kg',
+      mrp: MOCK_INSPECTION_DATA.product?.mrp || '₹520',
+      date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+      rawDate: new Date().toISOString().split('T')[0],
+      officer: MOCK_INSPECTION_DATA.inspector?.name || 'Officer',
+      complianceScore: MOCK_INSPECTION_DATA.overall?.score || 82,
+      status: reviewData.decision === 'VIOLATION' ? 'NON-COMPLIANT' : 'COMPLIANT',
+      hasReport: true,
+      hasEvidence: true,
+    };
+    saveInspectionToHistory(historyRecord);
     addToast({
       title: 'Officer Review Logged',
       message: `Assessment marked as "${reviewData.decision}" by officer.`,

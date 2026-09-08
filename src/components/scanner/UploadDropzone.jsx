@@ -136,7 +136,7 @@ export const UploadDropzone = ({ onFileSelected, onOpenCamera }) => {
         </div>
       ) : (
         <>
-          {/* Dual Action Cards (Equal weight as requested in Stage 3) */}
+          {/* Dual Action Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* 1. Camera Capture Card */}
             <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 flex flex-col items-center text-center justify-between shadow-xs hover:shadow-md hover:border-slate-300 transition-all duration-200 group">
@@ -222,3 +222,4 @@ export const UploadDropzone = ({ onFileSelected, onOpenCamera }) => {
     </div>
   );
 };
+

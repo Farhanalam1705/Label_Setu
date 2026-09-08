@@ -8,16 +8,17 @@ import {
   Eye, 
   Scale, 
   FileSpreadsheet, 
-  Download,
-  AlertCircle,
-  Calendar,
-  CheckCircle2,
-  PieChart as PieChartIcon
+  Download, 
+  AlertCircle, 
+  Calendar, 
+  CheckCircle2, 
+  PieChart as PieChartIcon 
 } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { StatCard } from '../components/common/StatCard';
 import { StatusBadge } from '../components/results/StatusBadge';
 import { useToast } from '../components/common/Toast';
+import { useLanguage } from '../context/LanguageContext';
 import { STATS_DATA, COMPLIANCE_CHART_DATA, RECENT_INSPECTIONS } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -36,6 +37,23 @@ export const Dashboard = () => {
   // Handle "View" Inspection
   const handleViewInspection = (inspection) => {
     navigate(`/history/${inspection.id}`);
+  };
+
+  // Stat translations helper
+  const getStatTitle = (id, fallback) => {
+    if (id === 'total') return t('totalInspectionsDash', fallback);
+    if (id === 'compliant') return t('compliantProducts', fallback);
+    if (id === 'violations') return t('violations', fallback);
+    if (id === 'review') return t('needsReview', fallback);
+    return fallback;
+  };
+
+  const getStatDescription = (id, fallback) => {
+    if (id === 'total') return t('packComEval', fallback);
+    if (id === 'compliant') return t('satisfiesMandate', fallback);
+    if (id === 'violations') return t('nonCompliantDetected', fallback);
+    if (id === 'review') return t('requiresConfirmation', fallback);
+    return fallback;
   };
 
   // Filter inspections
@@ -116,6 +134,7 @@ export const Dashboard = () => {
 
       {/* Statistics Cards (4 Cards with subtle stagger) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500">
+<<<<<<< Updated upstream
         {STATS_DATA.map((stat) => {
           const trans = getTranslatedStat(stat);
           return (
@@ -132,6 +151,21 @@ export const Dashboard = () => {
             />
           );
         })}
+=======
+        {STATS_DATA.map((stat) => (
+          <StatCard
+            key={stat.id}
+            title={getStatTitle(stat.id, stat.title)}
+            value={stat.value}
+            percentage={stat.percentage}
+            change={stat.change}
+            trend={stat.trend}
+            color={stat.color}
+            icon={stat.icon}
+            description={getStatDescription(stat.id, stat.description)}
+          />
+        ))}
+>>>>>>> Stashed changes
       </div>
 
       {/* Middle Section: Compliance Overview Chart & Quick Summary */}
@@ -198,7 +232,17 @@ export const Dashboard = () => {
               <div key={item.name} className="flex items-center justify-between text-xs hover:bg-slate-50 p-1 rounded-md transition-colors">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full transition-transform hover:scale-125" style={{ backgroundColor: item.color }}></span>
+<<<<<<< Updated upstream
                   <span className="text-slate-600 font-medium">{getTranslatedChartItemName(item.name)}</span>
+=======
+                  <span className="text-slate-600 font-medium">
+                    {item.name === 'Compliant'
+                      ? t('statusCompliant', 'Compliant')
+                      : item.name === 'Non-Compliant'
+                      ? t('statusNonCompliant', 'Non-Compliant')
+                      : t('statusNeedsReview', 'Needs Review')}
+                  </span>
+>>>>>>> Stashed changes
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-slate-800">{item.value}%</span>
@@ -351,9 +395,15 @@ export const Dashboard = () => {
               className="px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-hidden focus:ring-2 focus:ring-cyan-600 font-medium text-slate-700 transition-colors"
             >
               <option value="All">{t('allStatuses', 'All Statuses')}</option>
+<<<<<<< Updated upstream
               <option value="Compliant">{t('compliant', 'Compliant')}</option>
               <option value="Violation">{t('violations', 'Violation')}</option>
               <option value="Needs Review">{t('needsReview', 'Needs Review')}</option>
+=======
+              <option value="Compliant">{t('statusCompliant', 'Compliant')}</option>
+              <option value="Violation">{t('violations', 'Violation')}</option>
+              <option value="Needs Review">{t('statusNeedsReview', 'Needs Review')}</option>
+>>>>>>> Stashed changes
             </select>
           </div>
         </div>
