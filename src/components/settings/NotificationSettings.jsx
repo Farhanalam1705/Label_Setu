@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Bell, Save } from 'lucide-react';
 import { Toggle } from './Toggle';
 import { useToast } from '../common/Toast';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const NotificationSettings = ({ notifications, onSaveNotifications }) => {
   const { addToast } = useToast();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({ ...notifications });
 
   const handleToggle = (key, val) => {
@@ -15,8 +17,8 @@ export const NotificationSettings = ({ notifications, onSaveNotifications }) => 
     e.preventDefault();
     onSaveNotifications(formData);
     addToast({
-      title: 'Notifications Saved',
-      message: 'Notification settings saved.',
+      title: t('notificationsSaved', 'Notifications Saved'),
+      message: t('notificationsSavedDesc', 'Notification settings saved.'),
       type: 'success',
     });
   };
@@ -26,11 +28,11 @@ export const NotificationSettings = ({ notifications, onSaveNotifications }) => 
       <div className="flex items-center justify-between pb-4 border-b border-slate-100">
         <div className="flex items-center gap-2.5">
           <div className="p-2 bg-slate-100 text-slate-700 rounded-lg">
-            <Bell className="w-4 h-4" />
+            <Bell className="w-4 h-4 text-cyan-600" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-slate-900">Notification Settings</h3>
-            <p className="text-xs text-slate-500">Configure alert preferences for inspection milestones and enforcement actions.</p>
+            <h3 className="text-sm font-bold text-slate-900">{t('notificationTitle', 'Notification Settings')}</h3>
+            <p className="text-xs text-slate-500">{t('notificationSubtitle', 'Configure alert preferences for inspection milestones and enforcement actions.')}</p>
           </div>
         </div>
       </div>
@@ -39,40 +41,40 @@ export const NotificationSettings = ({ notifications, onSaveNotifications }) => 
         <div className="space-y-3">
           <Toggle
             id="inspectionCompleted"
-            label="Inspection completed"
-            description="Send an alert when an AI image analysis scan and classification finishes."
+            label={t('notifInspectionCompleted', 'Inspection completed')}
+            description={t('notifInspectionCompletedDesc', 'Send an alert when an AI image analysis scan and classification finishes.')}
             checked={formData.inspectionCompleted}
             onChange={(val) => handleToggle('inspectionCompleted', val)}
           />
 
           <Toggle
             id="officerReviewRequired"
-            label="Officer review required"
-            description="Notify when an inspection contains non-compliant or unverified findings needing review."
+            label={t('notifOfficerReviewRequired', 'Officer review required')}
+            description={t('notifOfficerReviewRequiredDesc', 'Notify when an inspection contains non-compliant or unverified findings needing review.')}
             checked={formData.officerReviewRequired}
             onChange={(val) => handleToggle('officerReviewRequired', val)}
           />
 
           <Toggle
             id="reportGenerated"
-            label="Report generated"
-            description="Send notification confirmation when an official PDF inspection report is finalized."
+            label={t('notifReportGenerated', 'Report generated')}
+            description={t('notifReportGeneratedDesc', 'Send notification confirmation when an official PDF inspection report is finalized.')}
             checked={formData.reportGenerated}
             onChange={(val) => handleToggle('reportGenerated', val)}
           />
 
           <Toggle
             id="violationDetected"
-            label="Potential violation detected"
-            description="High-priority statutory alerts when high-confidence non-compliance is identified."
+            label={t('notifViolationDetected', 'Potential violation detected')}
+            description={t('notifViolationDetectedDesc', 'High-priority statutory alerts when high-confidence non-compliance is identified.')}
             checked={formData.violationDetected}
             onChange={(val) => handleToggle('violationDetected', val)}
           />
 
           <Toggle
             id="systemUpdates"
-            label="System updates"
-            description="Receive notices regarding regulatory rule updates and portal maintenance."
+            label={t('notifSystemUpdates', 'System updates')}
+            description={t('notifSystemUpdatesDesc', 'Receive notices regarding regulatory rule updates and portal maintenance.')}
             checked={formData.systemUpdates}
             onChange={(val) => handleToggle('systemUpdates', val)}
           />
@@ -84,7 +86,7 @@ export const NotificationSettings = ({ notifications, onSaveNotifications }) => 
             className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-[#0c1e33] hover:bg-slate-800 rounded-xl transition-all shadow-xs cursor-pointer"
           >
             <Save className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Save Notification Settings</span>
+            <span>{t('saveNotifications', 'Save Notification Settings')}</span>
           </button>
         </div>
       </form>

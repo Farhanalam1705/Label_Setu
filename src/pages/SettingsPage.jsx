@@ -10,11 +10,16 @@ import { SecuritySettings } from '../components/settings/SecuritySettings';
 import { AboutSettings } from '../components/settings/AboutSettings';
 import { ResetSettingsModal } from '../components/settings/ResetSettingsModal';
 import { useToast } from '../components/common/Toast';
+import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 
 export const SettingsPage = () => {
   const { addToast } = useToast();
+  const { t, setLanguage } = useLanguage();
+  const { setTheme, setDensity } = useTheme();
+
   const [settings, setSettings] = useState(() => getSettings());
-  const [activeTab, setActiveTab] = useState('profile');
+  const [activeTab, setActiveTab] = useState('appearance');
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
   const handleSaveProfile = (newProfile) => {
@@ -44,9 +49,12 @@ export const SettingsPage = () => {
   const handleConfirmReset = () => {
     const defaults = resetSettings();
     setSettings(defaults);
+    setTheme('light');
+    setDensity('comfortable');
+    setLanguage('en');
     addToast({
-      title: 'Preferences Reset',
-      message: 'Preferences restored to defaults.',
+      title: t('preferencesSaved', 'Preferences Reset'),
+      message: t('resetPreferencesModalDesc', 'Preferences restored to defaults.'),
       type: 'info',
     });
   };
@@ -58,15 +66,15 @@ export const SettingsPage = () => {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-800 bg-cyan-50 px-2 py-0.5 rounded border border-cyan-200">
-              System Configuration
+              {t('systemConfig', 'System Configuration')}
             </span>
           </div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
             <SettingsIcon className="w-6 h-6 text-cyan-600" />
-            Settings
+            {t('settings', 'Settings')}
           </h1>
           <p className="text-xs text-slate-500 mt-1">
-            Manage your account, application preferences, and inspection settings.
+            {t('settingsSubtitle', 'Manage your account, application preferences, and inspection settings.')}
           </p>
         </div>
 
@@ -78,7 +86,7 @@ export const SettingsPage = () => {
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-amber-700 bg-white hover:bg-amber-50 border border-slate-200 rounded-xl transition-colors cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset Preferences</span>
+            <span>{t('resetPreferences', 'Reset Preferences')}</span>
           </button>
         </div>
       </div>

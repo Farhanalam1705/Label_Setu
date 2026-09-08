@@ -1,7 +1,10 @@
 import React from 'react';
 import { AlertTriangle, X, RotateCcw } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const ResetSettingsModal = ({ isOpen, onClose, onConfirm }) => {
+  const { t } = useLanguage();
+
   if (!isOpen) return null;
 
   return (
@@ -13,9 +16,9 @@ export const ResetSettingsModal = ({ isOpen, onClose, onConfirm }) => {
           </div>
 
           <div className="space-y-1">
-            <h3 className="text-base font-bold text-slate-900">Reset Preferences?</h3>
+            <h3 className="text-base font-bold text-slate-900">{t('resetPreferencesModalTitle', 'Reset Preferences?')}</h3>
             <p className="text-xs text-slate-500 leading-relaxed">
-              This will restore your application preferences to their default values. Inspection history and logged reviews will remain unaffected.
+              {t('resetPreferencesModalDesc', 'This will restore your application preferences to their default values. Inspection history and logged reviews will remain unaffected.')}
             </p>
           </div>
 
@@ -25,7 +28,7 @@ export const ResetSettingsModal = ({ isOpen, onClose, onConfirm }) => {
               onClick={onClose}
               className="flex-1 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
             >
-              Cancel
+              {t('cancel', 'Cancel')}
             </button>
             <button
               type="button"
@@ -35,7 +38,7 @@ export const ResetSettingsModal = ({ isOpen, onClose, onConfirm }) => {
               }}
               className="flex-1 py-2 text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 rounded-xl transition-all shadow-xs cursor-pointer"
             >
-              Reset
+              {t('reset', 'Reset')}
             </button>
           </div>
         </div>

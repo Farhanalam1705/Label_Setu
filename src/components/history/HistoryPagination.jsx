@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const HistoryPagination = ({
   currentPage,
@@ -8,6 +9,8 @@ export const HistoryPagination = ({
   totalItems,
   pageSize = 10,
 }) => {
+  const { t } = useLanguage();
+
   if (totalPages <= 1) return null;
 
   const startIndex = (currentPage - 1) * pageSize + 1;
@@ -21,8 +24,11 @@ export const HistoryPagination = ({
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 bg-white rounded-2xl border border-slate-200/90 shadow-2xs">
       <div className="text-xs text-slate-500 font-medium">
-        Showing <span className="font-bold text-slate-900">{startIndex}–{endIndex}</span> of{' '}
-        <span className="font-bold text-slate-900">{totalItems}</span> inspections
+        {t('showing', 'Showing')}{' '}
+        <span className="font-bold text-slate-900">{startIndex}–{endIndex}</span>{' '}
+        {t('of', 'of')}{' '}
+        <span className="font-bold text-slate-900">{totalItems}</span>{' '}
+        {t('results', 'results')}
       </div>
 
       <div className="flex items-center gap-1.5">
@@ -33,7 +39,7 @@ export const HistoryPagination = ({
           className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed border border-slate-200 rounded-lg transition-colors cursor-pointer"
         >
           <ChevronLeft className="w-3.5 h-3.5" />
-          <span>Previous</span>
+          <span>{t('previous', 'Previous')}</span>
         </button>
 
         <div className="flex items-center gap-1">
@@ -59,7 +65,7 @@ export const HistoryPagination = ({
           disabled={currentPage === totalPages}
           className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed border border-slate-200 rounded-lg transition-colors cursor-pointer"
         >
-          <span>Next</span>
+          <span>{t('next', 'Next')}</span>
           <ChevronRight className="w-3.5 h-3.5" />
         </button>
       </div>

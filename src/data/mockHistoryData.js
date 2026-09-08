@@ -398,9 +398,9 @@ export const INITIAL_MOCK_INSPECTIONS = [
 export const getInspectionHistory = () => {
   try {
     const stored = localStorage.getItem(HISTORY_STORAGE_KEY);
-    if (stored) {
+    if (stored !== null) {
       const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed) && parsed.length > 0) {
+      if (Array.isArray(parsed)) {
         return parsed;
       }
     }
@@ -437,3 +437,48 @@ export const saveInspectionToHistory = (inspection) => {
     return getInspectionHistory();
   }
 };
+
+/**
+ * Deletes a single inspection from history by ID.
+ */
+export const deleteInspectionFromHistory = (inspectionId) => {
+  try {
+    const history = getInspectionHistory();
+    const updated = history.filter((item) => item.inspectionId !== inspectionId);
+    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updated));
+    return updated;
+  } catch (e) {
+    console.error('Failed to delete inspection from history', e);
+    return getInspectionHistory();
+  }
+};
+
+/**
+ * Deletes multiple inspections from history.
+ */
+export const deleteMultipleInspections = (inspectionIds = []) => {
+  try {
+    const history = getInspectionHistory();
+    const set = new Set(inspectionIds);
+    const updated = history.filter((item) => !set.has(item.inspectionId));
+    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updated));
+    return updated;
+  } catch (e) {
+    console.error('Failed to delete multiple inspections from history', e);
+    return getInspectionHistory();
+  }
+};
+
+/**
+ * Clears all inspection records from history.
+ */
+export const clearAllInspectionHistory = () => {
+  try {
+    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify([]));
+    return [];
+  } catch (e) {
+    console.error('Failed to clear inspection history', e);
+    return [];
+  }
+};
+

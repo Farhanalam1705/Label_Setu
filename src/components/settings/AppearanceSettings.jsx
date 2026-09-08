@@ -1,17 +1,43 @@
 import React, { useState } from 'react';
-import { Palette, Sun, Moon, Laptop, LayoutGrid, List, Globe, Save } from 'lucide-react';
+import { Palette, Sun, Moon, LayoutGrid, List, Globe, Save, Check } from 'lucide-react';
 import { useToast } from '../common/Toast';
+import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const AppearanceSettings = ({ appearance, onSaveAppearance }) => {
   const { addToast } = useToast();
-  const [formData, setFormData] = useState({ ...appearance });
+  const { theme, setTheme, density, setDensity } = useTheme();
+  const { language, setLanguage, t, languagesList } = useLanguage();
+
+  const [formData, setFormData] = useState({
+    theme: theme || appearance?.theme || 'light',
+    density: density || appearance?.density || 'comfortable',
+    language: language || 'en',
+  });
+
+  const handleThemeChange = (newTheme) => {
+    setFormData((prev) => ({ ...prev, theme: newTheme }));
+    setTheme(newTheme);
+  };
+
+  const handleDensityChange = (newDensity) => {
+    setFormData((prev) => ({ ...prev, density: newDensity }));
+    setDensity(newDensity);
+  };
+
+  const handleLanguageChange = (langCode) => {
+    setFormData((prev) => ({ ...prev, language: langCode }));
+    setLanguage(langCode);
+  };
 
   const handleSave = (e) => {
     e.preventDefault();
-    onSaveAppearance(formData);
+    if (onSaveAppearance) {
+      onSaveAppearance(formData);
+    }
     addToast({
-      title: 'Appearance Saved',
-      message: 'Appearance settings saved.',
+      title: t('appearanceSaved', 'Appearance Saved'),
+      message: t('appearanceSavedDesc', 'Appearance settings saved successfully.'),
       type: 'success',
     });
   };
@@ -21,11 +47,11 @@ export const AppearanceSettings = ({ appearance, onSaveAppearance }) => {
       <div className="flex items-center justify-between pb-4 border-b border-slate-100">
         <div className="flex items-center gap-2.5">
           <div className="p-2 bg-slate-100 text-slate-700 rounded-lg">
-            <Palette className="w-4 h-4" />
+            <Palette className="w-4 h-4 text-cyan-600" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-slate-900">Appearance</h3>
-            <p className="text-xs text-slate-500">Customize interface theme, display density, and language settings.</p>
+            <h3 className="text-sm font-bold text-slate-900">{t('appearanceTitle', 'Appearance')}</h3>
+            <p className="text-xs text-slate-500">{t('appearanceSubtitle', 'Customize interface theme, display density, and language settings.')}</p>
           </div>
         </div>
       </div>
@@ -34,32 +60,35 @@ export const AppearanceSettings = ({ appearance, onSaveAppearance }) => {
         {/* Theme Selection */}
         <div className="space-y-2.5">
           <label className="text-xs font-bold text-slate-900 block">
-            Interface Theme
+            {t('interfaceTheme', 'Interface Theme')}
           </label>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             {[
-              { id: 'light', label: 'Light', icon: Sun, desc: 'Clean government daylight mode' },
-              { id: 'dark', label: 'Dark', icon: Moon, desc: 'High contrast dark theme' },
-              { id: 'system', label: 'System', icon: Laptop, desc: 'Follow device preference' },
-            ].map((t) => {
-              const Icon = t.icon;
-              const isSelected = formData.theme === t.id;
+              { id: 'light', label: t('themeLight', 'Light'), icon: Sun },
+              { id: 'dark', label: t('themeDark', 'Dark'), icon: Moon },
+            ].map((item) => {
+              const Icon = item.icon;
+              const isSelected = formData.theme === item.id;
               return (
                 <button
-                  key={t.id}
+                  key={item.id}
                   type="button"
-                  onClick={() => setFormData((prev) => ({ ...prev, theme: t.id }))}
-                  className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
+                  onClick={() => handleThemeChange(item.id)}
+                  className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer relative ${
                     isSelected
-                      ? 'bg-cyan-50/40 border-cyan-500 ring-1 ring-cyan-500/30'
+                      ? 'bg-cyan-50/50 border-cyan-500 ring-2 ring-cyan-500/20 shadow-xs'
                       : 'bg-slate-50/60 border-slate-200 hover:border-slate-300'
                   }`}
                 >
-                  <div className="flex items-center gap-2 font-bold text-slate-900 mb-1">
-                    <Icon className={`w-4 h-4 ${isSelected ? 'text-cyan-600' : 'text-slate-500'}`} />
-                    <span>{t.label}</span>
+                  <div className="flex items-center justify-between font-bold text-slate-900">
+                    <div className="flex items-center gap-2.5">
+                      <Icon className={`w-4 h-4 ${isSelected ? 'text-cyan-600' : 'text-slate-500'}`} />
+                      <span className="text-xs">{item.label}</span>
+                    </div>
+                    {isSelected && (
+                      <span className="w-2 h-2 rounded-full bg-cyan-500"></span>
+                    )}
                   </div>
-                  <p className="text-[10px] text-slate-500">{t.desc}</p>
                 </button>
               );
             })}
@@ -69,59 +98,93 @@ export const AppearanceSettings = ({ appearance, onSaveAppearance }) => {
         {/* Density Selection */}
         <div className="space-y-2.5 pt-2 border-t border-slate-100">
           <label className="text-xs font-bold text-slate-900 block">
-            Display Density
+            {t('displayDensity', 'Display Density')}
           </label>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
-              { id: 'comfortable', label: 'Comfortable', icon: LayoutGrid, desc: 'Optimized spacing for readability (Default)' },
-              { id: 'compact', label: 'Compact', icon: List, desc: 'Dense data presentation for quick scanning' },
-            ].map((d) => {
-              const Icon = d.icon;
-              const isSelected = formData.density === d.id;
+              { id: 'comfortable', label: t('densityComfortable', 'Comfortable'), icon: LayoutGrid, desc: t('densityComfortableDesc', 'Optimized spacing for readability (Default)') },
+              { id: 'compact', label: t('densityCompact', 'Compact'), icon: List, desc: t('densityCompactDesc', 'Dense data presentation for quick scanning') },
+            ].map((item) => {
+              const Icon = item.icon;
+              const isSelected = formData.density === item.id;
               return (
                 <button
-                  key={d.id}
+                  key={item.id}
                   type="button"
-                  onClick={() => setFormData((prev) => ({ ...prev, density: d.id }))}
+                  onClick={() => handleDensityChange(item.id)}
                   className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-cyan-50/40 border-cyan-500 ring-1 ring-cyan-500/30'
+                      ? 'bg-cyan-50/50 border-cyan-500 ring-2 ring-cyan-500/20 shadow-xs'
                       : 'bg-slate-50/60 border-slate-200 hover:border-slate-300'
                   }`}
                 >
-                  <div className="flex items-center gap-2 font-bold text-slate-900 mb-1">
-                    <Icon className={`w-4 h-4 ${isSelected ? 'text-cyan-600' : 'text-slate-500'}`} />
-                    <span>{d.label}</span>
+                  <div className="flex items-center justify-between font-bold text-slate-900 mb-1">
+                    <div className="flex items-center gap-2">
+                      <Icon className={`w-4 h-4 ${isSelected ? 'text-cyan-600' : 'text-slate-500'}`} />
+                      <span>{item.label}</span>
+                    </div>
+                    {isSelected && (
+                      <span className="w-2 h-2 rounded-full bg-cyan-500"></span>
+                    )}
                   </div>
-                  <p className="text-[10px] text-slate-500">{d.desc}</p>
+                  <p className="text-[10px] text-slate-500">{item.desc}</p>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Language Selection */}
-        <div className="space-y-2 pt-2 border-t border-slate-100">
-          <label className="text-xs font-bold text-slate-900 block flex items-center gap-1.5">
-            <Globe className="w-3.5 h-3.5 text-cyan-600" />
-            Portal Language
-          </label>
-          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
-            <span className="font-semibold text-slate-800">English (India)</span>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-200/80 text-slate-600">
-              Default
+        {/* Multi-Language Selection */}
+        <div className="space-y-3 pt-2 border-t border-slate-100">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-bold text-slate-900 block flex items-center gap-1.5">
+              <Globe className="w-3.5 h-3.5 text-cyan-600" />
+              <span>{t('portalLanguage', 'Portal Language')}</span>
+            </label>
+            <span className="text-[10px] text-slate-500 font-medium">
+              {languagesList.length} {t('selectLanguage', 'Languages Available')}
             </span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+            {languagesList.map((lang) => {
+              const isSelected = formData.language === lang.code;
+              return (
+                <button
+                  key={lang.code}
+                  type="button"
+                  onClick={() => handleLanguageChange(lang.code)}
+                  className={`p-3 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                    isSelected
+                      ? 'bg-cyan-50/60 border-cyan-500 ring-2 ring-cyan-500/20 shadow-xs'
+                      : 'bg-slate-50/60 border-slate-200 hover:border-slate-300 hover:bg-slate-100/50'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-bold text-slate-900">{lang.native}</span>
+                    {isSelected ? (
+                      <Check className="w-3.5 h-3.5 text-cyan-600" />
+                    ) : lang.default ? (
+                      <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-slate-200/80 text-slate-600">
+                        Default
+                      </span>
+                    ) : null}
+                  </div>
+                  <span className="text-[10px] text-slate-500 truncate">{lang.name}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Save button */}
-        <div className="flex justify-end pt-2">
+        <div className="flex justify-end pt-3 border-t border-slate-100">
           <button
             type="submit"
             className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-[#0c1e33] hover:bg-slate-800 rounded-xl transition-all shadow-xs cursor-pointer"
           >
             <Save className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Save Appearance</span>
+            <span>{t('saveAppearance', 'Save Appearance')}</span>
           </button>
         </div>
       </form>

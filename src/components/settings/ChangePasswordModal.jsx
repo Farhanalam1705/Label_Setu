@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { X, Lock, KeyRound, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useToast } from '../common/Toast';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const ChangePasswordModal = ({ isOpen, onClose }) => {
   const { addToast } = useToast();
+  const { t } = useLanguage();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -30,8 +32,8 @@ export const ChangePasswordModal = ({ isOpen, onClose }) => {
 
     // Mock validation success
     addToast({
-      title: 'Security Updated',
-      message: 'Password updated successfully.',
+      title: t('securityTitle', 'Security Updated'),
+      message: t('passwordUpdated', 'Password updated successfully.'),
       type: 'success',
     });
     onClose();
@@ -46,14 +48,14 @@ export const ChangePasswordModal = ({ isOpen, onClose }) => {
               <KeyRound className="w-4 h-4 text-cyan-600" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-900">Change Password</h3>
-              <p className="text-[11px] text-slate-500">Update officer access credentials</p>
+              <h3 className="text-sm font-bold text-slate-900">{t('changePassword', 'Change Password')}</h3>
+              <p className="text-[11px] text-slate-500">{t('securitySubtitle', 'Update officer access credentials')}</p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg"
+            className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -69,39 +71,39 @@ export const ChangePasswordModal = ({ isOpen, onClose }) => {
 
           <div className="space-y-1.5">
             <label className="text-slate-600 font-semibold block">
-              Current Password
+              {t('currentPassword', 'Current Password')}
             </label>
             <input
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              placeholder="Enter current password"
+              placeholder="••••••••••••"
               className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
             />
           </div>
 
           <div className="space-y-1.5">
             <label className="text-slate-600 font-semibold block">
-              New Password
+              {t('newPassword', 'New Password')}
             </label>
             <input
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Enter new password (min. 6 characters)"
+              placeholder="••••••••••••"
               className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
             />
           </div>
 
           <div className="space-y-1.5">
             <label className="text-slate-600 font-semibold block">
-              Confirm New Password
+              {t('confirmNewPassword', 'Confirm New Password')}
             </label>
             <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm new password"
+              placeholder="••••••••••••"
               className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
             />
           </div>
@@ -112,13 +114,13 @@ export const ChangePasswordModal = ({ isOpen, onClose }) => {
               onClick={onClose}
               className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
             >
-              Cancel
+              {t('cancel', 'Cancel')}
             </button>
             <button
               type="submit"
               className="px-5 py-2 text-xs font-bold text-white bg-[#0c1e33] hover:bg-slate-800 rounded-xl transition-all shadow-xs cursor-pointer"
             >
-              Update Password
+              {t('updatePassword', 'Update Password')}
             </button>
           </div>
         </form>

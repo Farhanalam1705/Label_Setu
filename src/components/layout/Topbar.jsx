@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Menu, Bell, Shield, CheckCircle2, ChevronRight } from 'lucide-react';
 import { UserMenu } from './UserMenu';
 import { useLocation, Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const Topbar = ({ onToggleSidebar }) => {
   const location = useLocation();
+  const { t } = useLanguage();
   const [showNotifications, setShowNotifications] = useState(false);
 
   // Dynamic title based on route
@@ -12,27 +14,38 @@ export const Topbar = ({ onToggleSidebar }) => {
     switch (location.pathname) {
       case '/dashboard':
         return {
-          title: 'Enforcement Dashboard',
-          category: 'Portal',
+          title: t('enforcementDashboard', 'Enforcement Dashboard'),
+          category: t('portalTitle', 'Portal'),
         };
       case '/scanner':
+      case '/new-inspection':
         return {
-          title: 'Product Scanner',
+          title: t('productScanner', 'Product Scanner'),
           category: 'Inspections',
         };
       case '/processing':
         return {
-          title: 'AI Analysis & Processing',
+          title: t('aiAnalysis', 'AI Analysis & Processing'),
           category: 'New Inspection',
         };
       case '/results':
         return {
-          title: 'Compliance Results',
+          title: t('complianceResults', 'Compliance Results'),
           category: 'Inspection Report',
+        };
+      case '/history':
+        return {
+          title: t('inspectionHistory', 'Inspection History'),
+          category: 'Records',
+        };
+      case '/settings':
+        return {
+          title: t('settings', 'Settings'),
+          category: t('systemConfig', 'System Configuration'),
         };
       default:
         return {
-          title: 'Portal',
+          title: t('portalTitle', 'Portal'),
           category: 'LABEL SETU',
         };
     }
@@ -63,7 +76,7 @@ export const Topbar = ({ onToggleSidebar }) => {
       <div className="flex items-center gap-3 sm:gap-4">
         <button
           onClick={onToggleSidebar}
-          className="lg:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+          className="lg:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
           aria-label="Open sidebar"
         >
           <Menu className="w-5 h-5" />
@@ -84,7 +97,7 @@ export const Topbar = ({ onToggleSidebar }) => {
         <div className="relative">
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg relative transition-colors"
+            className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg relative transition-colors cursor-pointer"
             aria-label="Notifications"
           >
             <Bell className="w-4 h-4" />
@@ -111,9 +124,9 @@ export const Topbar = ({ onToggleSidebar }) => {
               <div className="p-2 border-t border-slate-100 text-center">
                 <button
                   onClick={() => setShowNotifications(false)}
-                  className="text-xs font-medium text-cyan-700 hover:underline"
+                  className="text-xs font-medium text-cyan-700 hover:underline cursor-pointer"
                 >
-                  Close notifications
+                  {t('close', 'Close notifications')}
                 </button>
               </div>
             </div>

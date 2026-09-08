@@ -15,10 +15,13 @@ import {
 import { getCurrentUser, logout } from '../../services/auth';
 import { useToast } from '../common/Toast';
 import { LabelSetuLogo } from '../common/LabelSetuLogo';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const { addToast } = useToast();
+  const { t } = useLanguage();
+
   const user = getCurrentUser() || {
     name: 'Officer Rajesh Kumar',
     email: 'officer@labelsetu.gov.in',
@@ -29,8 +32,8 @@ export const Sidebar = ({ isOpen, onClose }) => {
   const handleLogout = () => {
     logout();
     addToast({
-      title: 'Logged Out',
-      message: 'You have been signed out successfully.',
+      title: t('signedOut', 'Logged Out'),
+      message: t('signedOut', 'You have been signed out successfully.'),
       type: 'info',
     });
     navigate('/login', { replace: true });
@@ -38,25 +41,25 @@ export const Sidebar = ({ isOpen, onClose }) => {
 
   const navItems = [
     {
-      name: 'Dashboard',
+      name: t('enforcementDashboard', 'Dashboard'),
       path: '/dashboard',
       icon: LayoutDashboard,
       badge: null,
     },
     {
-      name: 'Product Scanner',
+      name: t('productScanner', 'Product Scanner'),
       path: '/scanner',
       icon: ScanLine,
       badge: 'Live',
     },
     {
-      name: 'Inspection History',
+      name: t('inspectionHistory', 'Inspection History'),
       path: '/history',
       icon: History,
       badge: null,
     },
     {
-      name: 'Settings',
+      name: t('settings', 'Settings'),
       path: '/settings',
       icon: Settings,
       badge: null,
@@ -87,14 +90,14 @@ export const Sidebar = ({ isOpen, onClose }) => {
               <div className="flex items-center gap-1.5">
                 <span className="text-base font-extrabold tracking-wider text-white">LABEL SETU</span>
               </div>
-              <p className="text-[11px] text-slate-400 font-medium">Legal Metrology Portal</p>
+              <p className="text-[11px] text-slate-400 font-medium">{t('portalTitle', 'Legal Metrology Portal')}</p>
             </div>
           </div>
 
           {/* Close button on Mobile */}
           <button
             onClick={onClose}
-            className="lg:hidden p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+            className="lg:hidden p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 cursor-pointer"
             aria-label="Close menu"
           >
             <X className="w-5 h-5" />
@@ -140,10 +143,10 @@ export const Sidebar = ({ isOpen, onClose }) => {
         <div className="p-4 mx-3 mb-2 rounded-xl bg-slate-900/90 border border-slate-800/80 text-[11px] text-slate-400 space-y-1">
           <div className="flex items-center gap-1.5 text-slate-200 font-semibold text-xs">
             <Shield className="w-3.5 h-3.5 text-cyan-400" />
-            Official Enforcement
+            {t('officialEnforcement', 'Official Enforcement')}
           </div>
           <p className="text-[10px] text-slate-400 leading-tight">
-            Dept. of Consumer Affairs, Legal Metrology Division.
+            {t('officialEnforcementDept', 'Dept. of Consumer Affairs, Legal Metrology Division.')}
           </p>
         </div>
 
@@ -162,8 +165,8 @@ export const Sidebar = ({ isOpen, onClose }) => {
 
             <button
               onClick={handleLogout}
-              title="Logout"
-              className="p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors"
+              title={t('logout', 'Logout')}
+              className="p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors cursor-pointer"
               aria-label="Logout"
             >
               <LogOut className="w-4 h-4" />

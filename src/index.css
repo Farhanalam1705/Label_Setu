@@ -10,7 +10,183 @@
     font-family: var(--font-sans);
     color: #0f172a;
     background-color: #f8fafc;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
+}
+
+/* ── Dark Theme Overrides ─────────────────────────────────────── */
+html.dark, body.dark {
+  color-scheme: dark;
+  background-color: #070d18 !important;
+  color: #f1f5f9 !important;
+}
+
+.dark .min-h-screen.bg-slate-50 {
+  background-color: #070d18 !important;
+}
+
+.dark main {
+  color: #f1f5f9;
+}
+
+/* Backgrounds in dark mode */
+.dark .bg-white {
+  background-color: #0d1726 !important;
+  border-color: #1e2e48 !important;
+}
+
+.dark .bg-slate-50,
+.dark .bg-slate-50\/80,
+.dark .bg-slate-50\/60,
+.dark .bg-slate-50\/40,
+.dark .bg-slate-50\/70,
+.dark .bg-slate-100,
+.dark .bg-slate-100\/80 {
+  background-color: #0a1220 !important;
+  border-color: #1e2e48 !important;
+}
+
+.dark .hover\:bg-slate-50:hover,
+.dark .hover\:bg-slate-100:hover,
+.dark .hover\:bg-slate-200:hover {
+  background-color: #16243c !important;
+}
+
+.dark .hover\:bg-amber-50:hover {
+  background-color: rgba(245, 158, 11, 0.12) !important;
+}
+
+.dark .bg-cyan-50,
+.dark .bg-cyan-50\/40,
+.dark .bg-cyan-50\/60,
+.dark .bg-cyan-50\/30 {
+  background-color: rgba(6, 182, 212, 0.12) !important;
+  border-color: rgba(6, 182, 212, 0.3) !important;
+}
+
+.dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+.dark .bg-rose-50 {
+  background-color: rgba(244, 63, 94, 0.12) !important;
+  border-color: rgba(244, 63, 94, 0.3) !important;
+}
+
+.dark .bg-amber-100 {
+  background-color: rgba(245, 158, 11, 0.18) !important;
+}
+
+/* Borders in dark mode */
+.dark .border-slate-200,
+.dark .border-slate-200\/90,
+.dark .border-slate-200\/80,
+.dark .border-slate-200\/60,
+.dark .border-slate-100,
+.dark .border-slate-300,
+.dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+.dark .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #1a2a44 !important;
+}
+
+/* Typography in dark mode */
+.dark .text-slate-900 {
+  color: #f8fafc !important;
+}
+
+.dark .text-slate-800 {
+  color: #e2e8f0 !important;
+}
+
+.dark .text-slate-700 {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-slate-600 {
+  color: #94a3b8 !important;
+}
+
+.dark .text-slate-500 {
+  color: #8899b0 !important;
+}
+
+.dark .text-slate-400 {
+  color: #64748b !important;
+}
+
+/* Topbar Header in dark mode */
+.dark header {
+  background-color: #0b1424 !important;
+  border-bottom-color: #1a2a44 !important;
+}
+
+/* Inputs, selects, textareas in dark mode */
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark select,
+.dark textarea {
+  background-color: #070d18 !important;
+  color: #f1f5f9 !important;
+  border-color: #1e2e48 !important;
+}
+
+.dark input:disabled {
+  background-color: #060b14 !important;
+  border-color: #162438 !important;
+  color: #94a3b8 !important;
+}
+
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: #06b6d4 !important;
+  background-color: #091222 !important;
+}
+
+/* Buttons in dark mode */
+.dark button.bg-slate-100 {
+  background-color: #121f35 !important;
+  color: #e2e8f0 !important;
+  border-color: #1e2e48 !important;
+}
+
+.dark button.bg-slate-100:hover {
+  background-color: #1a2c4b !important;
+}
+
+/* Badges and pills */
+.dark .bg-slate-200\/80 {
+  background-color: #1e2e48 !important;
+  color: #cbd5e1 !important;
+}
+
+/* ── Density Compact Mode ─────────────────────────────────────── */
+html.density-compact .p-6 {
+  padding: 1rem !important;
+}
+
+html.density-compact .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 1rem !important;
+}
+
+html.density-compact .p-4 {
+  padding: 0.75rem !important;
+}
+
+html.density-compact .py-4 {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+html.density-compact .py-3 {
+  padding-top: 0.375rem !important;
+  padding-bottom: 0.375rem !important;
+}
+
+html.density-compact .gap-6 {
+  gap: 1rem !important;
 }
 
 /* Custom subtle scrollbar */
@@ -21,12 +197,21 @@
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
 }
+.dark ::-webkit-scrollbar-track {
+  background: #0b1424;
+}
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 9999px;
 }
+.dark ::-webkit-scrollbar-thumb {
+  background: #1e2e48;
+}
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #2a3e60;
 }
 
 /* Smooth keyframes */
@@ -136,4 +321,5 @@
     print-color-adjust: exact !important;
   }
 }
+
 

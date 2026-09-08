@@ -1,5 +1,6 @@
 import React from 'react';
 import { Check, X, AlertCircle, AlertTriangle } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 /**
  * StatusBadge Component
@@ -10,6 +11,7 @@ import { Check, X, AlertCircle, AlertTriangle } from 'lucide-react';
  * - NEEDS REVIEW: ⚠ NEEDS REVIEW
  */
 export const StatusBadge = ({ status, size = 'md' }) => {
+  const { t } = useLanguage();
   const norm = (status || '').toUpperCase().trim();
 
   let config = {
@@ -23,35 +25,35 @@ export const StatusBadge = ({ status, size = 'md' }) => {
     config = {
       symbol: '✓',
       icon: <Check className={size === 'sm' ? 'w-3 h-3' : 'w-3.5 h-3.5'} />,
-      text: 'COMPLIANT',
+      text: t('statusCompliant', 'COMPLIANT'),
       style: 'bg-emerald-50 text-emerald-800 border-emerald-300 font-bold',
     };
   } else if (norm === 'NON-COMPLIANT' || norm === 'NON COMPLIANT' || norm === 'VIOLATION' || norm === 'FAIL') {
     config = {
       symbol: '✕',
       icon: <X className={size === 'sm' ? 'w-3 h-3' : 'w-3.5 h-3.5'} />,
-      text: 'NON-COMPLIANT',
+      text: t('statusNonCompliant', 'NON-COMPLIANT'),
       style: 'bg-rose-50 text-rose-800 border-rose-300 font-bold',
     };
   } else if (norm === 'MISSING') {
     config = {
       symbol: '!',
       icon: <AlertCircle className={size === 'sm' ? 'w-3 h-3' : 'w-3.5 h-3.5'} />,
-      text: 'MISSING',
+      text: t('statusMissing', 'MISSING'),
       style: 'bg-orange-50 text-orange-800 border-orange-300 font-bold',
     };
   } else if (norm === 'NEEDS REVIEW' || norm === 'REVIEW' || norm === 'NEEDS_REVIEW') {
     config = {
       symbol: '⚠',
       icon: <AlertTriangle className={size === 'sm' ? 'w-3 h-3' : 'w-3.5 h-3.5'} />,
-      text: 'NEEDS REVIEW',
+      text: t('statusNeedsReview', 'NEEDS REVIEW'),
       style: 'bg-amber-50 text-amber-800 border-amber-300 font-bold',
     };
   } else if (norm === 'PENDING REVIEW' || norm === 'PENDING' || norm === 'PENDING_REVIEW') {
     config = {
       symbol: '○',
       icon: <span className="w-2 h-2 rounded-full border-2 border-slate-500 inline-block shrink-0" />,
-      text: 'PENDING REVIEW',
+      text: t('statusPendingReview', 'PENDING REVIEW'),
       style: 'bg-slate-100 text-slate-700 border-slate-300 font-bold',
     };
   }

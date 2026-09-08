@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, Filter, Calendar, Tag, X, RotateCcw } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const HistoryFilters = ({
   searchQuery,
@@ -13,6 +14,8 @@ export const HistoryFilters = ({
   onClearFilters,
   isFiltered,
 }) => {
+  const { t } = useLanguage();
+
   return (
     <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-4 sm:p-5 space-y-4">
       {/* Search row */}
@@ -23,14 +26,14 @@ export const HistoryFilters = ({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by inspection ID, product, manufacturer..."
+            placeholder={t('searchPlaceholder', 'Search by inspection ID, product, manufacturer...')}
             className="w-full pl-10 pr-10 py-2.5 bg-slate-50 hover:bg-slate-100/80 focus:bg-white border border-slate-200 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all font-medium"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-md"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-md cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -44,7 +47,7 @@ export const HistoryFilters = ({
             className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-xs font-semibold text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100/80 border border-rose-200 rounded-xl transition-colors cursor-pointer shrink-0"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>Clear Filters</span>
+            <span>{t('clearFilters', 'Clear Filters')}</span>
           </button>
         )}
       </div>
@@ -55,18 +58,18 @@ export const HistoryFilters = ({
         <div className="space-y-1">
           <label className="text-[11px] font-bold text-slate-500 flex items-center gap-1.5">
             <Filter className="w-3 h-3 text-cyan-600" />
-            <span>Status</span>
+            <span>{t('status', 'Status')}</span>
           </label>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="w-full px-3 py-2 bg-slate-50 hover:bg-slate-100/80 focus:bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all cursor-pointer"
           >
-            <option value="ALL">All Statuses</option>
-            <option value="COMPLIANT">Compliant</option>
-            <option value="NON-COMPLIANT">Non-Compliant</option>
-            <option value="NEEDS REVIEW">Needs Review</option>
-            <option value="PENDING REVIEW">Pending Review</option>
+            <option value="ALL">{t('allStatuses', 'All Statuses')}</option>
+            <option value="COMPLIANT">{t('compliant', 'Compliant')}</option>
+            <option value="NON-COMPLIANT">{t('nonCompliant', 'Non-Compliant')}</option>
+            <option value="NEEDS REVIEW">{t('needsReview', 'Needs Review')}</option>
+            <option value="PENDING REVIEW">{t('pendingReview', 'Pending Review')}</option>
           </select>
         </div>
 
@@ -74,17 +77,17 @@ export const HistoryFilters = ({
         <div className="space-y-1">
           <label className="text-[11px] font-bold text-slate-500 flex items-center gap-1.5">
             <Calendar className="w-3 h-3 text-cyan-600" />
-            <span>Date Range</span>
+            <span>{t('dateRange', 'Date Range')}</span>
           </label>
           <select
             value={dateFilter}
             onChange={(e) => setDateFilter(e.target.value)}
             className="w-full px-3 py-2 bg-slate-50 hover:bg-slate-100/80 focus:bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all cursor-pointer"
           >
-            <option value="ALL">All Time</option>
-            <option value="TODAY">Today (05 Sep 2026)</option>
-            <option value="WEEK">This Week</option>
-            <option value="MONTH">This Month (Sep 2026)</option>
+            <option value="ALL">{t('allTime', 'All Time')}</option>
+            <option value="TODAY">{t('today', 'Today')} (05 Sep 2026)</option>
+            <option value="WEEK">{t('thisWeek', 'This Week')}</option>
+            <option value="MONTH">{t('thisMonth', 'This Month')} (Sep 2026)</option>
           </select>
         </div>
 
@@ -92,17 +95,17 @@ export const HistoryFilters = ({
         <div className="space-y-1">
           <label className="text-[11px] font-bold text-slate-500 flex items-center gap-1.5">
             <Tag className="w-3 h-3 text-cyan-600" />
-            <span>Product Category</span>
+            <span>{t('productCategory', 'Product Category')}</span>
           </label>
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
             className="w-full px-3 py-2 bg-slate-50 hover:bg-slate-100/80 focus:bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all cursor-pointer"
           >
-            <option value="ALL">All Categories</option>
-            <option value="Food Grains & Pulses">Food Grains & Pulses</option>
-            <option value="Packaged Commodities">Packaged Commodities</option>
-            <option value="Other">Other</option>
+            <option value="ALL">{t('allCategories', 'All Categories')}</option>
+            <option value="Food Grains & Pulses">{t('foodGrainsPulses', 'Food Grains & Pulses')}</option>
+            <option value="Packaged Commodities">{t('packagedCommodities', 'Packaged Commodities')}</option>
+            <option value="Other">{t('other', 'Other')}</option>
           </select>
         </div>
       </div>
