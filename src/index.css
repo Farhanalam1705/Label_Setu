@@ -322,4 +322,54 @@ html.density-compact .gap-6 {
   }
 }
 
+/* ── Customer Portal Theme Variations ────────────────────────── */
+html.theme-plum body, html[data-theme="plum"] body {
+  background-color: #fbf8fa;
+}
+
+html.theme-light body, html[data-theme="light"] body {
+  background-color: #f8fafc;
+}
+
+html.theme-dark, html[data-theme="dark"] {
+  color-scheme: dark;
+  background-color: #070d18 !important;
+  color: #f1f5f9 !important;
+}
+
+html.theme-contrast, html[data-theme="contrast"] {
+  color-scheme: dark;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+html.theme-contrast .bg-white,
+html.theme-contrast .bg-slate-50,
+html.theme-contrast .card {
+  background-color: #121212 !important;
+  border-color: #f59e0b !important;
+}
+
+html.theme-contrast aside {
+  background-color: #000000 !important;
+  border-right-color: #f59e0b !important;
+}
+
+/* ── Layout Density ─────────────────────────────────────────── */
+.density-compact table th,
+.density-compact table td {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.density-compact .p-5,
+.density-compact .p-6,
+.density-compact .p-7 {
+  padding: 1rem !important;
+}
+
+.density-compact .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.875rem !important;
+}
+
 

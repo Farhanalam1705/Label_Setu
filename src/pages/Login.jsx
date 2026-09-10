@@ -122,7 +122,7 @@ export const Login = () => {
             <div>
               <h1 className="text-3xl font-extrabold tracking-wider text-white">LABEL SETU</h1>
               <p className={`text-sm font-medium mt-0.5 ${isOfficer ? 'text-cyan-200/90' : 'text-rose-200/90'}`}>
-                {isOfficer ? 'AI-Powered Legal Metrology Compliance Checker' : 'Customer Portal'}
+                AI-Powered Legal Metrology Compliance Checker
               </p>
             </div>
           </div>
@@ -176,10 +176,10 @@ export const Login = () => {
                   : 'text-rose-700 bg-rose-50 border-rose-200'
               }`}
             >
-              {isOfficer ? 'LABEL SETU' : 'LABEL SETU'}
+              LABEL SETU
             </span>
             <p className={`text-xs font-bold uppercase tracking-wider ${isOfficer ? 'text-cyan-800' : 'text-rose-800'}`}>
-              {isOfficer ? 'AI-Powered Legal Metrology Compliance Checker' : 'Customer Portal'}
+              AI-Powered Legal Metrology Compliance Checker
             </p>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
               {isOfficer ? 'Officer Login' : 'Customer Login'}
@@ -370,4 +370,3 @@ export const Login = () => {
     </div>
   );
 };
-

@@ -91,37 +91,25 @@ export const Scanner = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-600">
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-<<<<<<< Updated upstream
-                <span className="font-bold text-slate-800 block mb-0.5">{t('principalDisplayPanel', '1. Principal Display Panel')}</span>
-=======
                 <span className="font-bold text-slate-800 block mb-0.5">
                   {t('principalDisplayPanel', '1. Principal Display Panel')}
                 </span>
->>>>>>> Stashed changes
                 <p className="text-slate-500 text-[11px]">
                   {t('principalDisplayPanelDesc', 'Ensure the primary commodity name, net weight/volume, and brand are in clear focus.')}
                 </p>
               </div>
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-<<<<<<< Updated upstream
-                <span className="font-bold text-slate-800 block mb-0.5">{t('mandatoryDeclarationsGuide', '2. Mandatory Declarations')}</span>
-=======
                 <span className="font-bold text-slate-800 block mb-0.5">
                   {t('mandatoryDeclarationsGuide', '2. Mandatory Declarations')}
                 </span>
->>>>>>> Stashed changes
                 <p className="text-slate-500 text-[11px]">
                   {t('mandatoryDeclarationsDesc', 'MRP (incl. of all taxes), Consumer Care details, and packer address must not be obscured.')}
                 </p>
               </div>
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-<<<<<<< Updated upstream
-                <span className="font-bold text-slate-800 block mb-0.5">{t('lightingClarity', '3. Lighting & Clarity')}</span>
-=======
                 <span className="font-bold text-slate-800 block mb-0.5">
                   {t('lightingClarity', '3. Lighting & Clarity')}
                 </span>
->>>>>>> Stashed changes
                 <p className="text-slate-500 text-[11px]">
                   {t('lightingClarityDesc', 'Avoid flash reflection, shadows, or cropped corners on the commodity package.')}
                 </p>

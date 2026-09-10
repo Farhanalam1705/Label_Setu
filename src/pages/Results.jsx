@@ -8,11 +8,8 @@ import {
 } from 'lucide-react';
 import { MOCK_INSPECTION_DATA } from '../data/mockResultsData';
 import { REVIEW_STORAGE_KEY } from '../data/mockReviewData';
-<<<<<<< Updated upstream
 import { useLanguage } from '../context/LanguageContext';
-=======
 import { saveInspectionToHistory } from '../data/mockHistoryData';
->>>>>>> Stashed changes
 import { ResultsHeader } from '../components/results/ResultsHeader';
 import { ComplianceSummary } from '../components/results/ComplianceSummary';
 import { ProductImageViewer } from '../components/results/ProductImageViewer';

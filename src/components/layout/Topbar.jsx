@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, Bell, Shield, CheckCircle2, ChevronRight } from 'lucide-react';
 import { UserMenu } from './UserMenu';
 import { useLocation, Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
+
+import { getComplaintNotifications } from '../../services/complaintService';
 
 export const Topbar = ({ onToggleSidebar }) => {
   const location = useLocation();
@@ -11,6 +13,12 @@ export const Topbar = ({ onToggleSidebar }) => {
 
   // Dynamic title based on route
   const getPageInfo = () => {
+    if (location.pathname.startsWith('/complaints')) {
+      return {
+        title: t('complaintManagement', 'Complaint Management'),
+        category: t('enforcement', 'Enforcement'),
+      };
+    }
     switch (location.pathname) {
       case '/dashboard':
         return {
@@ -53,22 +61,37 @@ export const Topbar = ({ onToggleSidebar }) => {
 
   const pageInfo = getPageInfo();
 
-  const mockNotifications = [
-    {
-      id: 1,
-      title: 'Mandatory Declaration Alert',
-      desc: 'New guideline update issued for packaged food commodity MRP declarations.',
-      time: '15m ago',
-      unread: true,
-    },
-    {
-      id: 2,
-      title: 'Batch Inspection Synced',
-      desc: 'Inspection INS-2026-0894 logged to central enforcement registry.',
-      time: '1h ago',
-      unread: false,
-    },
-  ];
+  const [officerNotifs, setOfficerNotifs] = useState(() => {
+    const dynamic = getComplaintNotifications('officer');
+    const staticBase = [
+      {
+        id: 'mock-1',
+        title: 'Mandatory Declaration Alert',
+        message: 'New guideline update issued for packaged food commodity MRP declarations.',
+        time: '15m ago',
+        unread: true,
+      },
+    ];
+    return [...dynamic, ...staticBase];
+  });
+
+  useEffect(() => {
+    const handler = () => {
+      const dynamic = getComplaintNotifications('officer');
+      const staticBase = [
+        {
+          id: 'mock-1',
+          title: 'Mandatory Declaration Alert',
+          message: 'New guideline update issued for packaged food commodity MRP declarations.',
+          time: '15m ago',
+          unread: true,
+        },
+      ];
+      setOfficerNotifs([...dynamic, ...staticBase]);
+    };
+    window.addEventListener('labelsetu_notifications_updated', handler);
+    return () => window.removeEventListener('labelsetu_notifications_updated', handler);
+  }, []);
 
   return (
     <header className="sticky top-0 z-30 h-16 bg-white border-b border-slate-200/90 shadow-xs flex items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -101,23 +124,36 @@ export const Topbar = ({ onToggleSidebar }) => {
             aria-label="Notifications"
           >
             <Bell className="w-4 h-4" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white"></span>
+            {officerNotifs.some((n) => n.unread) && (
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white"></span>
+            )}
           </button>
 
           {showNotifications && (
             <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl border border-slate-200 shadow-xl py-2 z-50 animate-in fade-in zoom-in-95">
               <div className="px-4 py-2 border-b border-slate-100 flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-900">Enforcement Alerts</span>
-                <span className="text-[10px] bg-cyan-100 text-cyan-800 font-bold px-1.5 py-0.5 rounded">
-                  1 New
-                </span>
+                {officerNotifs.filter((n) => n.unread).length > 0 && (
+                  <span className="text-[10px] bg-cyan-100 text-cyan-800 font-bold px-1.5 py-0.5 rounded">
+                    {officerNotifs.filter((n) => n.unread).length} New
+                  </span>
+                )}
               </div>
               <div className="divide-y divide-slate-100 max-h-64 overflow-y-auto">
-                {mockNotifications.map((n) => (
+                {officerNotifs.map((n) => (
                   <div key={n.id} className={`p-3 text-xs hover:bg-slate-50 transition-colors ${n.unread ? 'bg-cyan-50/30' : ''}`}>
                     <p className="font-semibold text-slate-800">{n.title}</p>
-                    <p className="text-slate-500 text-[11px] mt-0.5">{n.desc}</p>
-                    <span className="text-[10px] text-slate-400 mt-1 block">{n.time}</span>
+                    <p className="text-slate-500 text-[11px] mt-0.5">{n.message || n.desc}</p>
+                    {n.complaintId && (
+                      <Link
+                        to={`/complaints/${n.complaintId}`}
+                        onClick={() => setShowNotifications(false)}
+                        className="text-[10px] text-cyan-700 font-bold hover:underline block mt-1"
+                      >
+                        Review Complaint ({n.complaintId}) &rarr;
+                      </Link>
+                    )}
+                    <span className="text-[10px] text-slate-400 mt-1 block">{n.time || 'Today'}</span>
                   </div>
                 ))}
               </div>
@@ -133,7 +169,13 @@ export const Topbar = ({ onToggleSidebar }) => {
           )}
         </div>
 
-        <div className="h-6 w-px bg-slate-200 hidden sm:block"></div>
+        {/* Customer Portal Switcher Link */}
+        <Link
+          to="/customer/dashboard"
+          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#57184a] hover:bg-[#431238] text-rose-200 border border-rose-400/30 shadow-2xs transition-colors cursor-pointer"
+        >
+          <span>Customer Portal &rarr;</span>
+        </Link>
 
         {/* User Menu */}
         <UserMenu />

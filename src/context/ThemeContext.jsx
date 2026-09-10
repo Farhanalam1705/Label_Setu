@@ -5,51 +5,70 @@ const ThemeContext = createContext(null);
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setThemeState] = useState(() => {
-    const settings = getSettings();
-    return settings.appearance?.theme || 'light';
+    try {
+      const storedTheme = localStorage.getItem('label_setu_theme');
+      if (storedTheme) return storedTheme;
+      const settings = getSettings();
+      return settings.appearance?.theme || 'plum';
+    } catch {
+      return 'plum';
+    }
   });
 
   const [density, setDensityState] = useState(() => {
-    const settings = getSettings();
-    return settings.appearance?.density || 'comfortable';
+    try {
+      const storedDensity = localStorage.getItem('label_setu_density');
+      if (storedDensity) return storedDensity;
+      const settings = getSettings();
+      return settings.appearance?.density || 'comfortable';
+    } catch {
+      return 'comfortable';
+    }
   });
 
   // Apply Theme to DOM root
   useEffect(() => {
     const root = document.documentElement;
-    const applyTheme = (isDark) => {
-      if (isDark) {
-        root.classList.add('dark');
-        document.body.classList.add('dark');
-      } else {
-        root.classList.remove('dark');
-        document.body.classList.remove('dark');
-      }
-    };
+    const body = document.body;
 
-    if (theme === 'dark') {
-      applyTheme(true);
-    } else if (theme === 'light') {
-      applyTheme(false);
-    } else if (theme === 'system') {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      applyTheme(mediaQuery.matches);
+    // Clear previous theme classes
+    root.classList.remove('theme-plum', 'theme-light', 'theme-dark', 'theme-contrast', 'dark');
+    body.classList.remove('theme-plum', 'theme-light', 'theme-dark', 'theme-contrast', 'dark');
 
-      const handler = (e) => applyTheme(e.matches);
-      mediaQuery.addEventListener('change', handler);
-      return () => mediaQuery.removeEventListener('change', handler);
+    const effectiveTheme = theme || 'plum';
+    root.setAttribute('data-theme', effectiveTheme);
+    body.setAttribute('data-theme', effectiveTheme);
+    root.classList.add(`theme-${effectiveTheme}`);
+    body.classList.add(`theme-${effectiveTheme}`);
+
+    if (effectiveTheme === 'dark' || effectiveTheme === 'contrast') {
+      root.classList.add('dark');
+      body.classList.add('dark');
+    }
+
+    try {
+      localStorage.setItem('label_setu_theme', effectiveTheme);
+    } catch {
+      // ignore
     }
   }, [theme]);
 
   // Apply Density to DOM root
   useEffect(() => {
     const root = document.documentElement;
-    if (density === 'compact') {
-      root.classList.add('density-compact');
-      document.body.classList.add('density-compact');
-    } else {
-      root.classList.remove('density-compact');
-      document.body.classList.remove('density-compact');
+    const body = document.body;
+
+    root.classList.remove('density-compact', 'density-comfortable');
+    body.classList.remove('density-compact', 'density-comfortable');
+
+    const effectiveDensity = density === 'compact' ? 'density-compact' : 'density-comfortable';
+    root.classList.add(effectiveDensity);
+    body.classList.add(effectiveDensity);
+
+    try {
+      localStorage.setItem('label_setu_density', density);
+    } catch {
+      // ignore
     }
   }, [density]);
 

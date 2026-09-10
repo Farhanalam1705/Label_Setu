@@ -13,7 +13,19 @@ import { ReportGeneratorPage } from '../pages/ReportGeneratorPage';
 import { InspectionHistoryPage } from '../pages/InspectionHistoryPage';
 import { InspectionDetailsPage } from '../pages/InspectionDetailsPage';
 import { SettingsPage } from '../pages/SettingsPage';
+import { OfficerComplaints } from '../pages/OfficerComplaints';
+import { OfficerComplaintDetail } from '../pages/OfficerComplaintDetail';
+
+// Customer Portal Pages & Layout
+import { CustomerLayout } from '../components/customer/CustomerLayout';
 import { CustomerDashboard } from '../pages/CustomerDashboard';
+import { CustomerProducts } from '../pages/customer/CustomerProducts';
+import { CustomerInspections } from '../pages/customer/CustomerInspections';
+import { CustomerInspectionDetail } from '../pages/customer/CustomerInspectionDetail';
+import { CustomerComplaints } from '../pages/customer/CustomerComplaints';
+import { CustomerReports } from '../pages/customer/CustomerReports';
+import { CustomerNotifications } from '../pages/customer/CustomerNotifications';
+import { CustomerSettings } from '../pages/customer/CustomerSettings';
 
 export const AppRoutes = () => {
   return (
@@ -21,21 +33,33 @@ export const AppRoutes = () => {
       {/* Public Route: Login */}
       <Route path="/login" element={<Login />} />
 
-      {/* Customer Dashboard Route */}
+      {/* Customer Portal Protected Routes */}
       <Route
-        path="/customer/dashboard"
+        path="/customer"
         element={
-          <ProtectedRoute>
-            <CustomerDashboard />
+          <ProtectedRoute allowedRole="customer">
+            <CustomerLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route index element={<Navigate to="/customer/dashboard" replace />} />
+        <Route path="dashboard" element={<CustomerDashboard />} />
+        <Route path="products" element={<CustomerProducts />} />
+        <Route path="products/:productId" element={<CustomerProducts />} />
+        <Route path="inspections" element={<CustomerInspections />} />
+        <Route path="inspections/:inspectionId" element={<CustomerInspectionDetail />} />
+        <Route path="complaints" element={<CustomerComplaints />} />
+        <Route path="complaints/:complaintId" element={<CustomerComplaints />} />
+        <Route path="reports" element={<CustomerReports />} />
+        <Route path="notifications" element={<CustomerNotifications />} />
+        <Route path="settings" element={<CustomerSettings />} />
+      </Route>
 
-      {/* Protected Routes enclosed in MainLayout */}
+      {/* Officer Protected Routes enclosed in MainLayout */}
       <Route
         path="/"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRole="officer">
             <MainLayout />
           </ProtectedRoute>
         }
@@ -43,17 +67,17 @@ export const AppRoutes = () => {
         {/* Default index route redirects to dashboard */}
         <Route index element={<Navigate to="/dashboard" replace />} />
         
-        {/* Dashboard Stage 2 */}
+        {/* Dashboard */}
         <Route path="dashboard" element={<Dashboard />} />
         
-        {/* New Inspection / Scanner Stages 3 & 4 */}
+        {/* Scanner / New Inspection */}
         <Route path="scanner" element={<Scanner />} />
         <Route path="new-inspection" element={<Scanner />} />
 
         {/* AI Analysis / Processing */}
         <Route path="processing" element={<Processing />} />
 
-        {/* Compliance Results Placeholder */}
+        {/* Results & Review */}
         <Route path="results" element={<Results />} />
         <Route path="evidence" element={<EvidenceViewer />} />
         <Route path="review/:inspectionId" element={<OfficerReviewPage />} />
@@ -61,11 +85,16 @@ export const AppRoutes = () => {
         <Route path="report/generate" element={<ReportGeneratorPage />} />
         <Route path="history" element={<InspectionHistoryPage />} />
         <Route path="history/:inspectionId" element={<InspectionDetailsPage />} />
+        
+        {/* Officer Complaint Management */}
+        <Route path="complaints" element={<OfficerComplaints />} />
+        <Route path="complaints/:complaintId" element={<OfficerComplaintDetail />} />
+
         <Route path="settings" element={<SettingsPage />} />
       </Route>
 
       {/* Fallback catch-all route */}
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 };
