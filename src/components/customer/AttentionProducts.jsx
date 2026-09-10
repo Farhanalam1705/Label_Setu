@@ -3,9 +3,11 @@ import { AlertCircle, ArrowRight, PackageOpen, ChevronRight } from 'lucide-react
 import { Link, useNavigate } from 'react-router-dom';
 import { StatusBadge } from '../results/StatusBadge';
 import { CUSTOMER_ATTENTION_PRODUCTS } from '../../data/customerMockData';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const AttentionProducts = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   return (
     <div className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-2xs flex flex-col justify-between">
@@ -17,14 +19,14 @@ export const AttentionProducts = () => {
           </div>
           <div>
             <h2 className="text-base font-bold text-slate-900 tracking-tight">
-              Products Requiring Attention
+              {t('productsRequiringAttention', 'Products Requiring Attention')}
             </h2>
-            <p className="text-xs text-slate-400">Declarations flagged for correction</p>
+            <p className="text-xs text-slate-400">{t('flaggedForCorrection', 'Declarations flagged for correction')}</p>
           </div>
         </div>
 
         <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
-          3 Items
+          3 {t('attention', 'Items')}
         </span>
       </div>
 
@@ -44,7 +46,7 @@ export const AttentionProducts = () => {
               </div>
               <p className="text-xs text-slate-500 line-clamp-1">{prod.issue}</p>
               <div className="text-[11px] text-slate-400">
-                Inspection Ref: <span className="font-mono font-medium text-slate-600">{prod.inspectionId}</span> &bull; Updated: {prod.updatedAt}
+                {t('inspectionId', 'Inspection Ref')}: <span className="font-mono font-medium text-slate-600">{prod.inspectionId}</span> &bull; {t('lastUpdated', 'Updated')}: {prod.updatedAt}
               </div>
             </div>
 
@@ -52,7 +54,7 @@ export const AttentionProducts = () => {
               onClick={() => navigate(`/customer/products/${prod.id}`)}
               className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-colors shrink-0 cursor-pointer self-start sm:self-auto"
             >
-              <span>View Product</span>
+              <span>{t('details', 'View Product')}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -65,10 +67,11 @@ export const AttentionProducts = () => {
           to="/customer/products"
           className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
         >
-          <span>View All Products in Catalog</span>
+          <span>{t('myProducts', 'View All Products in Catalog')}</span>
           <ChevronRight className="w-3.5 h-3.5" />
         </Link>
       </div>
     </div>
   );
 };
+

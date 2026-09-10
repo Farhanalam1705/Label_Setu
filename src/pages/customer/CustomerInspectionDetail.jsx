@@ -22,10 +22,12 @@ import {
 } from 'lucide-react';
 import { StatusBadge } from '../../components/results/StatusBadge';
 import { EvidenceViewer } from '../../components/results/EvidenceViewer';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const CustomerInspectionDetail = () => {
   const { inspectionId } = useParams();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   // State for Evidence Viewer Modal
   const [isEvidenceOpen, setIsEvidenceOpen] = useState(false);
@@ -124,14 +126,14 @@ export const CustomerInspectionDetail = () => {
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
           <Link to="/customer/dashboard" className="hover:text-rose-700 transition-colors">
-            Customer Portal
+            {t('customerPortal', 'Customer Portal')}
           </Link>
           <span className="text-slate-300">/</span>
           <Link to="/customer/inspections" className="hover:text-rose-700 transition-colors">
-            My Inspections
+            {t('myInspections', 'My Inspections')}
           </Link>
           <span className="text-slate-300">/</span>
-          <span className="text-rose-700 font-bold">Inspection Details</span>
+          <span className="text-rose-700 font-bold">{t('inspectionDetails', 'Inspection Details')}</span>
         </nav>
 
         {/* Title Bar */}
@@ -139,7 +141,7 @@ export const CustomerInspectionDetail = () => {
           <div>
             <div className="flex flex-wrap items-center gap-3">
               <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                Inspection Details
+                {t('inspectionDetails', 'Inspection Details')}
               </h1>
               <div className="flex items-center gap-2">
                 <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 border border-slate-200">
@@ -149,7 +151,7 @@ export const CustomerInspectionDetail = () => {
               </div>
             </div>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              View the inspection results and compliance findings for your product.
+              {t('inspectionResultsSubtitle', 'View the inspection results and compliance findings for your product.')}
             </p>
           </div>
 
@@ -159,7 +161,7 @@ export const CustomerInspectionDetail = () => {
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 transition-colors shadow-2xs"
             >
               <ArrowLeft className="w-3.5 h-3.5 text-slate-400" />
-              <span>Back to My Inspections</span>
+              <span>{t('backToInspections', 'Back to My Inspections')}</span>
             </Link>
           </div>
         </div>
@@ -171,49 +173,49 @@ export const CustomerInspectionDetail = () => {
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
         <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs">
           <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-            Compliance Score
+            {t('complianceScore', 'Compliance Score')}
           </span>
           <div className="flex items-baseline gap-1.5 mt-1.5">
             <span className="text-2xl font-black text-slate-900">82%</span>
             <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
-              Verified
+              {t('verified', 'Verified')}
             </span>
           </div>
         </div>
 
         <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs">
           <span className="text-[11px] font-bold text-emerald-600 uppercase tracking-wider block">
-            Compliant
+            {t('compliant', 'Compliant')}
           </span>
           <div className="flex items-baseline gap-1.5 mt-1.5">
             <span className="text-2xl font-black text-emerald-700">3</span>
-            <span className="text-[10px] font-medium text-slate-400">Declarations</span>
+            <span className="text-[10px] font-medium text-slate-400">{t('declarations', 'Declarations')}</span>
           </div>
         </div>
 
         <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs">
           <span className="text-[11px] font-bold text-amber-600 uppercase tracking-wider block">
-            Needs Review
+            {t('needsReview', 'Needs Review')}
           </span>
           <div className="flex items-baseline gap-1.5 mt-1.5">
             <span className="text-2xl font-black text-amber-700">2</span>
-            <span className="text-[10px] font-medium text-slate-400">Attention</span>
+            <span className="text-[10px] font-medium text-slate-400">{t('attention', 'Attention')}</span>
           </div>
         </div>
 
         <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs">
           <span className="text-[11px] font-bold text-rose-600 uppercase tracking-wider block">
-            Non-Compliant
+            {t('nonCompliant', 'Non-Compliant')}
           </span>
           <div className="flex items-baseline gap-1.5 mt-1.5">
             <span className="text-2xl font-black text-rose-700">1</span>
-            <span className="text-[10px] font-medium text-slate-400">Flagged</span>
+            <span className="text-[10px] font-medium text-slate-400">{t('flagged', 'Flagged')}</span>
           </div>
         </div>
 
         <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs col-span-2 sm:col-span-1">
           <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-            Inspection Date
+            {t('inspectionDate', 'Inspection Date')}
           </span>
           <div className="flex items-center gap-1.5 mt-2">
             <Calendar className="w-4 h-4 text-slate-400" />
@@ -234,54 +236,54 @@ export const CustomerInspectionDetail = () => {
                 <Package className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="text-sm font-bold text-slate-900">Product Information</h2>
-                <p className="text-[11px] text-slate-400">Registered packaged commodity metadata</p>
+                <h2 className="text-sm font-bold text-slate-900">{t('productInformation', 'Product Information')}</h2>
+                <p className="text-[11px] text-slate-400">{t('registeredCommodityMetadata', 'Registered packaged commodity metadata')}</p>
               </div>
             </div>
             <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
-              Batch: AR52026
+              {t('batch', 'Batch')}: AR52026
             </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-1">
             <div className="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-1">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                Product Name
+                {t('productName', 'Product Name')}
               </span>
               <p className="font-bold text-slate-900 text-sm">ABC Premium Rice</p>
             </div>
 
             <div className="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-1">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                Category
+                {t('category', 'Category')}
               </span>
               <p className="font-bold text-slate-800 text-sm">Food Grains & Pulses</p>
             </div>
 
             <div className="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-1">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                Manufacturer / Packer
+                {t('manufacturerPacker', 'Manufacturer / Packer')}
               </span>
               <p className="font-semibold text-slate-800">ABC Foods Pvt. Ltd.</p>
             </div>
 
             <div className="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-1">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                Net Quantity
+                {t('netQuantity', 'Net Quantity')}
               </span>
               <p className="font-bold text-slate-900 text-sm">5 kg</p>
             </div>
 
             <div className="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-1">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                Maximum Retail Price (MRP)
+                {t('mrpDeclaration', 'Maximum Retail Price (MRP)')}
               </span>
               <p className="font-black text-rose-700 text-sm">₹520</p>
             </div>
 
             <div className="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-1">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                Packed Date
+                {t('date', 'Packed Date')}
               </span>
               <p className="font-semibold text-slate-800 text-sm">08/2026</p>
             </div>
@@ -293,7 +295,7 @@ export const CustomerInspectionDetail = () => {
           <div>
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
               <Shield className="w-4 h-4 text-rose-700" />
-              <h2 className="text-sm font-bold text-slate-900">Compliance Overview</h2>
+              <h2 className="text-sm font-bold text-slate-900">{t('complianceOverview', 'Compliance Overview')}</h2>
             </div>
 
             {/* Circular Gauge */}
@@ -321,10 +323,10 @@ export const CustomerInspectionDetail = () => {
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
                   <span className="text-2xl font-black text-slate-900 leading-none">82%</span>
-                  <span className="text-[10px] font-bold text-slate-400 mt-0.5">Score</span>
+                  <span className="text-[10px] font-bold text-slate-400 mt-0.5">{t('score', 'Score')}</span>
                 </div>
               </div>
-              <p className="text-xs font-bold text-slate-800 mt-2">Overall Compliance Score</p>
+              <p className="text-xs font-bold text-slate-800 mt-2">{t('overallScore', 'Overall Compliance Score')}</p>
               <span className="text-[11px] text-slate-400">Legal Metrology Index</span>
             </div>
           </div>
@@ -334,25 +336,25 @@ export const CustomerInspectionDetail = () => {
             <div className="flex items-center justify-between p-2 rounded-xl bg-emerald-50/60 border border-emerald-100 text-emerald-800 font-semibold">
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>Compliant</span>
+                <span>{t('compliant', 'Compliant')}</span>
               </div>
-              <span className="font-bold">3 checks</span>
+              <span className="font-bold">3 {t('declarations', 'checks')}</span>
             </div>
 
             <div className="flex items-center justify-between p-2 rounded-xl bg-amber-50/60 border border-amber-100 text-amber-800 font-semibold">
               <div className="flex items-center gap-1.5">
                 <AlertTriangle className="w-4 h-4 text-amber-600" />
-                <span>Needs Review</span>
+                <span>{t('needsReview', 'Needs Review')}</span>
               </div>
-              <span className="font-bold">2 checks</span>
+              <span className="font-bold">2 {t('declarations', 'checks')}</span>
             </div>
 
             <div className="flex items-center justify-between p-2 rounded-xl bg-rose-50/60 border border-rose-100 text-rose-800 font-semibold">
               <div className="flex items-center gap-1.5">
                 <XCircle className="w-4 h-4 text-rose-600" />
-                <span>Non-Compliant</span>
+                <span>{t('nonCompliant', 'Non-Compliant')}</span>
               </div>
-              <span className="font-bold">1 check</span>
+              <span className="font-bold">1 {t('declarations', 'check')}</span>
             </div>
           </div>
         </div>
@@ -365,14 +367,14 @@ export const CustomerInspectionDetail = () => {
         <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/40">
           <div>
             <h2 className="text-base font-black text-slate-900 tracking-tight">
-              Compliance Findings
+              {t('complianceFindings', 'Compliance Findings')}
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Detailed statutory verification per Legal Metrology (Packaged Commodities) Rules
+              {t('statutoryVerificationDesc', 'Detailed statutory verification per Legal Metrology (Packaged Commodities) Rules')}
             </p>
           </div>
           <span className="text-xs font-bold text-slate-500 bg-white px-3 py-1 rounded-lg border border-slate-200">
-            5 Total Checks
+            5 {t('totalGrievances', 'Total Checks')}
           </span>
         </div>
 
@@ -388,7 +390,7 @@ export const CustomerInspectionDetail = () => {
                   <h3 className="font-bold text-sm text-slate-900">{finding.title}</h3>
                   <StatusBadge status={finding.status} size="sm" />
                   <span className="text-[11px] font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
-                    Confidence: {finding.confidence}%
+                    {t('confidence', 'Confidence')}: {finding.confidence}%
                   </span>
                 </div>
                 <p className="text-xs text-slate-600 font-medium">
@@ -404,7 +406,7 @@ export const CustomerInspectionDetail = () => {
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200/80 transition-colors cursor-pointer shadow-2xs"
                 >
                   <Eye className="w-3.5 h-3.5 text-rose-600" />
-                  <span>View Evidence</span>
+                  <span>{t('viewEvidence', 'View Evidence')}</span>
                 </button>
               </div>
             </div>
@@ -420,46 +422,46 @@ export const CustomerInspectionDetail = () => {
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-5 space-y-4">
           <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
             <Building className="w-4 h-4 text-rose-700" />
-            <h2 className="text-sm font-bold text-slate-900">Inspection Information</h2>
+            <h2 className="text-sm font-bold text-slate-900">{t('inspectionInformation', 'Inspection Information')}</h2>
           </div>
 
           <div className="space-y-2.5 text-xs">
             <div className="flex items-center justify-between py-1 border-b border-slate-50">
-              <span className="text-slate-400 font-medium">Inspection ID</span>
+              <span className="text-slate-400 font-medium">{t('inspectionId', 'Inspection ID')}</span>
               <span className="font-mono font-bold text-slate-900">{displayInspectionId}</span>
             </div>
 
             <div className="flex items-center justify-between py-1 border-b border-slate-50">
-              <span className="text-slate-400 font-medium">Inspection Date</span>
+              <span className="text-slate-400 font-medium">{t('date', 'Inspection Date')}</span>
               <span className="font-semibold text-slate-800">05 September 2026</span>
             </div>
 
             <div className="flex items-center justify-between py-1 border-b border-slate-50">
-              <span className="text-slate-400 font-medium">Inspection Type</span>
+              <span className="text-slate-400 font-medium">{t('inspectionType', 'Inspection Type')}</span>
               <span className="font-semibold text-slate-800">Product Label Inspection</span>
             </div>
 
             <div className="flex items-center justify-between py-1 border-b border-slate-50">
-              <span className="text-slate-400 font-medium">Inspected By</span>
+              <span className="text-slate-400 font-medium">{t('inspectedBy', 'Inspected By')}</span>
               <span className="font-semibold text-slate-800">Officer</span>
             </div>
 
             <div className="flex items-center justify-between py-1 border-b border-slate-50">
-              <span className="text-slate-400 font-medium">Department</span>
+              <span className="text-slate-400 font-medium">{t('department', 'Department')}</span>
               <span className="font-semibold text-slate-800">Legal Metrology</span>
             </div>
 
             <div className="flex items-center justify-between py-1 border-b border-slate-50">
-              <span className="text-slate-400 font-medium">Status</span>
+              <span className="text-slate-400 font-medium">{t('status', 'Status')}</span>
               <span className="font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-                Needs Review
+                {t('needsReview', 'Needs Review')}
               </span>
             </div>
 
             <div className="flex items-center justify-between py-1">
-              <span className="text-slate-400 font-medium">Officer Review</span>
+              <span className="text-slate-400 font-medium">{t('officerReview', 'Officer Review')}</span>
               <span className="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                Completed
+                {t('completed', 'Completed')}
               </span>
             </div>
           </div>
@@ -469,44 +471,44 @@ export const CustomerInspectionDetail = () => {
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-5 space-y-4">
           <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
             <Clock className="w-4 h-4 text-rose-700" />
-            <h2 className="text-sm font-bold text-slate-900">Inspection Timeline</h2>
+            <h2 className="text-sm font-bold text-slate-900">{t('timeline', 'Inspection Timeline')}</h2>
           </div>
 
           <div className="relative pl-5 space-y-3.5 border-l-2 border-rose-100 ml-2 text-xs">
             <div className="relative">
               <div className="absolute -left-[27px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-50" />
               <span className="text-[10px] font-bold text-slate-400 block">05 Sep 2026</span>
-              <span className="font-semibold text-slate-800">Inspection Started</span>
+              <span className="font-semibold text-slate-800">{t('inspectionStarted', 'Inspection Started')}</span>
             </div>
 
             <div className="relative">
               <div className="absolute -left-[27px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-50" />
               <span className="text-[10px] font-bold text-slate-400 block">05 Sep 2026</span>
-              <span className="font-semibold text-slate-800">Product Image Captured</span>
+              <span className="font-semibold text-slate-800">{t('productImageCaptured', 'Product Image Captured')}</span>
             </div>
 
             <div className="relative">
               <div className="absolute -left-[27px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-50" />
               <span className="text-[10px] font-bold text-slate-400 block">05 Sep 2026</span>
-              <span className="font-semibold text-slate-800">AI-Assisted Analysis Completed</span>
+              <span className="font-semibold text-slate-800">{t('analysisComplete', 'AI-Assisted Analysis Completed')}</span>
             </div>
 
             <div className="relative">
               <div className="absolute -left-[27px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-50" />
               <span className="text-[10px] font-bold text-slate-400 block">05 Sep 2026</span>
-              <span className="font-semibold text-slate-800">Compliance Findings Generated</span>
+              <span className="font-semibold text-slate-800">{t('complianceFindings', 'Compliance Findings Generated')}</span>
             </div>
 
             <div className="relative">
               <div className="absolute -left-[27px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-50" />
               <span className="text-[10px] font-bold text-slate-400 block">05 Sep 2026</span>
-              <span className="font-semibold text-slate-800">Officer Review Completed</span>
+              <span className="font-semibold text-slate-800">{t('officerReview', 'Officer Review Completed')}</span>
             </div>
 
             <div className="relative">
               <div className="absolute -left-[27px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-50" />
               <span className="text-[10px] font-bold text-slate-400 block">05 Sep 2026</span>
-              <span className="font-bold text-rose-700">Report Generated</span>
+              <span className="font-bold text-rose-700">{t('reportGenerated', 'Report Generated')}</span>
             </div>
           </div>
         </div>
@@ -516,7 +518,7 @@ export const CustomerInspectionDetail = () => {
           <div>
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
               <FileText className="w-4 h-4 text-rose-700" />
-              <h2 className="text-sm font-bold text-slate-900">Inspection Report</h2>
+              <h2 className="text-sm font-bold text-slate-900">{t('reports', 'Inspection Report')}</h2>
             </div>
 
             <div className="p-3.5 mt-3 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
@@ -526,7 +528,7 @@ export const CustomerInspectionDetail = () => {
                 </div>
                 <div className="overflow-hidden">
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                    Official Document
+                    {t('officialDocument', 'Official Document')}
                   </span>
                   <p className="font-mono text-xs font-bold text-slate-900 truncate">
                     LABEL_SETU_Inspection_{displayInspectionId}.pdf
@@ -535,9 +537,9 @@ export const CustomerInspectionDetail = () => {
               </div>
 
               <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-200/60">
-                <span className="text-slate-500">Document Status</span>
+                <span className="text-slate-500">{t('documentStatus', 'Document Status')}</span>
                 <span className="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                  Available
+                  {t('available', 'Available')}
                 </span>
               </div>
             </div>
@@ -549,7 +551,7 @@ export const CustomerInspectionDetail = () => {
               className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-[#57184a] hover:bg-[#431238] text-white transition-colors shadow-2xs"
             >
               <FileText className="w-4 h-4" />
-              <span>View Report</span>
+              <span>{t('viewReport', 'View Report')}</span>
             </Link>
           </div>
         </div>
@@ -565,10 +567,10 @@ export const CustomerInspectionDetail = () => {
           </div>
           <div>
             <h3 className="font-bold text-slate-900 text-sm">
-              Have you identified an issue with this product?
+              {t('haveIdentifiedIssue', 'Have you identified an issue with this product?')}
             </h3>
             <p className="text-xs text-slate-600 mt-0.5">
-              Submit product snapshots to initiate an AI-assisted compliance analysis and officer verification.
+              {t('submitSnapshotsDesc', 'Submit product snapshots to initiate an AI-assisted compliance analysis and officer verification.')}
             </p>
           </div>
         </div>
@@ -578,7 +580,7 @@ export const CustomerInspectionDetail = () => {
           className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-md shadow-rose-900/10 transition-all active:scale-98 shrink-0 cursor-pointer"
         >
           <Sparkles className="w-4 h-4" />
-          <span>Raise a Complaint</span>
+          <span>{t('raiseNewComplaint', 'Raise a Complaint')}</span>
         </Link>
       </div>
 
@@ -591,7 +593,7 @@ export const CustomerInspectionDetail = () => {
           className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 transition-colors shadow-2xs"
         >
           <ArrowLeft className="w-4 h-4 text-slate-400" />
-          <span>Back to My Inspections</span>
+          <span>{t('backToInspections', 'Back to My Inspections')}</span>
         </Link>
 
         <div className="flex items-center gap-2.5">
@@ -601,7 +603,7 @@ export const CustomerInspectionDetail = () => {
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-white text-rose-700 hover:bg-rose-50 border border-rose-200 transition-colors shadow-2xs cursor-pointer"
           >
             <Eye className="w-3.5 h-3.5" />
-            <span>View Evidence</span>
+            <span>{t('viewEvidence', 'View Evidence')}</span>
           </button>
         </div>
       </div>

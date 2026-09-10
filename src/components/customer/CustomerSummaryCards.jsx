@@ -2,57 +2,60 @@ import React from 'react';
 import { Package, ClipboardList, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { CUSTOMER_SUMMARY_STATS } from '../../data/customerMockData';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const CustomerSummaryCards = () => {
+  const { t } = useLanguage();
+
   const cards = [
     {
       id: 'products',
-      title: 'My Products',
+      title: t('myProducts', 'My Products'),
       value: CUSTOMER_SUMMARY_STATS.myProducts,
       icon: Package,
       iconColor: 'text-cyan-400',
       iconBg: 'bg-cyan-500/15 border-cyan-500/30',
       cardBg: 'bg-[#0f1b2d] border-[#1e314f] hover:border-cyan-500/50',
-      badge: 'Active Portfolio',
+      badge: t('activePortfolio', 'Active Portfolio'),
       badgeStyle: 'bg-cyan-950/80 text-cyan-300 border-cyan-500/30',
       glow: 'group-hover:shadow-cyan-500/10',
       link: '/customer/products',
     },
     {
       id: 'inspections',
-      title: 'Total Inspections',
+      title: t('totalInspections', 'Total Inspections'),
       value: CUSTOMER_SUMMARY_STATS.inspections,
       icon: ClipboardList,
       iconColor: 'text-violet-400',
       iconBg: 'bg-violet-500/15 border-violet-500/30',
       cardBg: 'bg-[#0f1b2d] border-[#1e314f] hover:border-violet-500/50',
-      badge: 'Official Records',
+      badge: t('officialRecords', 'Official Records'),
       badgeStyle: 'bg-violet-950/80 text-violet-300 border-violet-500/30',
       glow: 'group-hover:shadow-violet-500/10',
       link: '/customer/inspections',
     },
     {
       id: 'compliant',
-      title: 'Compliant Products',
+      title: t('compliantProducts', 'Compliant Products'),
       value: CUSTOMER_SUMMARY_STATS.compliantProducts,
       icon: ShieldCheck,
       iconColor: 'text-emerald-400',
       iconBg: 'bg-emerald-500/15 border-emerald-500/30',
       cardBg: 'bg-[#0f1b2d] border-[#1e314f] hover:border-emerald-500/50',
-      badge: '58.3% Ratio',
+      badge: `58.3% ${t('ratio', 'Ratio')}`,
       badgeStyle: 'bg-emerald-950/80 text-emerald-300 border-emerald-500/30',
       glow: 'group-hover:shadow-emerald-500/10',
       link: '/customer/products',
     },
     {
       id: 'needs-attention',
-      title: 'Needs Attention',
+      title: t('needsAttention', 'Needs Attention'),
       value: CUSTOMER_SUMMARY_STATS.needsAttention,
       icon: AlertTriangle,
       iconColor: 'text-amber-400',
       iconBg: 'bg-amber-500/15 border-amber-500/30',
       cardBg: 'bg-[#0f1b2d] border-[#1e314f] hover:border-amber-500/50',
-      badge: 'Action Required',
+      badge: t('actionRequired', 'Action Required'),
       badgeStyle: 'bg-amber-950/80 text-amber-300 border-amber-500/30',
       glow: 'group-hover:shadow-amber-500/10',
       link: '/customer/products',

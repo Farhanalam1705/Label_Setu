@@ -1,38 +1,40 @@
 import React from 'react';
 import { Package, ClipboardList, FileText, Bell, Zap, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const QuickActions = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const actions = [
     {
-      title: 'View My Products',
-      desc: '12 registered SKUs',
+      title: t('myProducts', 'View My Products'),
+      desc: `12 ${t('activePortfolio', 'registered SKUs')}`,
       icon: Package,
       path: '/customer/products',
       color: 'hover:border-rose-300 hover:bg-rose-50/40 text-rose-800',
       iconBg: 'bg-rose-50 text-rose-700 border border-rose-200/60',
     },
     {
-      title: 'View Inspections',
-      desc: '8 verification audits',
+      title: t('myInspections', 'View Inspections'),
+      desc: `8 ${t('officialRecords', 'verification audits')}`,
       icon: ClipboardList,
       path: '/customer/inspections',
       color: 'hover:border-[#57184a]/30 hover:bg-[#57184a]/5 text-[#57184a]',
       iconBg: 'bg-[#57184a]/10 text-[#57184a] border border-[#57184a]/20',
     },
     {
-      title: 'View Reports',
-      desc: 'Download certificates',
+      title: t('reports', 'View Reports'),
+      desc: t('downloadCsvLog', 'Download certificates'),
       icon: FileText,
       path: '/customer/reports',
       color: 'hover:border-emerald-300 hover:bg-emerald-50/40 text-emerald-800',
       iconBg: 'bg-emerald-50 text-emerald-700 border border-emerald-200/60',
     },
     {
-      title: 'Notifications',
-      desc: 'Alerts & rule changes',
+      title: t('notifications', 'Notifications'),
+      desc: t('grievanceAlertsSubtitle', 'Alerts & rule changes'),
       icon: Bell,
       path: '/customer/notifications',
       color: 'hover:border-amber-300 hover:bg-amber-50/40 text-amber-800',
@@ -48,9 +50,9 @@ export const QuickActions = () => {
         </div>
         <div>
           <h2 className="text-base font-bold text-slate-900 tracking-tight">
-            Quick Actions
+            {t('quickActions', 'Quick Actions')}
           </h2>
-          <p className="text-xs text-slate-400">Direct shortcuts to customer tools</p>
+          <p className="text-xs text-slate-400">{t('directShortcuts', 'Direct shortcuts to customer tools')}</p>
         </div>
       </div>
 
@@ -84,3 +86,4 @@ export const QuickActions = () => {
     </div>
   );
 };
+

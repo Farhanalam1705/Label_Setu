@@ -142,7 +142,7 @@ export const CustomerSettings = () => {
             {t('accountSettings', 'Account & Organization Settings')}
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Manage your registered business profile, theme preferences, language, and security controls
+            {t('accountSettingsSubtitle', 'Manage your registered business profile, theme preferences, language, and security controls')}
           </p>
         </div>
 
@@ -175,8 +175,8 @@ export const CustomerSettings = () => {
               </div>
             </div>
             <div className="pt-2 border-t border-slate-100 text-[11px] text-slate-500 space-y-1">
-              <p className="truncate"><strong className="text-slate-700">Company:</strong> {companyName}</p>
-              <p><strong className="text-slate-700">Zone:</strong> {zone}</p>
+              <p className="truncate"><strong className="text-slate-700">{t('companyName', 'Company')}:</strong> {companyName}</p>
+              <p><strong className="text-slate-700">{t('assignedEnforcementZone', 'Zone')}:</strong> {zone}</p>
             </div>
           </div>
 
@@ -185,7 +185,7 @@ export const CustomerSettings = () => {
             {[
               { id: 'profile', label: t('organizationProfile', 'Organization & Profile'), icon: Building },
               { id: 'appearance', label: t('themeAppearance', 'Theme & Appearance'), icon: Palette },
-              { id: 'language', label: t('languageRegional', 'Language & Regional Standards'), icon: Globe },
+              { id: 'language', label: t('languageRegionalStandards', 'Language & Regional Standards'), icon: Globe },
               { id: 'notifications', label: t('notificationPreferences', 'Notification Preferences'), icon: Bell },
               { id: 'security', label: t('securityAccess', 'Security & Access'), icon: Shield },
               { id: 'data', label: t('dataComplianceExport', 'Data & Compliance Export'), icon: Download },
@@ -219,18 +219,18 @@ export const CustomerSettings = () => {
             <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-2xs space-y-6">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div>
-                  <h2 className="text-base font-bold text-slate-900">Organization & Business Profile</h2>
-                  <p className="text-xs text-slate-500">Official enterprise records registered with Legal Metrology</p>
+                  <h2 className="text-base font-bold text-slate-900">{t('organizationProfile', 'Organization & Business Profile')}</h2>
+                  <p className="text-xs text-slate-500">{t('organizationProfileSubtitle', 'Official enterprise records registered with Legal Metrology')}</p>
                 </div>
                 <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  Verified Business
+                  {t('verifiedBusiness', 'Verified Business')}
                 </span>
               </div>
 
               <form onSubmit={handleSaveAll} className="space-y-4 text-xs">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="font-bold text-slate-700">Company Name</label>
+                    <label className="font-bold text-slate-700">{t('companyName', 'Company Name')}</label>
                     <input
                       type="text"
                       value={companyName}
@@ -240,7 +240,7 @@ export const CustomerSettings = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="font-bold text-slate-700">GSTIN / Tax ID</label>
+                    <label className="font-bold text-slate-700">{t('gstinTaxId', 'GSTIN / Tax ID')}</label>
                     <input
                       type="text"
                       value={gstin}
@@ -250,7 +250,7 @@ export const CustomerSettings = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="font-bold text-slate-700">Authorized Representative</label>
+                    <label className="font-bold text-slate-700">{t('authorizedRepresentative', 'Authorized Representative')}</label>
                     <input
                       type="text"
                       value={contactName}
@@ -260,7 +260,7 @@ export const CustomerSettings = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="font-bold text-slate-700">Designation / Role</label>
+                    <label className="font-bold text-slate-700">{t('designationRole', 'Designation / Role')}</label>
                     <input
                       type="text"
                       value={designation}
@@ -270,7 +270,7 @@ export const CustomerSettings = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="font-bold text-slate-700">Registered Email Address</label>
+                    <label className="font-bold text-slate-700">{t('registeredEmail', 'Registered Email Address')}</label>
                     <div className="relative">
                       <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                       <input
@@ -283,7 +283,7 @@ export const CustomerSettings = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="font-bold text-slate-700">Direct Contact Phone</label>
+                    <label className="font-bold text-slate-700">{t('directContactPhone', 'Direct Contact Phone')}</label>
                     <div className="relative">
                       <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                       <input
@@ -296,7 +296,7 @@ export const CustomerSettings = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="font-bold text-slate-700">Legal Metrology Registration ID</label>
+                    <label className="font-bold text-slate-700">{t('legalMetrologyRegId', 'Legal Metrology Registration ID')}</label>
                     <input
                       type="text"
                       value={registrationNo}
@@ -306,7 +306,7 @@ export const CustomerSettings = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="font-bold text-slate-700">Assigned Enforcement Zone</label>
+                    <label className="font-bold text-slate-700">{t('assignedEnforcementZone', 'Assigned Enforcement Zone')}</label>
                     <input
                       type="text"
                       value={zone}
@@ -316,7 +316,7 @@ export const CustomerSettings = () => {
                   </div>
 
                   <div className="space-y-1.5 sm:col-span-2">
-                    <label className="font-bold text-slate-700">Registered Manufacturing / Packaging Address</label>
+                    <label className="font-bold text-slate-700">{t('registeredAddress', 'Registered Manufacturing / Packaging Address')}</label>
                     <textarea
                       rows={3}
                       value={address}
@@ -332,7 +332,7 @@ export const CustomerSettings = () => {
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-[#57184a] hover:bg-[#431238] text-white shadow-sm transition-colors cursor-pointer"
                   >
                     <Save className="w-3.5 h-3.5" />
-                    <span>Save Profile Details</span>
+                    <span>{t('saveProfileDetails', 'Save Profile Details')}</span>
                   </button>
                 </div>
               </form>
@@ -346,17 +346,17 @@ export const CustomerSettings = () => {
             <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-2xs space-y-6">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div>
-                  <h2 className="text-base font-bold text-slate-900">Theme & Interface Appearance</h2>
-                  <p className="text-xs text-slate-500">Customize the visual theme, contrast, and layout density</p>
+                  <h2 className="text-base font-bold text-slate-900">{t('themeAppearance', 'Theme & Interface Appearance')}</h2>
+                  <p className="text-xs text-slate-500">{t('themeAppearanceSubtitle', 'Customize the visual theme, contrast, and layout density')}</p>
                 </div>
                 <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-purple-50 text-[#57184a] border border-purple-200">
-                  {selectedTheme.toUpperCase()} ACTIVE
+                  {selectedTheme.toUpperCase()} {t('active', 'ACTIVE')}
                 </span>
               </div>
 
               {/* Theme Palette Selection Grid */}
               <div className="space-y-3">
-                <span className="text-xs font-bold text-slate-800 block">Color Themes</span>
+                <span className="text-xs font-bold text-slate-800 block">{t('colorThemes', 'Color Themes')}</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   {themeOptions.map((theme) => {
                     const isSelected = selectedTheme === theme.id;
@@ -397,8 +397,8 @@ export const CustomerSettings = () => {
               <div className="pt-4 border-t border-slate-100 space-y-4 text-xs">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <div>
-                    <span className="font-bold text-slate-900 block">Layout Density</span>
-                    <span className="text-[11px] text-slate-500">Control table row spacing and cards padding</span>
+                    <span className="font-bold text-slate-900 block">{t('layoutDensity', 'Layout Density')}</span>
+                    <span className="text-[11px] text-slate-500">{t('layoutDensityDesc', 'Control table row spacing and cards padding')}</span>
                   </div>
                   <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200 shadow-2xs">
                     <button
@@ -407,7 +407,7 @@ export const CustomerSettings = () => {
                         density === 'comfortable' ? 'bg-[#57184a] text-white shadow-xs' : 'text-slate-600'
                       }`}
                     >
-                      Comfortable
+                      {t('comfortable', 'Comfortable')}
                     </button>
                     <button
                       onClick={() => setDensity('compact')}
@@ -415,15 +415,15 @@ export const CustomerSettings = () => {
                         density === 'compact' ? 'bg-[#57184a] text-white shadow-xs' : 'text-slate-600'
                       }`}
                     >
-                      Compact
+                      {t('compact', 'Compact')}
                     </button>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <div>
-                    <span className="font-bold text-slate-900 block">Micro-Animations & Transitions</span>
-                    <span className="text-[11px] text-slate-500">Enable smooth card hovers and pipeline animations</span>
+                    <span className="font-bold text-slate-900 block">{t('microAnimations', 'Micro-Animations & Transitions')}</span>
+                    <span className="text-[11px] text-slate-500">{t('microAnimationsDesc', 'Enable smooth card hovers and pipeline animations')}</span>
                   </div>
                   <button
                     type="button"
@@ -450,17 +450,17 @@ export const CustomerSettings = () => {
             <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-2xs space-y-6">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div>
-                  <h2 className="text-base font-bold text-slate-900">Language & Regional Standards</h2>
-                  <p className="text-xs text-slate-500">Configure Indian official languages and statutory measurement units</p>
+                  <h2 className="text-base font-bold text-slate-900">{t('languageRegionalStandards', 'Language & Regional Standards')}</h2>
+                  <p className="text-xs text-slate-500">{t('languageRegionalSubtitle', 'Configure Indian official languages and statutory measurement units')}</p>
                 </div>
                 <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 border border-rose-200">
-                  8 Languages Supported
+                  {t('languagesSupported', '8 Languages Supported')}
                 </span>
               </div>
 
               {/* Language Selection Grid */}
               <div className="space-y-3">
-                <span className="text-xs font-bold text-slate-800 block">Select Portal Language</span>
+                <span className="text-xs font-bold text-slate-800 block">{t('selectPortalLanguage', 'Select Portal Language')}</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                   {languages.map((lang) => {
                     const isSelected = selectedLanguage === lang.code;
@@ -498,7 +498,7 @@ export const CustomerSettings = () => {
               {/* Date & Standards Form */}
               <div className="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div className="space-y-1.5">
-                  <label className="font-bold text-slate-700">Date Format</label>
+                  <label className="font-bold text-slate-700">{t('dateFormat', 'Date Format')}</label>
                   <select
                     value={dateFormat}
                     onChange={(e) => setDateFormat(e.target.value)}
@@ -511,7 +511,7 @@ export const CustomerSettings = () => {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="font-bold text-slate-700">Statutory Unit Rule Standard</label>
+                  <label className="font-bold text-slate-700">{t('statutoryUnitStandard', 'Statutory Unit Rule Standard')}</label>
                   <select
                     value={unitSystem}
                     onChange={(e) => setUnitSystem(e.target.value)}
@@ -532,8 +532,8 @@ export const CustomerSettings = () => {
             <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-2xs space-y-6">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div>
-                  <h2 className="text-base font-bold text-slate-900">Notification Preferences</h2>
-                  <p className="text-xs text-slate-500">Configure regulatory alerts, inspection updates, and grievance dispatches</p>
+                  <h2 className="text-base font-bold text-slate-900">{t('notificationPreferences', 'Notification Preferences')}</h2>
+                  <p className="text-xs text-slate-500">{t('notificationPreferencesSubtitle', 'Configure regulatory alerts, inspection updates, and grievance dispatches')}</p>
                 </div>
                 <Bell className="w-5 h-5 text-rose-700" />
               </div>
@@ -542,9 +542,9 @@ export const CustomerSettings = () => {
                 {/* Notification Item 1 */}
                 <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-200">
                   <div className="space-y-0.5 max-w-lg">
-                    <span className="font-bold text-slate-900 block">Inspection Log Updates</span>
+                    <span className="font-bold text-slate-900 block">{t('inspectionLogUpdates', 'Inspection Log Updates')}</span>
                     <p className="text-slate-500 text-[11px]">
-                      Receive automated email notifications whenever an enforcement officer completes a product label review.
+                      {t('inspectionLogUpdatesDesc', 'Receive automated email notifications whenever an enforcement officer completes a product label review.')}
                     </p>
                   </div>
                   <button
@@ -565,9 +565,9 @@ export const CustomerSettings = () => {
                 {/* Notification Item 2 */}
                 <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-200">
                   <div className="space-y-0.5 max-w-lg">
-                    <span className="font-bold text-slate-900 block">Grievance & Complaint Tracking Alerts</span>
+                    <span className="font-bold text-slate-900 block">{t('grievanceAlerts', 'Grievance & Complaint Tracking Alerts')}</span>
                     <p className="text-slate-500 text-[11px]">
-                      Instant notifications for status changes (Submitted → Under Review → Resolved / Rejected).
+                      {t('grievanceAlertsDesc', 'Instant notifications for status changes (Submitted → Under Review → Resolved / Rejected).')}
                     </p>
                   </div>
                   <button
@@ -588,9 +588,9 @@ export const CustomerSettings = () => {
                 {/* Notification Item 3 */}
                 <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-200">
                   <div className="space-y-0.5 max-w-lg">
-                    <span className="font-bold text-slate-900 block">Urgent SMS Alerts for Non-Compliance Notices</span>
+                    <span className="font-bold text-slate-900 block">{t('urgentSmsAlerts', 'Urgent SMS Alerts for Non-Compliance Notices')}</span>
                     <p className="text-slate-500 text-[11px]">
-                      Receive direct priority SMS for any flagged packaging non-compliance needing 48-hour response.
+                      {t('urgentSmsAlertsDesc', 'Receive direct priority SMS for any flagged packaging non-compliance needing 48-hour response.')}
                     </p>
                   </div>
                   <button
@@ -611,9 +611,9 @@ export const CustomerSettings = () => {
                 {/* Notification Item 4 */}
                 <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-200">
                   <div className="space-y-0.5 max-w-lg">
-                    <span className="font-bold text-slate-900 block">WhatsApp Statutory Digest</span>
+                    <span className="font-bold text-slate-900 block">{t('whatsappDigest', 'WhatsApp Statutory Digest')}</span>
                     <p className="text-slate-500 text-[11px]">
-                      Receive weekly summary digests and legal metrology amendments via verified WhatsApp business line.
+                      {t('whatsappDigestDesc', 'Receive weekly summary digests and legal metrology amendments via verified WhatsApp business line.')}
                     </p>
                   </div>
                   <button
@@ -641,11 +641,11 @@ export const CustomerSettings = () => {
             <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-2xs space-y-6">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div>
-                  <h2 className="text-base font-bold text-slate-900">Security & Authentication</h2>
-                  <p className="text-xs text-slate-500">Manage credentials, two-factor authentication, and active enterprise sessions</p>
+                  <h2 className="text-base font-bold text-slate-900">{t('securityAccess', 'Security & Authentication')}</h2>
+                  <p className="text-xs text-slate-500">{t('securityAccessSubtitle', 'Manage credentials, two-factor authentication, and active enterprise sessions')}</p>
                 </div>
                 <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  2FA Active
+                  2FA {t('active', 'Active')}
                 </span>
               </div>
 
@@ -656,8 +656,8 @@ export const CustomerSettings = () => {
                     <Smartphone className="w-5 h-5" />
                   </div>
                   <div className="space-y-0.5">
-                    <h3 className="text-xs font-bold text-slate-900">Two-Factor Authentication (2FA)</h3>
-                    <p className="text-[11px] text-slate-600">OTP required on registered mobile (+91 98765 43210)</p>
+                    <h3 className="text-xs font-bold text-slate-900">{t('twoFactorAuth', 'Two-Factor Authentication (2FA)')}</h3>
+                    <p className="text-[11px] text-slate-600">{t('twoFactorAuthDesc', 'OTP required on registered mobile (+91 98765 43210)')}</p>
                   </div>
                 </div>
                 <button
@@ -672,16 +672,16 @@ export const CustomerSettings = () => {
                   }}
                   className="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white text-slate-700 border border-slate-200 shadow-2xs hover:bg-slate-50 transition-colors cursor-pointer"
                 >
-                  {twoFactorEnabled ? 'Configure' : 'Enable'}
+                  {twoFactorEnabled ? t('configure', 'Configure') : t('enable', 'Enable')}
                 </button>
               </div>
 
               {/* Password Change Section */}
               <div className="space-y-3 pt-2">
-                <span className="text-xs font-bold text-slate-800 block">Change Account Password</span>
+                <span className="text-xs font-bold text-slate-800 block">{t('changePassword', 'Change Account Password')}</span>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                   <div className="space-y-1">
-                    <label className="text-[11px] font-semibold text-slate-600">Current Password</label>
+                    <label className="text-[11px] font-semibold text-slate-600">{t('currentPassword', 'Current Password')}</label>
                     <input
                       type="password"
                       value={currentPassword}
@@ -691,7 +691,7 @@ export const CustomerSettings = () => {
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[11px] font-semibold text-slate-600">New Password</label>
+                    <label className="text-[11px] font-semibold text-slate-600">{t('newPassword', 'New Password')}</label>
                     <input
                       type="password"
                       value={newPassword}
@@ -701,7 +701,7 @@ export const CustomerSettings = () => {
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[11px] font-semibold text-slate-600">Confirm Password</label>
+                    <label className="text-[11px] font-semibold text-slate-600">{t('confirmPassword', 'Confirm Password')}</label>
                     <input
                       type="password"
                       value={confirmPassword}
@@ -735,14 +735,14 @@ export const CustomerSettings = () => {
                     className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white transition-colors cursor-pointer"
                   >
                     <KeyRound className="w-3.5 h-3.5" />
-                    <span>Update Password</span>
+                    <span>{t('updatePassword', 'Update Password')}</span>
                   </button>
                 </div>
               </div>
 
               {/* Active Session Info */}
               <div className="pt-4 border-t border-slate-100 space-y-2 text-xs">
-                <span className="font-bold text-slate-800 block">Current Active Session</span>
+                <span className="font-bold text-slate-800 block">{t('activeSession', 'Current Active Session')}</span>
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <Laptop className="w-4 h-4 text-emerald-600" />
@@ -766,8 +766,8 @@ export const CustomerSettings = () => {
             <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-2xs space-y-6">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div>
-                  <h2 className="text-base font-bold text-slate-900">Data & Compliance Export</h2>
-                  <p className="text-xs text-slate-500">Download complete audit logs, certification dossiers, and inspection histories</p>
+                  <h2 className="text-base font-bold text-slate-900">{t('dataComplianceExport', 'Data & Compliance Export')}</h2>
+                  <p className="text-xs text-slate-500">{t('dataComplianceExportSubtitle', 'Download complete audit logs, certification dossiers, and inspection histories')}</p>
                 </div>
                 <Download className="w-5 h-5 text-rose-700" />
               </div>
@@ -778,9 +778,9 @@ export const CustomerSettings = () => {
                     <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center font-bold">
                       <FileSpreadsheet className="w-4 h-4" />
                     </div>
-                    <h3 className="font-bold text-slate-900">Inspection & Audit History (CSV)</h3>
+                    <h3 className="font-bold text-slate-900">{t('inspectionAuditHistoryCsv', 'Inspection & Audit History (CSV)')}</h3>
                     <p className="text-[11px] text-slate-500">
-                      Complete tabular export of all 8 verification logs with compliance scores and date stamps.
+                      {t('inspectionAuditHistoryCsvDesc', 'Complete tabular export of all 8 verification logs with compliance scores and date stamps.')}
                     </p>
                   </div>
                   <button
@@ -795,7 +795,7 @@ export const CustomerSettings = () => {
                     className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl font-bold text-xs bg-white text-slate-800 border border-slate-200 hover:bg-slate-100 transition-colors shadow-2xs cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5" />
-                    <span>Download CSV Log</span>
+                    <span>{t('downloadCsvLog', 'Download CSV Log')}</span>
                   </button>
                 </div>
 

@@ -2,9 +2,11 @@ import React from 'react';
 import { FileText, Download, CheckCircle2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CUSTOMER_RECENT_REPORTS } from '../../data/customerMockData';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const RecentReports = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   return (
     <div className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-2xs flex flex-col justify-between">
@@ -16,9 +18,9 @@ export const RecentReports = () => {
           </div>
           <div>
             <h2 className="text-base font-bold text-slate-900 tracking-tight">
-              Recent Reports
+              {t('reports', 'Recent Reports')}
             </h2>
-            <p className="text-xs text-slate-400">Official inspection certificates</p>
+            <p className="text-xs text-slate-400">{t('officialReportsSubtitle', 'Official inspection certificates')}</p>
           </div>
         </div>
 
@@ -26,7 +28,7 @@ export const RecentReports = () => {
           to="/customer/reports"
           className="text-xs font-semibold text-rose-700 hover:text-rose-900 transition-colors"
         >
-          All Reports &rarr;
+          {t('reports', 'All Reports')} &rarr;
         </Link>
       </div>
 
@@ -39,14 +41,14 @@ export const RecentReports = () => {
           >
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
-                <FileText className="w-5 h-5" />
+                <FileText className="w-4 h-4" />
               </div>
               <div>
                 <p className="font-mono font-bold text-xs text-slate-900 break-all">
                   {report.name}
                 </p>
                 <div className="flex flex-wrap items-center gap-2 text-[11px] text-slate-500 mt-1">
-                  <span>Product: {report.product}</span>
+                  <span>{t('product', 'Product')}: {report.product}</span>
                   <span>&bull;</span>
                   <span>{report.date}</span>
                   <span>&bull;</span>
@@ -63,7 +65,7 @@ export const RecentReports = () => {
               className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold bg-[#57184a] text-white hover:bg-[#431238] rounded-lg transition-colors shrink-0 cursor-pointer shadow-2xs self-start sm:self-auto"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>View Report</span>
+              <span>{t('viewReport', 'View Report')}</span>
             </button>
           </div>
         ))}
@@ -76,9 +78,10 @@ export const RecentReports = () => {
           to="/customer/reports"
           className="text-rose-700 font-semibold hover:underline"
         >
-          Manage archive
+          {t('archivedDocuments', 'Manage archive')}
         </Link>
       </div>
     </div>
   );
 };
+

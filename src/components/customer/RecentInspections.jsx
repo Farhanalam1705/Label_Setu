@@ -7,19 +7,21 @@ import {
   Eye, 
   CheckSquare, 
   Square, 
-  CheckCircle2,
-  XCircle,
-  AlertTriangle
+  CheckCircle2, 
+  XCircle, 
+  AlertTriangle 
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { CUSTOMER_RECENT_INSPECTIONS } from '../../data/customerMockData';
 import { useToast } from '../common/Toast';
+import { useLanguage } from '../../context/LanguageContext';
 
 const STORAGE_KEY = 'label_setu_customer_recent_inspections';
 
 export const RecentInspections = () => {
   const navigate = useNavigate();
   const { addToast } = useToast();
+  const { t } = useLanguage();
 
   // Load from localStorage or fallback to mock data
   const [inspections, setInspections] = useState(() => {
@@ -131,7 +133,7 @@ export const RecentInspections = () => {
       return (
         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
           <CheckCircle2 className="w-3 h-3" />
-          COMPLIANT
+          {t('compliant', 'COMPLIANT')}
         </span>
       );
     }
@@ -139,14 +141,14 @@ export const RecentInspections = () => {
       return (
         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">
           <XCircle className="w-3 h-3" />
-          NON-COMPLIANT
+          {t('nonCompliant', 'NON-COMPLIANT')}
         </span>
       );
     }
     return (
       <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">
         <AlertTriangle className="w-3 h-3" />
-        NEEDS REVIEW
+        {t('needsReview', 'NEEDS REVIEW')}
       </span>
     );
   };
@@ -161,7 +163,7 @@ export const RecentInspections = () => {
           </div>
           <div>
             <h2 className="text-lg font-black text-white tracking-tight">
-              Recent Inspection History
+              {t('recentInspections', 'Recent Inspection History')}
             </h2>
           </div>
         </div>
@@ -175,7 +177,7 @@ export const RecentInspections = () => {
               title="Clear all inspection records"
             >
               <Trash2 className="w-3.5 h-3.5" />
-              <span>Clear All Data</span>
+              <span>{t('clearAllData', 'Clear All Data')}</span>
             </button>
           )}
 
@@ -185,7 +187,7 @@ export const RecentInspections = () => {
             title="Reset to default mock data"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset Demo</span>
+            <span>{t('resetDemo', 'Reset Demo')}</span>
           </button>
         </div>
       </div>
@@ -199,7 +201,7 @@ export const RecentInspections = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by Product Name, ID or Category..."
+            placeholder={t('searchPlaceholder', 'Search by Product Name, ID or Category...')}
             className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl border border-slate-700 bg-[#0a1526] text-white placeholder-slate-400 focus:outline-hidden focus:border-cyan-500"
           />
         </div>
@@ -207,10 +209,10 @@ export const RecentInspections = () => {
         {/* Status Filter Tabs */}
         <div className="flex items-center gap-1 bg-[#0a1526] p-1 rounded-xl border border-slate-700 text-xs">
           {[
-            { key: 'ALL', label: 'All' },
-            { key: 'COMPLIANT', label: 'Compliant' },
-            { key: 'REVIEW', label: 'Review' },
-            { key: 'NON_COMPLIANT', label: 'Violations' },
+            { key: 'ALL', label: t('all', 'All') },
+            { key: 'COMPLIANT', label: t('compliant', 'Compliant') },
+            { key: 'REVIEW', label: t('review', 'Review') },
+            { key: 'NON_COMPLIANT', label: t('violations', 'Violations') },
           ].map((tab) => (
             <button
               key={tab.key}
@@ -232,21 +234,21 @@ export const RecentInspections = () => {
         <div className="p-3 px-6 bg-cyan-950/90 border-b border-cyan-500/30 flex items-center justify-between animate-in fade-in">
           <div className="flex items-center gap-2 text-xs text-cyan-200 font-bold">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span>{selectedIds.length} inspection(s) selected</span>
+            <span>{selectedIds.length} {t('inspectionsSelected', 'inspection(s) selected')}</span>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setSelectedIds([])}
               className="px-2.5 py-1 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer font-medium"
             >
-              Deselect All
+              {t('deselectAll', 'Deselect All')}
             </button>
             <button
               onClick={handleDeleteSelected}
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-xs transition-colors cursor-pointer"
             >
               <Trash2 className="w-3.5 h-3.5" />
-              <span>Delete Selected ({selectedIds.length})</span>
+              <span>{t('deleteSelected', 'Delete Selected')} ({selectedIds.length})</span>
             </button>
           </div>
         </div>
@@ -271,12 +273,12 @@ export const RecentInspections = () => {
                     )}
                   </button>
                 </th>
-                <th className="py-3.5 px-4">Inspection ID</th>
-                <th className="py-3.5 px-4">Product Name</th>
-                <th className="py-3.5 px-4">Date</th>
-                <th className="py-3.5 px-4">Status</th>
-                <th className="py-3.5 px-4">Score</th>
-                <th className="py-3.5 px-4 text-right">Actions</th>
+                <th className="py-3.5 px-4">{t('inspectionId', 'Inspection ID')}</th>
+                <th className="py-3.5 px-4">{t('productName', 'Product Name')}</th>
+                <th className="py-3.5 px-4">{t('date', 'Date')}</th>
+                <th className="py-3.5 px-4">{t('status', 'Status')}</th>
+                <th className="py-3.5 px-4">{t('score', 'Score')}</th>
+                <th className="py-3.5 px-4 text-right">{t('actions', 'Actions')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60 font-medium">
@@ -356,7 +358,7 @@ export const RecentInspections = () => {
                           title="View Details"
                         >
                           <Eye className="w-3.5 h-3.5" />
-                          <span className="hidden sm:inline">Details</span>
+                          <span className="hidden sm:inline">{t('details', 'Details')}</span>
                         </button>
 
                         <button
@@ -381,11 +383,11 @@ export const RecentInspections = () => {
             <ClipboardList className="w-7 h-7" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-white">No Inspection Records Found</h3>
+            <h3 className="text-base font-bold text-white">{t('noInspectionRecordsFound', 'No Inspection Records Found')}</h3>
             <p className="text-xs text-slate-400 max-w-sm mx-auto mt-1">
               {searchQuery || statusFilter !== 'ALL'
-                ? 'No inspections matched your filter criteria.'
-                : 'All inspection logs have been removed.'}
+                ? t('noInspectionsMatched', 'No inspections matched your filter criteria.')
+                : t('allInspectionLogsRemoved', 'All inspection logs have been removed.')}
             </p>
           </div>
           <button
@@ -393,7 +395,7 @@ export const RecentInspections = () => {
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-cyan-600 hover:bg-cyan-700 text-white shadow-md transition-colors cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>Restore Demo Records</span>
+            <span>{t('restoreDemoRecords', 'Restore Demo Records')}</span>
           </button>
         </div>
       )}
@@ -406,9 +408,9 @@ export const RecentInspections = () => {
               <Trash2 className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white">Clear All Inspection Data?</h3>
+              <h3 className="text-lg font-bold text-white">{t('clearAllInspectionData', 'Clear All Inspection Data?')}</h3>
               <p className="text-xs text-slate-300 mt-1">
-                This will delete all {inspections.length} recent inspection records from your active view. You can restore default demo records anytime.
+                {t('clearAllInspectionDataDesc', `This will delete all ${inspections.length} recent inspection records from your active view. You can restore default demo records anytime.`)}
               </p>
             </div>
             <div className="flex items-center justify-end gap-3 pt-2">
@@ -416,13 +418,13 @@ export const RecentInspections = () => {
                 onClick={() => setShowClearModal(false)}
                 className="px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:bg-slate-800 transition-colors cursor-pointer"
               >
-                Cancel
+                {t('cancel', 'Cancel')}
               </button>
               <button
                 onClick={handleClearAll}
                 className="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-md transition-colors cursor-pointer"
               >
-                Yes, Clear All
+                {t('yesClearAll', 'Yes, Clear All')}
               </button>
             </div>
           </div>

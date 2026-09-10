@@ -2,9 +2,11 @@ import React from 'react';
 import { FileText, ArrowLeft, Download } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CUSTOMER_RECENT_REPORTS } from '../../data/customerMockData';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const CustomerReports = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   return (
     <div className="space-y-6">
@@ -13,20 +15,20 @@ export const CustomerReports = () => {
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold text-rose-700 mb-1">
             <Link to="/customer/dashboard" className="hover:underline flex items-center gap-1">
-              <ArrowLeft className="w-3.5 h-3.5" /> Back to Dashboard
+              <ArrowLeft className="w-3.5 h-3.5" /> {t('backToDashboard', 'Back to Dashboard')}
             </Link>
           </div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-            Inspection Reports
+            {t('reports', 'Inspection Reports')}
           </h1>
           <p className="text-xs text-slate-500 mt-1">
-            Official compliance certificates and signed verification summaries
+            {t('officialReportsSubtitle', 'Official compliance certificates and signed verification summaries')}
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold px-3 py-1.5 rounded-xl bg-rose-50 text-rose-700 border border-rose-200">
-            2 Reports Available
+            2 {t('reports', 'Reports Available')}
           </span>
         </div>
       </div>
@@ -34,7 +36,7 @@ export const CustomerReports = () => {
       {/* Reports List */}
       <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden">
         <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-          <span className="text-xs font-bold text-slate-700">Archived Documents</span>
+          <span className="text-xs font-bold text-slate-700">{t('archivedDocuments', 'Archived Documents')}</span>
           <span className="text-xs text-slate-400">PDF Format &bull; Government Digitally Stamped</span>
         </div>
 
@@ -51,9 +53,9 @@ export const CustomerReports = () => {
                 <div>
                   <h3 className="font-mono font-bold text-xs text-slate-900">{rep.name}</h3>
                   <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 mt-1">
-                    <span>Product: {rep.product}</span>
+                    <span>{t('product', 'Product')}: {rep.product}</span>
                     <span>&bull;</span>
-                    <span>Issued: {rep.date}</span>
+                    <span>{t('date', 'Issued')}: {rep.date}</span>
                     <span>&bull;</span>
                     <span className="text-emerald-700 font-semibold">{rep.status}</span>
                   </div>
@@ -65,14 +67,14 @@ export const CustomerReports = () => {
                   onClick={() => navigate(`/customer/inspections/${rep.inspectionId}`)}
                   className="px-3.5 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-xs transition-colors cursor-pointer border border-rose-200/60"
                 >
-                  View Details
+                  {t('details', 'View Details')}
                 </button>
                 <button
                   onClick={() => window.print()}
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#57184a] hover:bg-[#431238] text-white font-semibold text-xs transition-colors shadow-2xs cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>Download</span>
+                  <span>{t('downloadCsvLog', 'Download')}</span>
                 </button>
               </div>
             </div>

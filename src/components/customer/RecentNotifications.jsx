@@ -2,8 +2,11 @@ import React from 'react';
 import { Bell, AlertTriangle, CheckCircle2, Info, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { CUSTOMER_RECENT_NOTIFICATIONS } from '../../data/customerMockData';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const RecentNotifications = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-2xs flex flex-col justify-between">
       {/* Header */}
@@ -14,14 +17,14 @@ export const RecentNotifications = () => {
           </div>
           <div>
             <h2 className="text-base font-bold text-slate-900 tracking-tight">
-              Recent Notifications
+              {t('notifications', 'Recent Notifications')}
             </h2>
-            <p className="text-xs text-slate-400">Updates on inspections & guidelines</p>
+            <p className="text-xs text-slate-400">{t('grievanceAlertsSubtitle', 'Updates on inspections & guidelines')}</p>
           </div>
         </div>
 
         <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
-          3 Recent
+          3 {t('recentInspections', 'Recent')}
         </span>
       </div>
 
@@ -88,10 +91,11 @@ export const RecentNotifications = () => {
           to="/customer/notifications"
           className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-colors"
         >
-          <span>View All Notifications</span>
+          <span>{t('notifications', 'View All Notifications')}</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
     </div>
   );
 };
+

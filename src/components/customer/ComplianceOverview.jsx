@@ -1,8 +1,10 @@
 import React from 'react';
 import { ShieldCheck, Sparkles } from 'lucide-react';
 import { CUSTOMER_SUMMARY_STATS } from '../../data/customerMockData';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const ComplianceOverview = () => {
+  const { t } = useLanguage();
   const percentage = CUSTOMER_SUMMARY_STATS.overallCompliance;
   const { compliant, needsReview, nonCompliant } = CUSTOMER_SUMMARY_STATS.breakdown;
   const total = compliant + needsReview + nonCompliant;
@@ -29,10 +31,10 @@ export const ComplianceOverview = () => {
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-lg font-black text-white tracking-tight">
-                Compliance Overview
+                {t('complianceOverview', 'Compliance Overview')}
               </h2>
               <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                <Sparkles className="w-3 h-3" /> Live Audit
+                <Sparkles className="w-3 h-3" /> {t('liveAudit', 'Live Audit')}
               </span>
             </div>
           </div>
@@ -41,7 +43,7 @@ export const ComplianceOverview = () => {
         <div className="flex items-center gap-2 self-start sm:self-auto">
           <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Good Standing (Grade A)
+            {t('goodStanding', 'Good Standing (Grade A)')}
           </span>
         </div>
       </div>
@@ -86,7 +88,7 @@ export const ComplianceOverview = () => {
               {percentage}%
             </span>
             <span className="text-[10px] font-bold text-cyan-300 uppercase tracking-wider mt-0.5">
-              Overall Score
+              {t('overallScore', 'Overall Score')}
             </span>
           </div>
         </div>
@@ -95,10 +97,10 @@ export const ComplianceOverview = () => {
         <div className="flex-1 w-full space-y-4">
           <div className="flex items-center justify-between text-xs">
             <span className="font-bold text-slate-300 uppercase tracking-wider text-[11px]">
-              Commodity Distribution Bar
+              {t('commodityDistributionBar', 'Commodity Distribution Bar')}
             </span>
             <span className="font-medium text-slate-400">
-              {compliant} of {total} items compliant
+              {compliant} {t('of', 'of')} {total} {t('itemsCompliant', 'items compliant')}
             </span>
           </div>
           
@@ -107,32 +109,32 @@ export const ComplianceOverview = () => {
             <div
               style={{ width: `${(compliant / total) * 100}%` }}
               className="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-l-full transition-all duration-500 shadow-xs"
-              title={`Compliant: ${compliant} products`}
+              title={`${t('compliant', 'Compliant')}: ${compliant}`}
             />
             <div
               style={{ width: `${(needsReview / total) * 100}%` }}
               className="bg-gradient-to-r from-amber-500 to-amber-400 h-full transition-all duration-500 shadow-xs"
-              title={`Needs Review: ${needsReview} products`}
+              title={`${t('needsReview', 'Needs Review')}: ${needsReview}`}
             />
             <div
               style={{ width: `${(nonCompliant / total) * 100}%` }}
               className="bg-gradient-to-r from-rose-500 to-red-600 h-full rounded-r-full transition-all duration-500 shadow-xs"
-              title={`Non-Compliant: ${nonCompliant} products`}
+              title={`${t('nonCompliant', 'Non-Compliant')}: ${nonCompliant}`}
             />
           </div>
 
           <div className="flex flex-wrap items-center gap-4 text-xs text-slate-300 pt-1">
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block shadow-xs shadow-emerald-500/50"></span>
-              <span className="font-semibold text-slate-200">Compliant (58%)</span>
+              <span className="font-semibold text-slate-200">{t('compliant', 'Compliant')} (58%)</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block shadow-xs shadow-amber-500/50"></span>
-              <span className="font-semibold text-slate-200">Needs Review (25%)</span>
+              <span className="font-semibold text-slate-200">{t('needsReview', 'Needs Review')} (25%)</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block shadow-xs shadow-rose-500/50"></span>
-              <span className="font-semibold text-slate-200">Violations (17%)</span>
+              <span className="font-semibold text-slate-200">{t('violations', 'Violations')} (17%)</span>
             </div>
           </div>
         </div>

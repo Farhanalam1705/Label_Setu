@@ -40,11 +40,13 @@ import {
   deleteComplaints, 
   subscribeComplaints 
 } from '../../services/complaintService';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const CustomerComplaints = () => {
   const { complaintId } = useParams();
   const navigate = useNavigate();
   const { addToast } = useToast();
+  const { t } = useLanguage();
   const fileInputRef = useRef(null);
   const additionalEvidenceInputRef = useRef(null);
   const modalEvidenceInputRef = useRef(null);
@@ -395,7 +397,7 @@ export const CustomerComplaints = () => {
       return (
         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
           <CheckCircle2 className="w-3 h-3" />
-          Resolved
+          {t('resolved', 'Resolved')}
         </span>
       );
     }
@@ -403,7 +405,7 @@ export const CustomerComplaints = () => {
       return (
         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-500/15 text-sky-400 border border-sky-500/30">
           <Clock className="w-3 h-3" />
-          Under Review
+          {t('needsReview', 'Under Review')}
         </span>
       );
     }
@@ -411,7 +413,7 @@ export const CustomerComplaints = () => {
       return (
         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-500/15 text-purple-300 border border-purple-500/30">
           <Paperclip className="w-3 h-3" />
-          Evidence Requested
+          {t('evidenceRequested', 'Evidence Requested')}
         </span>
       );
     }
@@ -419,14 +421,14 @@ export const CustomerComplaints = () => {
       return (
         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">
           <XCircle className="w-3 h-3" />
-          Rejected
+          {t('rejected', 'Rejected')}
         </span>
       );
     }
     return (
       <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
         <Send className="w-3 h-3" />
-        Submitted
+        {t('submitted', 'Submitted')}
       </span>
     );
   };
@@ -726,14 +728,14 @@ export const CustomerComplaints = () => {
             <div>
               <div className="flex items-center gap-2 text-xs font-semibold text-rose-600 mb-1">
                 <Link to="/customer/dashboard" className="hover:underline flex items-center gap-1">
-                  <ArrowLeft className="w-3.5 h-3.5" /> Back to Dashboard
+                  <ArrowLeft className="w-3.5 h-3.5" /> {t('backToDashboard', 'Back to Dashboard')}
                 </Link>
               </div>
               <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                Complaints & Grievances
+                {t('complaints', 'Complaints & Grievances')}
               </h1>
               <p className="text-xs text-slate-500 mt-1">
-                Raise and track complaints related to product labels and inspections.
+                {t('grievanceAlertsSubtitle', 'Raise and track complaints related to product labels and inspections.')}
               </p>
             </div>
 
@@ -750,32 +752,32 @@ export const CustomerComplaints = () => {
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-lg shadow-rose-950/30 transition-all active:scale-98 cursor-pointer self-start sm:self-auto"
             >
               <PlusCircle className="w-4 h-4" />
-              <span>Raise New Complaint</span>
+              <span>{t('raiseNewComplaint', 'Raise New Complaint')}</span>
             </button>
           </div>
 
           {/* Quick Stats Summary */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
             <div className="bg-[#0f1b2d] p-4 rounded-xl border border-[#1e314f]">
-              <span className="text-xs font-semibold text-slate-400">Total Grievances</span>
+              <span className="text-xs font-semibold text-slate-400">{t('totalGrievances', 'Total Grievances')}</span>
               <p className="text-2xl font-black text-white mt-1">{complaints.length}</p>
             </div>
             <div className="bg-[#0f1b2d] p-4 rounded-xl border border-[#1e314f]">
-              <span className="text-xs font-semibold text-cyan-400">Submitted</span>
+              <span className="text-xs font-semibold text-cyan-400">{t('submitted', 'Submitted')}</span>
               <p className="text-2xl font-black text-white mt-1">
-                {complaints.filter((c) => c.status === 'Submitted').length}
+                {complaints.filter((c) => ['SUBMITTED', 'Submitted'].includes(c.status)).length}
               </p>
             </div>
             <div className="bg-[#0f1b2d] p-4 rounded-xl border border-[#1e314f]">
-              <span className="text-xs font-semibold text-amber-400">Under Review</span>
+              <span className="text-xs font-semibold text-amber-400">{t('needsReview', 'Under Review')}</span>
               <p className="text-2xl font-black text-white mt-1">
-                {complaints.filter((c) => c.status === 'Under Review').length}
+                {complaints.filter((c) => ['UNDER_REVIEW', 'Under Review', 'ADDITIONAL_EVIDENCE_REQUIRED', 'Additional Evidence Requested'].includes(c.status)).length}
               </p>
             </div>
             <div className="bg-[#0f1b2d] p-4 rounded-xl border border-[#1e314f]">
-              <span className="text-xs font-semibold text-emerald-400">Resolved</span>
+              <span className="text-xs font-semibold text-emerald-400">{t('resolved', 'Resolved')}</span>
               <p className="text-2xl font-black text-white mt-1">
-                {complaints.filter((c) => c.status === 'Resolved').length}
+                {complaints.filter((c) => ['RESOLVED', 'Resolved', 'VALIDATED'].includes(c.status)).length}
               </p>
             </div>
           </div>
@@ -790,7 +792,7 @@ export const CustomerComplaints = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search complaints by ID, Product or Category..."
+                  placeholder={t('searchComplaintsPlaceholder', 'Search complaints by ID, Product or Category...')}
                   className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl border border-slate-700 bg-[#0a1526] text-white placeholder-slate-400 focus:outline-hidden focus:border-cyan-500"
                 />
               </div>
@@ -800,20 +802,20 @@ export const CustomerComplaints = () => {
                 {selectedComplaintIds.length > 0 ? (
                   <div className="flex items-center gap-2 bg-rose-950/40 border border-rose-500/30 px-2.5 py-1 rounded-xl">
                     <span className="text-xs font-bold text-rose-300">
-                      {selectedComplaintIds.length} Selected
+                      {selectedComplaintIds.length} {t('selected', 'Selected')}
                     </span>
                     <button
                       onClick={handleDeleteSelected}
                       className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-bold text-xs bg-rose-600 hover:bg-rose-700 text-white shadow-xs transition-all active:scale-95 cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
-                      <span>Delete Data ({selectedComplaintIds.length})</span>
+                      <span>{t('deleteData', 'Delete Data')} ({selectedComplaintIds.length})</span>
                     </button>
                     <button
                       onClick={() => setSelectedComplaintIds([])}
                       className="text-xs text-slate-400 hover:text-white px-1 cursor-pointer"
                     >
-                      Clear
+                      {t('clear', 'Clear')}
                     </button>
                   </div>
                 ) : (
@@ -832,23 +834,28 @@ export const CustomerComplaints = () => {
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs bg-[#0a1526] hover:bg-rose-950/30 text-slate-300 hover:text-rose-300 border border-slate-700 hover:border-rose-500/40 transition-colors cursor-pointer"
                   >
                     <Trash2 className="w-3.5 h-3.5 text-rose-400" />
-                    <span>Delete Data</span>
+                    <span>{t('deleteData', 'Delete Data')}</span>
                   </button>
                 )}
 
                 {/* Filter Tabs */}
                 <div className="flex items-center gap-1 bg-[#0a1526] p-1 rounded-xl border border-slate-700 text-xs">
-                  {['ALL', 'Submitted', 'Under Review', 'Resolved'].map((tab) => (
+                  {[
+                    { key: 'ALL', label: t('all', 'All') },
+                    { key: 'Submitted', label: t('submitted', 'Submitted') },
+                    { key: 'Under Review', label: t('needsReview', 'Under Review') },
+                    { key: 'Resolved', label: t('resolved', 'Resolved') },
+                  ].map((tab) => (
                     <button
-                      key={tab}
-                      onClick={() => setStatusFilter(tab)}
+                      key={tab.key}
+                      onClick={() => setStatusFilter(tab.key)}
                       className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-colors cursor-pointer ${
-                        statusFilter === tab
+                        statusFilter === tab.key
                           ? 'bg-rose-600 text-white shadow-xs'
                           : 'text-slate-400 hover:text-white'
                       }`}
                     >
-                      {tab}
+                      {tab.label}
                     </button>
                   ))}
                 </div>
@@ -873,12 +880,12 @@ export const CustomerComplaints = () => {
                           className="w-4 h-4 rounded border-slate-700 bg-[#0a1526] text-rose-600 focus:ring-rose-500 cursor-pointer accent-rose-600"
                         />
                       </th>
-                      <th className="py-3.5 px-4">Complaint ID</th>
-                      <th className="py-3.5 px-4">Product</th>
-                      <th className="py-3.5 px-4">Date</th>
-                      <th className="py-3.5 px-4">Issue Category</th>
-                      <th className="py-3.5 px-4">Status</th>
-                      <th className="py-3.5 px-4 text-right">Action</th>
+                      <th className="py-3.5 px-4">{t('complaintId', 'Complaint ID')}</th>
+                      <th className="py-3.5 px-4">{t('product', 'Product')}</th>
+                      <th className="py-3.5 px-4">{t('date', 'Date')}</th>
+                      <th className="py-3.5 px-4">{t('category', 'Issue Category')}</th>
+                      <th className="py-3.5 px-4">{t('status', 'Status')}</th>
+                      <th className="py-3.5 px-4 text-right">{t('actions', 'Action')}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-800/60 font-medium">
@@ -889,8 +896,7 @@ export const CustomerComplaints = () => {
                       return (
                         <tr
                           key={cId}
-                          onClick={() => setSelectedComplaintDetail(item)}
-                          className={`hover:bg-[#162740] transition-colors cursor-pointer ${
+                          className={`hover:bg-[#162740] transition-colors ${
                             selectedComplaintIds.includes(cId)
                               ? 'bg-[#182a45] ring-1 ring-inset ring-rose-500/40'
                               : ''
@@ -933,7 +939,7 @@ export const CustomerComplaints = () => {
                                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-500/15 text-rose-300 hover:bg-rose-500/25 border border-rose-500/30 transition-colors cursor-pointer shadow-xs"
                               >
                                 <Eye className="w-3.5 h-3.5" />
-                                <span>View Details</span>
+                                <span>{t('details', 'View Details')}</span>
                               </button>
                               <button
                                 onClick={(e) => handleDeleteSingle(cId, e)}
@@ -952,16 +958,20 @@ export const CustomerComplaints = () => {
                 </table>
               </div>
             ) : (
-              <div className="p-10 text-center space-y-3">
-                <AlertCircle className="w-10 h-10 text-slate-500 mx-auto" />
-                <p className="text-sm font-bold text-white">No complaints submitted yet.</p>
-                <p className="text-xs text-slate-400">Raise a complaint if you identify a potential issue with a product label.</p>
+              <div className="p-12 text-center space-y-3">
+                <div className="w-12 h-12 rounded-2xl bg-[#142237] border border-slate-700 text-slate-400 flex items-center justify-center mx-auto">
+                  <AlertCircle className="w-6 h-6" />
+                </div>
+                <h3 className="text-sm font-bold text-white">{t('noComplaintsSubmitted', 'No complaints submitted yet.')}</h3>
+                <p className="text-xs text-slate-400 max-w-sm mx-auto">
+                  {t('raiseComplaintPrompt', 'Raise a complaint if you identify a potential issue with a product label.')}
+                </p>
                 <button
                   onClick={() => setViewState('upload')}
                   className="mt-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white transition-colors cursor-pointer"
                 >
                   <PlusCircle className="w-4 h-4" />
-                  <span>Raise New Complaint</span>
+                  <span>{t('raiseNewComplaint', 'Raise New Complaint')}</span>
                 </button>
               </div>
             )}
@@ -979,9 +989,9 @@ export const CustomerComplaints = () => {
               onClick={() => setViewState('list')}
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-400 hover:text-rose-300 transition-colors cursor-pointer"
             >
-              <ArrowLeft className="w-4 h-4" /> Cancel & Return
+              <ArrowLeft className="w-4 h-4" /> {t('cancelAndReturn', 'Cancel & Return')}
             </button>
-            <span className="text-xs font-bold text-slate-400">Step 1 of 3: Scan Product Label</span>
+            <span className="text-xs font-bold text-slate-400">{t('step1Scan', 'Step 1 of 3: Scan Product Label')}</span>
           </div>
 
           <div className="bg-[#0f1b2d] rounded-2xl p-6 sm:p-8 border border-[#1e314f] shadow-xl space-y-6">
@@ -990,13 +1000,13 @@ export const CustomerComplaints = () => {
                 <Camera className="w-6 h-6" />
               </div>
               <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                Upload or Capture Product Image
+                {t('uploadOrCapture', 'Upload or Capture Product Image')}
               </h2>
               <p className="text-xs text-slate-300 max-w-md mx-auto">
-                Provide a clear image of the product label so LABEL SETU can perform a preliminary analysis.
+                {t('uploadOrCaptureDesc', 'Provide a clear image of the product label so LABEL SETU can perform a preliminary analysis.')}
               </p>
               <p className="text-[11px] font-mono text-slate-400">
-                Accepted formats: <strong className="text-slate-300">JPG &bull; PNG &bull; WEBP</strong>
+                {t('acceptedFormats', 'Accepted formats: JPG • PNG • WEBP')}
               </p>
             </div>
 
@@ -1018,8 +1028,8 @@ export const CustomerComplaints = () => {
                 <div className="w-11 h-11 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
                   <Camera className="w-6 h-6" />
                 </div>
-                <div className="font-bold text-sm text-white">📷 Capture Image</div>
-                <p className="text-[11px] text-slate-400">Open device camera to snapshot actual product</p>
+                <div className="font-bold text-sm text-white">📷 {t('captureImage', 'Capture Image')}</div>
+                <p className="text-[11px] text-slate-400">{t('captureImageDesc', 'Open device camera to snapshot actual product')}</p>
               </button>
 
               {/* FILE UPLOAD BUTTON */}
@@ -1030,40 +1040,9 @@ export const CustomerComplaints = () => {
                 <div className="w-11 h-11 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
                   <Upload className="w-6 h-6" />
                 </div>
-                <div className="font-bold text-sm text-white">↑ Upload Image</div>
-                <p className="text-[11px] text-slate-400">Choose custom photo from your device</p>
+                <div className="font-bold text-sm text-white">↑ {t('uploadImage', 'Upload Image')}</div>
+                <p className="text-[11px] text-slate-400">{t('uploadImageDesc', 'Choose custom photo from your device')}</p>
               </button>
-            </div>
-
-            {/* Quick Demo Presets */}
-            <div className="p-4 rounded-xl bg-[#142237]/60 border border-slate-800 space-y-2.5">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-slate-300">
-                <Sparkles className="w-3.5 h-3.5 text-rose-400" />
-                <span>Or Select Demo Preset Scenarios:</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <button
-                  onClick={() => handleSelectScenario('eligible')}
-                  className="p-2.5 rounded-lg bg-[#0a1526] hover:bg-[#101f35] border border-amber-500/30 text-left text-xs transition-colors cursor-pointer flex items-center justify-between"
-                >
-                  <div>
-                    <span className="font-bold text-white block">Preset 1: ABC Premium Rice</span>
-                    <span className="text-[10px] text-amber-400 font-medium">Potential issue detected (Eligible)</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
-                </button>
-
-                <button
-                  onClick={() => handleSelectScenario('rejected')}
-                  className="p-2.5 rounded-lg bg-[#0a1526] hover:bg-[#101f35] border border-emerald-500/30 text-left text-xs transition-colors cursor-pointer flex items-center justify-between"
-                >
-                  <div>
-                    <span className="font-bold text-white block">Preset 2: XYZ Premium Atta</span>
-                    <span className="text-[10px] text-emerald-400 font-medium">Clean label (No issue / Ineligible)</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -1079,19 +1058,19 @@ export const CustomerComplaints = () => {
               onClick={() => setViewState('upload')}
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-400 hover:text-rose-300 transition-colors cursor-pointer"
             >
-              <ArrowLeft className="w-4 h-4" /> Change Image
+              <ArrowLeft className="w-4 h-4" /> {t('changeImage', 'Change Image')}
             </button>
-            <span className="text-xs font-bold text-slate-400">Step 1 of 3: Image Preview</span>
+            <span className="text-xs font-bold text-slate-400">{t('step1Preview', 'Step 1 of 3: Image Preview')}</span>
           </div>
 
           <div className="bg-[#0f1b2d] rounded-2xl p-6 sm:p-8 border border-[#1e314f] shadow-xl space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <h2 className="text-xl font-black text-white tracking-tight">
-                  Product Image Preview
+                  {t('productImagePreview', 'Product Image Preview')}
                 </h2>
                 <p className="text-xs text-slate-400">
-                  Verify label clarity before running preliminary analysis
+                  {t('previewSubtitle', 'Review the captured label before running preliminary check')}
                 </p>
               </div>
 
@@ -1102,7 +1081,7 @@ export const CustomerComplaints = () => {
                   type="text"
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
-                  placeholder="Enter Product Name..."
+                  placeholder={t('productNameSku', 'Enter Product Name...')}
                   className="bg-transparent text-white font-bold text-xs focus:outline-hidden"
                 />
               </div>
@@ -1126,7 +1105,7 @@ export const CustomerComplaints = () => {
                 onClick={() => setViewState('upload')}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer"
               >
-                <span>Choose Another Image</span>
+                <span>{t('changeImage', 'Choose Another Image')}</span>
               </button>
 
               <button
@@ -1134,7 +1113,7 @@ export const CustomerComplaints = () => {
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-lg shadow-rose-950/40 transition-all cursor-pointer active:scale-98"
               >
                 <Sparkles className="w-4 h-4" />
-                <span>Continue to AI Analysis &rarr;</span>
+                <span>{t('startPreliminaryAnalysis', 'Continue to AI Analysis &rarr;')}</span>
               </button>
             </div>
           </div>
@@ -1149,13 +1128,13 @@ export const CustomerComplaints = () => {
           <div className="bg-[#0f1b2d] rounded-2xl p-8 border border-[#1e314f] shadow-xl text-center space-y-6">
             <div className="space-y-2">
               <span className="text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30 inline-block">
-                AI-Assisted Preliminary Analysis
+                {t('aiAssistedAnalysis', 'AI-Assisted Preliminary Analysis')}
               </span>
               <h2 className="text-2xl font-black text-white tracking-tight">
-                Analyzing Product Label...
+                {t('analyzingProduct', 'Analyzing Product Label...')}
               </h2>
               <p className="text-xs text-slate-400">
-                Evaluating packaging declarations for {productName}
+                {t('analyzingSubtitle', 'Evaluating packaging declarations for')} {productName}
               </p>
             </div>
 
@@ -1170,10 +1149,10 @@ export const CustomerComplaints = () => {
             {/* Steps Checklist */}
             <div className="bg-[#142237]/80 rounded-xl p-5 border border-slate-800 text-left space-y-3">
               {[
-                { title: 'Image uploaded', done: analysisStepIndex >= 0 },
-                { title: 'Product label detected', done: analysisStepIndex >= 1 },
-                { title: 'Checking label information', done: analysisStepIndex >= 2 },
-                { title: 'Evaluating potential compliance issue', done: analysisStepIndex >= 3 },
+                { title: t('stepPreprocessing', 'Image uploaded'), done: analysisStepIndex >= 0 },
+                { title: t('stepDetecting', 'Product label detected'), done: analysisStepIndex >= 1 },
+                { title: t('stepVerifying', 'Checking label information'), done: analysisStepIndex >= 2 },
+                { title: t('stepSynthesizing', 'Evaluating potential compliance issue'), done: analysisStepIndex >= 3 },
               ].map((step, idx) => (
                 <div key={idx} className="flex items-center gap-3 text-xs">
                   {step.done ? (
@@ -1202,9 +1181,9 @@ export const CustomerComplaints = () => {
         <div className="max-w-2xl mx-auto space-y-6">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-rose-400">
-              Complaint Eligibility
+              {t('eligibilityCheck', 'Complaint Eligibility')}
             </span>
-            <span className="text-xs text-slate-400">Step 2 of 3: AI Preliminary Screening</span>
+            <span className="text-xs text-slate-400">{t('step2Eligibility', 'Step 2 of 3: AI Preliminary Screening')}</span>
           </div>
 
           {activeAnalysisResult?.issueDetected ? (
@@ -1216,13 +1195,13 @@ export const CustomerComplaints = () => {
                 </div>
                 <div className="space-y-1">
                   <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-950 text-amber-300 border border-amber-500/40">
-                    ⚠ Potential Issue Detected
+                    ⚠ {t('issueDetected', 'Potential Issue Detected')}
                   </span>
                   <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                    ELIGIBLE FOR SUBMISSION
+                    {t('eligibleForSubmission', 'ELIGIBLE FOR SUBMISSION')}
                   </h2>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    A potential compliance issue was identified from the submitted product image. You may submit a complaint for officer review.
+                    {t('statutoryGuidance', 'A potential compliance issue was identified from the submitted product image. You may submit a complaint for officer review.')}
                   </p>
                 </div>
               </div>
@@ -1230,15 +1209,15 @@ export const CustomerComplaints = () => {
               {/* AI-Assisted Preliminary Analysis Summary Card */}
               <div className="bg-[#142237] rounded-xl p-5 border border-slate-800 space-y-3 text-xs">
                 <div className="flex items-center justify-between pb-2 border-b border-slate-700/60">
-                  <span className="text-slate-400 font-semibold">Product:</span>
+                  <span className="text-slate-400 font-semibold">{t('product', 'Product')}:</span>
                   <span className="font-bold text-white">{productName || activeAnalysisResult.product}</span>
                 </div>
                 <div className="flex items-center justify-between pb-2 border-b border-slate-700/60">
-                  <span className="text-slate-400 font-semibold">Potential Issue:</span>
+                  <span className="text-slate-400 font-semibold">{t('detectedIssue', 'Potential Issue')}:</span>
                   <span className="font-bold text-amber-300 text-right max-w-xs">{activeAnalysisResult.issue}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400 font-semibold">Confidence:</span>
+                  <span className="text-slate-400 font-semibold">{t('aiConfidenceScore', 'Confidence')}:</span>
                   <span className="font-mono font-bold text-emerald-400">{activeAnalysisResult.confidence}%</span>
                 </div>
               </div>
@@ -1251,16 +1230,16 @@ export const CustomerComplaints = () => {
                   className="w-14 h-14 object-cover rounded-lg border border-slate-700 shrink-0"
                 />
                 <div className="text-xs space-y-0.5 min-w-0">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Evidence</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">{t('viewEvidence', 'Evidence')}</span>
                   <p className="font-bold text-white truncate">{productName}</p>
-                  <p className="text-[11px] text-slate-400">Uploaded product label snapshot</p>
+                  <p className="text-[11px] text-slate-400">{t('uploadedProductImage', 'Uploaded product label snapshot')}</p>
                 </div>
               </div>
 
               {/* Mandatory Preliminary Disclaimer */}
               <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-[11px] text-slate-400 flex items-start gap-2">
                 <Info className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                <span>Final verification will be performed by an enforcement officer.</span>
+                <span>{t('aiInfoBoxMsg', 'Final verification will be performed by an enforcement officer.')}</span>
               </div>
 
               {/* Action Buttons */}
@@ -1269,14 +1248,14 @@ export const CustomerComplaints = () => {
                   onClick={() => setViewState('upload')}
                   className="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer"
                 >
-                  Back
+                  {t('cancel', 'Back')}
                 </button>
 
                 <button
                   onClick={() => setViewState('form')}
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-lg shadow-rose-950/40 transition-all cursor-pointer"
                 >
-                  <span>Continue to Complaint Submission &rarr;</span>
+                  <span>{t('proceedToFileComplaint', 'Continue to Complaint Submission &rarr;')}</span>
                 </button>
               </div>
             </div>
@@ -1289,13 +1268,13 @@ export const CustomerComplaints = () => {
                 </div>
                 <div className="space-y-1">
                   <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-300 border border-emerald-500/40">
-                    ✓ No Apparent Compliance Issue
+                    ✓ {t('noIssueDetected', 'No Apparent Compliance Issue')}
                   </span>
                   <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                    NOT ELIGIBLE FOR SUBMISSION
+                    {t('ineligibleForSubmission', 'NOT ELIGIBLE FOR SUBMISSION')}
                   </h2>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    Based on the submitted image, no potential compliance issue was identified during the preliminary analysis.
+                    {t('noIssueDetected', 'Based on the submitted image, no potential compliance issue was identified during the preliminary analysis.')}
                   </p>
                 </div>
               </div>
@@ -1303,15 +1282,15 @@ export const CustomerComplaints = () => {
               {/* Details Box */}
               <div className="bg-[#142237] rounded-xl p-5 border border-slate-800 space-y-2 text-xs">
                 <div className="flex items-center justify-between pb-2 border-b border-slate-700/60">
-                  <span className="text-slate-400 font-semibold">Product:</span>
+                  <span className="text-slate-400 font-semibold">{t('product', 'Product')}:</span>
                   <span className="font-bold text-white">{productName || activeAnalysisResult.product}</span>
                 </div>
                 <div className="flex items-center justify-between pb-2 border-b border-slate-700/60">
-                  <span className="text-slate-400 font-semibold">Potential Issue:</span>
-                  <span className="font-bold text-emerald-400">None detected.</span>
+                  <span className="text-slate-400 font-semibold">{t('detectedIssue', 'Potential Issue')}:</span>
+                  <span className="font-bold text-emerald-400">{t('noIssueDetected', 'None detected.')}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400 font-semibold">Confidence:</span>
+                  <span className="text-slate-400 font-semibold">{t('aiConfidenceScore', 'Confidence')}:</span>
                   <span className="font-mono font-bold text-emerald-400">{activeAnalysisResult.confidence}%</span>
                 </div>
               </div>
@@ -1319,7 +1298,7 @@ export const CustomerComplaints = () => {
               {/* Blocked Submission Notice */}
               <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-[11px] text-slate-400 flex items-center gap-2">
                 <Info className="w-4 h-4 text-slate-400 shrink-0" />
-                <span>The customer cannot submit a complaint when the eligibility result is negative.</span>
+                <span>{t('ineligibleForSubmission', 'The customer cannot submit a complaint when the eligibility result is negative.')}</span>
               </div>
 
               {/* Action Button: ONLY Upload Another Image */}
@@ -1329,7 +1308,7 @@ export const CustomerComplaints = () => {
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-white transition-colors cursor-pointer"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Upload Another Image</span>
+                  <span>{t('changeImage', 'Upload Another Image')}</span>
                 </button>
               </div>
             </div>
@@ -1347,31 +1326,31 @@ export const CustomerComplaints = () => {
               onClick={() => setViewState('eligibility')}
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-400 hover:text-rose-300 transition-colors cursor-pointer"
             >
-              <ArrowLeft className="w-4 h-4" /> Back to Eligibility
+              <ArrowLeft className="w-4 h-4" /> {t('cancel', 'Back to Eligibility')}
             </button>
-            <span className="text-xs font-bold text-slate-400">Step 3 of 3: Submit Complaint</span>
+            <span className="text-xs font-bold text-slate-400">{t('step3Form', 'Step 3 of 3: Submit Complaint')}</span>
           </div>
 
           {/* COMPLAINT REVIEW SECTION */}
           <div className="bg-[#0f1b2d] rounded-2xl p-5 sm:p-6 border border-slate-800 shadow-xl space-y-4">
             <div className="flex items-center gap-2 text-rose-400 font-bold text-xs">
               <Sparkles className="w-4 h-4" />
-              <span>Complaint Review</span>
+              <span>{t('complaintFiling', 'Complaint Review')}</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div className="p-3 rounded-xl bg-[#142237] border border-slate-800 space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Product</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{t('product', 'Product')}</span>
                 <p className="font-bold text-white">{productName}</p>
               </div>
               <div className="p-3 rounded-xl bg-[#142237] border border-slate-800 space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Issue</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{t('category', 'Issue')}</span>
                 <p className="font-bold text-amber-300">{complaintCategory}</p>
               </div>
               <div className="p-3 rounded-xl bg-[#142237] border border-slate-800 space-y-1 sm:col-span-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">AI Preliminary Finding</span>
-                  <span className="text-emerald-400 font-mono font-bold text-[11px]">{activeAnalysisResult.confidence}% Confidence</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{t('aiAssistedAnalysis', 'AI Preliminary Finding')}</span>
+                  <span className="text-emerald-400 font-mono font-bold text-[11px]">{activeAnalysisResult.confidence}% {t('score', 'Confidence')}</span>
                 </div>
                 <p className="text-slate-200 font-medium">"{activeAnalysisResult.issue}"</p>
               </div>
@@ -1385,9 +1364,9 @@ export const CustomerComplaints = () => {
                 className="w-14 h-14 object-cover rounded-lg border border-slate-700 shrink-0"
               />
               <div className="text-xs space-y-0.5 min-w-0">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Evidence</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">{t('viewEvidence', 'Evidence')}</span>
                 <p className="font-bold text-white truncate">{productName}</p>
-                <p className="text-[11px] text-emerald-400 font-semibold">✓ Verified in Preliminary AI Step</p>
+                <p className="text-[11px] text-emerald-400 font-semibold">✓ {t('imageVerified', 'Verified in Preliminary AI Step')}</p>
               </div>
             </div>
           </div>
@@ -1396,17 +1375,17 @@ export const CustomerComplaints = () => {
           <form onSubmit={handleSubmitComplaint} className="bg-[#0f1b2d] rounded-2xl p-6 sm:p-8 border border-[#1e314f] shadow-xl space-y-5">
             <div>
               <h2 className="text-xl font-black text-white tracking-tight">
-                Submit Complaint
+                {t('submitComplaint', 'Submit Complaint')}
               </h2>
               <p className="text-xs text-slate-400 mt-0.5">
-                Complete the grievance details for official review by Legal Metrology Officers.
+                {t('complaintFilingSubtitle', 'Complete the grievance details for official review by Legal Metrology Officers.')}
               </p>
             </div>
 
             {/* Complaint Category */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-300">
-                Complaint Category <span className="text-rose-400">*</span>
+                {t('complaintCategory', 'Complaint Category')} <span className="text-rose-400">*</span>
               </label>
               <select
                 value={complaintCategory}
@@ -1414,19 +1393,19 @@ export const CustomerComplaints = () => {
                 required
                 className="w-full p-2.5 rounded-xl border border-slate-700 bg-[#0a1526] text-white text-xs focus:outline-hidden focus:border-rose-500 cursor-pointer"
               >
-                <option value="Incorrect MRP">Incorrect MRP</option>
-                <option value="Incorrect Quantity">Incorrect Quantity</option>
-                <option value="Missing Information">Missing Information</option>
-                <option value="Labeling Issue">Labeling Issue</option>
-                <option value="Consumer Care Issue">Consumer Care Issue</option>
-                <option value="Other">Other</option>
+                <option value="Incorrect MRP">{t('mrpDeclaration', 'Incorrect MRP')}</option>
+                <option value="Incorrect Quantity">{t('netQuantity', 'Incorrect Quantity')}</option>
+                <option value="Missing Information">{t('findings', 'Missing Information')}</option>
+                <option value="Labeling Issue">{t('declarations', 'Labeling Issue')}</option>
+                <option value="Consumer Care Issue">{t('consumerCareDetails', 'Consumer Care Issue')}</option>
+                <option value="Other">{t('actions', 'Other')}</option>
               </select>
             </div>
 
             {/* Description */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-300">
-                Description <span className="text-rose-400">*</span>
+                {t('complaintDescription', 'Description')} <span className="text-rose-400">*</span>
               </label>
               <textarea
                 required
@@ -1440,7 +1419,7 @@ export const CustomerComplaints = () => {
 
             {/* Evidence & Optional Additional Evidence */}
             <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-300">Additional Evidence (Optional)</label>
+              <label className="text-xs font-bold text-slate-300">{t('additionalEvidenceOptional', 'Additional Evidence (Optional)')}</label>
               <input
                 type="file"
                 ref={additionalEvidenceInputRef}
@@ -1451,7 +1430,7 @@ export const CustomerComplaints = () => {
                 <div className="flex items-center gap-2">
                   <Paperclip className="w-4 h-4 text-slate-400" />
                   <span className="text-slate-300">
-                    {additionalEvidenceName ? additionalEvidenceName : 'No additional file selected'}
+                    {additionalEvidenceName ? additionalEvidenceName : t('noInspectionRecordsFound', 'No additional file selected')}
                   </span>
                 </div>
                 <button
@@ -1459,7 +1438,7 @@ export const CustomerComplaints = () => {
                   onClick={() => additionalEvidenceInputRef.current?.click()}
                   className="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 transition-colors cursor-pointer"
                 >
-                  Upload File
+                  {t('uploadImage', 'Upload File')}
                 </button>
               </div>
             </div>
@@ -1474,7 +1453,7 @@ export const CustomerComplaints = () => {
                   className="w-4 h-4 mt-0.5 rounded border-slate-700 bg-[#0a1526] text-rose-600 focus:ring-rose-500 cursor-pointer accent-rose-600 shrink-0"
                 />
                 <span>
-                  I confirm that the information provided is accurate to the best of my knowledge.
+                  {t('declarationConfirm', 'I confirm that the information provided is accurate to the best of my knowledge.')}
                 </span>
               </label>
             </div>
@@ -1493,12 +1472,12 @@ export const CustomerComplaints = () => {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin text-white" />
-                    <span>Submitting Complaint...</span>
+                    <span>{t('submitting', 'Submitting Complaint...')}</span>
                   </>
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    <span>Submit Complaint</span>
+                    <span>{t('submitComplaint', 'Submit Complaint')}</span>
                   </>
                 )}
               </button>
@@ -1519,39 +1498,39 @@ export const CustomerComplaints = () => {
 
             <div className="space-y-1">
               <span className="text-[11px] font-black uppercase tracking-wider text-emerald-400">
-                ✓ Complaint Submitted Successfully
+                ✓ {t('complaintSubmittedSuccessfully', 'Complaint Submitted Successfully')}
               </span>
               <h2 className="text-2xl font-black text-white tracking-tight">
-                Grievance Registered
+                {t('complaintSubmittedSubtitle', 'Grievance Registered')}
               </h2>
               <p className="text-xs text-slate-300 max-w-sm mx-auto">
-                Your complaint has been submitted successfully and is awaiting review by the enforcement team.
+                {t('grievanceAlertsDesc', 'Your complaint has been submitted successfully and is awaiting review by the enforcement team.')}
               </p>
             </div>
 
             {/* Summary Details */}
             <div className="bg-[#142237] rounded-xl p-5 border border-slate-800 space-y-3 text-xs text-left max-w-md mx-auto">
               <div className="flex items-center justify-between pb-2 border-b border-slate-700/60">
-                <span className="text-slate-400">Complaint ID:</span>
+                <span className="text-slate-400">{t('complaintId', 'Complaint ID')}:</span>
                 <span className="font-mono font-bold text-white text-sm">
                   {submittedComplaint?.id || 'CMP-2026-0001'}
                 </span>
               </div>
               <div className="flex items-center justify-between pb-2 border-b border-slate-700/60">
-                <span className="text-slate-400">Product:</span>
+                <span className="text-slate-400">{t('product', 'Product')}:</span>
                 <span className="font-bold text-white">{submittedComplaint?.product || 'ABC Premium Rice'}</span>
               </div>
               <div className="flex items-center justify-between pb-2 border-b border-slate-700/60">
-                <span className="text-slate-400">Category:</span>
+                <span className="text-slate-400">{t('category', 'Category')}:</span>
                 <span className="font-bold text-rose-300">{submittedComplaint?.category || 'Consumer Care Issue'}</span>
               </div>
               <div className="flex items-center justify-between pb-2 border-b border-slate-700/60">
-                <span className="text-slate-400">Submitted:</span>
+                <span className="text-slate-400">{t('submitted', 'Submitted')}:</span>
                 <span className="font-medium text-slate-200">09 September 2026</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-slate-400">Status:</span>
-                <span className="font-bold text-cyan-300 uppercase tracking-wider">SUBMITTED</span>
+                <span className="text-slate-400">{t('status', 'Status')}:</span>
+                <span className="font-bold text-cyan-300 uppercase tracking-wider">{t('submitted', 'SUBMITTED')}</span>
               </div>
             </div>
 
@@ -1566,14 +1545,14 @@ export const CustomerComplaints = () => {
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-[#142237] hover:bg-[#1c304d] text-white border border-slate-700 transition-colors cursor-pointer"
               >
                 <Eye className="w-4 h-4 text-cyan-400" />
-                <span>View Complaint</span>
+                <span>{t('trackComplaint', 'View Complaint')}</span>
               </button>
 
               <button
                 onClick={() => setViewState('list')}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-lg transition-all cursor-pointer active:scale-98"
               >
-                <span>View All Complaints</span>
+                <span>{t('backToComplaints', 'View All Complaints')}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

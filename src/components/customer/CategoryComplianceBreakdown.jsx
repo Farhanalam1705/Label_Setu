@@ -1,8 +1,11 @@
 import React from 'react';
 import { Layers, CheckCircle2, AlertTriangle, XCircle, ArrowRight, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const CategoryComplianceBreakdown = () => {
+  const { t } = useLanguage();
+
   const categories = [
     {
       name: 'Food & Grains',
@@ -61,9 +64,9 @@ export const CategoryComplianceBreakdown = () => {
               </div>
               <div>
                 <h3 className="text-base font-bold text-white tracking-tight">
-                  Category Compliance Performance
+                  {t('commodityDistributionBar', 'Category Compliance Performance')}
                 </h3>
-                <p className="text-xs text-slate-400">Compliance health broken down by product lines</p>
+                <p className="text-xs text-slate-400">{t('complianceHealthDesc', 'Compliance health broken down by product lines')}</p>
               </div>
             </div>
 
@@ -71,7 +74,7 @@ export const CategoryComplianceBreakdown = () => {
               to="/customer/products"
               className="text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1"
             >
-              <span>Catalog</span>
+              <span>{t('myProducts', 'Catalog')}</span>
               <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
@@ -82,7 +85,7 @@ export const CategoryComplianceBreakdown = () => {
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-bold text-white">{cat.name}</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-[11px] text-slate-400 font-medium">{cat.compliant}/{cat.total} Compliant</span>
+                    <span className="text-[11px] text-slate-400 font-medium">{cat.compliant}/{cat.total} {t('compliant', 'Compliant')}</span>
                     <span className="font-black text-white text-xs">{cat.score}%</span>
                   </div>
                 </div>
@@ -100,8 +103,8 @@ export const CategoryComplianceBreakdown = () => {
         </div>
 
         <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
-          <span>Updated as of latest inspection round</span>
-          <span className="text-cyan-400 font-medium">4 Core Categories</span>
+          <span>{t('updatedAsOfLatest', 'Updated as of latest inspection round')}</span>
+          <span className="text-cyan-400 font-medium">4 {t('category', 'Core Categories')}</span>
         </div>
       </div>
 
@@ -115,7 +118,7 @@ export const CategoryComplianceBreakdown = () => {
               </div>
               <div>
                 <h3 className="text-base font-bold text-white tracking-tight">
-                  Statutory Rule Checklist
+                  {t('statutoryRuleChecklist', 'Statutory Rule Checklist')}
                 </h3>
                 <p className="text-xs text-slate-400">Legal Metrology PCR 2011</p>
               </div>
@@ -130,7 +133,7 @@ export const CategoryComplianceBreakdown = () => {
               >
                 <div className="space-y-0.5 min-w-0">
                   <p className="text-xs font-bold text-white truncate">{item.rule}</p>
-                  <p className="text-[11px] text-slate-400">{item.rate}% compliance conformity rate</p>
+                  <p className="text-[11px] text-slate-400">{item.rate}% {t('complianceOverview', 'compliance rate')}</p>
                 </div>
 
                 <span
@@ -140,7 +143,7 @@ export const CategoryComplianceBreakdown = () => {
                       : 'bg-amber-950/80 text-amber-300 border-amber-500/30'
                   }`}
                 >
-                  {item.status}
+                  {item.status === 'Passed' ? t('compliant', 'Passed') : t('needsReview', 'Review')}
                 </span>
               </div>
             ))}
@@ -148,9 +151,10 @@ export const CategoryComplianceBreakdown = () => {
         </div>
 
         <div className="pt-3 border-t border-slate-800/80 text-xs text-slate-400 text-center">
-          Verified under Legal Metrology Act Standards
+          {t('businessComplianceDesc', 'Verified under Legal Metrology Act Standards')}
         </div>
       </div>
     </div>
   );
 };
+

@@ -169,14 +169,6 @@ export const Topbar = ({ onToggleSidebar }) => {
           )}
         </div>
 
-        {/* Customer Portal Switcher Link */}
-        <Link
-          to="/customer/dashboard"
-          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#57184a] hover:bg-[#431238] text-rose-200 border border-rose-400/30 shadow-2xs transition-colors cursor-pointer"
-        >
-          <span>Customer Portal &rarr;</span>
-        </Link>
-
         {/* User Menu */}
         <UserMenu />
       </div>

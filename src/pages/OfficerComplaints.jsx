@@ -101,45 +101,55 @@ export const OfficerComplaints = () => {
     return matchesSearch && matchesStatus && matchesCategory;
   });
 
+  const getTranslatedCategory = (cat) => {
+    if (!cat) return t('consumerCareIssue', 'Consumer Care Issue');
+    if (cat.includes('MRP')) return t('incorrectMrp', 'Incorrect MRP');
+    if (cat.includes('Quantity')) return t('incorrectQuantity', 'Incorrect Quantity');
+    if (cat.includes('Missing')) return t('missingInformation', 'Missing Information');
+    if (cat.includes('Labeling')) return t('labelingIssue', 'Labeling Issue');
+    if (cat.includes('Consumer')) return t('consumerCareIssue', 'Consumer Care Issue');
+    return cat;
+  };
+
   const getStatusBadge = (statusStr) => {
     const s = (statusStr || '').toUpperCase();
     if (s === 'SUBMITTED') {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
-          <Clock className="w-3 h-3" /> Submitted
+        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200/80">
+          <Clock className="w-3 h-3" /> {t('submitted', 'Submitted')}
         </span>
       );
     }
     if (s === 'UNDER_REVIEW' || s === 'UNDER REVIEW') {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-sky-500/10 text-sky-400 border border-sky-500/20">
-          <RefreshCw className="w-3 h-3 animate-spin-slow" /> Under Review
+        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-sky-50 text-sky-700 border border-sky-200/80">
+          <RefreshCw className="w-3 h-3" /> {t('underReview', 'Under Review')}
         </span>
       );
     }
     if (s === 'ADDITIONAL_EVIDENCE_REQUIRED') {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-500/10 text-purple-300 border border-purple-500/20">
-          <AlertTriangle className="w-3 h-3 text-purple-400" /> Evidence Requested
+        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200/80">
+          <AlertTriangle className="w-3 h-3 text-purple-600" /> {t('evidenceRequested', 'Evidence Requested')}
         </span>
       );
     }
     if (s === 'RESOLVED' || s === 'VALIDATED') {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-          <CheckCircle2 className="w-3 h-3" /> Resolved
+        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+          <CheckCircle2 className="w-3 h-3" /> {t('resolved', 'Resolved')}
         </span>
       );
     }
     if (s === 'REJECTED') {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20">
-          <XCircle className="w-3 h-3" /> Rejected
+        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200/80">
+          <XCircle className="w-3 h-3" /> {t('rejected', 'Rejected')}
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700">
+      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
         {statusStr}
       </span>
     );
@@ -150,136 +160,137 @@ export const OfficerComplaints = () => {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-cyan-400 mb-1">
-            <span>Officer Portal</span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
-            <span className="text-slate-300">Grievance Enforcement</span>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-800 bg-cyan-50 px-2.5 py-0.5 rounded-md border border-cyan-200 flex items-center gap-1.5">
+              <Shield className="w-3.5 h-3.5 text-cyan-600" /> {t('grievanceEnforcement', 'Grievance Enforcement')}
+            </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
-            <AlertCircle className="w-7 h-7 text-cyan-400" />
-            Complaint Management
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+            <AlertCircle className="w-7 h-7 text-cyan-600" />
+            {t('complaintManagement', 'Complaint Management')}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Review and manage customer complaints submitted through LABEL SETU.
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            {t('complaintManagementSubtitle', 'Review and manage customer complaints submitted through LABEL SETU.')}
           </p>
         </div>
 
         <button
+          type="button"
           onClick={() => {
             setComplaints(getComplaints());
             addToast({
               type: 'info',
-              title: 'Complaints Refreshed',
-              message: 'Shared complaints data reloaded from storage.',
+              title: t('complaintsRefreshed', 'Complaints Refreshed'),
+              message: t('complaintsRefreshedMsg', 'Shared complaints data reloaded from storage.'),
             });
           }}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 shadow-xs transition-colors cursor-pointer self-start sm:self-auto"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 shadow-2xs transition-colors cursor-pointer self-start sm:self-auto"
         >
-          <RefreshCw className="w-3.5 h-3.5 text-cyan-400" />
-          <span>Refresh Feed</span>
+          <RefreshCw className="w-3.5 h-3.5 text-cyan-600" />
+          <span>{t('refreshFeed', 'Refresh Feed')}</span>
         </button>
       </div>
 
       {/* Summary KPI Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
         {/* Total */}
         <div 
           onClick={() => setStatusFilter('ALL')}
-          className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+          className={`p-4 rounded-2xl border transition-all cursor-pointer bg-white shadow-2xs ${
             statusFilter === 'ALL'
-              ? 'bg-[#0e2238] border-cyan-500 shadow-md ring-1 ring-cyan-500/30'
-              : 'bg-white dark:bg-[#0c1e33] border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700'
+              ? 'border-cyan-500 ring-2 ring-cyan-500/20 bg-cyan-50/20'
+              : 'border-slate-200/90 hover:border-slate-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Total</span>
-            <Layers className="w-4 h-4 text-cyan-400" />
+            <span className="text-xs font-bold text-slate-500">{t('total', 'Total')}</span>
+            <Layers className="w-4 h-4 text-cyan-600" />
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2 font-mono">
+          <p className="text-2xl sm:text-3xl font-black text-slate-900 mt-2 font-mono">
             {totalCount}
           </p>
-          <span className="text-[10px] text-slate-400 font-medium">All logged grievances</span>
+          <span className="text-[10px] text-slate-400 font-medium">{t('allLoggedGrievances', 'All logged grievances')}</span>
         </div>
 
         {/* Submitted */}
         <div 
           onClick={() => setStatusFilter('SUBMITTED')}
-          className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+          className={`p-4 rounded-2xl border transition-all cursor-pointer bg-white shadow-2xs ${
             statusFilter === 'SUBMITTED'
-              ? 'bg-[#291e10] border-amber-500 shadow-md ring-1 ring-amber-500/30'
-              : 'bg-white dark:bg-[#0c1e33] border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700'
+              ? 'border-amber-500 ring-2 ring-amber-500/20 bg-amber-50/20'
+              : 'border-slate-200/90 hover:border-slate-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-amber-500 dark:text-amber-400">Submitted</span>
-            <Clock className="w-4 h-4 text-amber-400" />
+            <span className="text-xs font-bold text-amber-700">{t('submitted', 'Submitted')}</span>
+            <Clock className="w-4 h-4 text-amber-600" />
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2 font-mono">
+          <p className="text-2xl sm:text-3xl font-black text-amber-800 mt-2 font-mono">
             {submittedCount}
           </p>
-          <span className="text-[10px] text-amber-500/80 dark:text-amber-400/70 font-medium">Awaiting initial review</span>
+          <span className="text-[10px] text-amber-600/80 font-medium">{t('awaitingInitialReview', 'Awaiting initial review')}</span>
         </div>
 
         {/* Under Review */}
         <div 
           onClick={() => setStatusFilter('UNDER_REVIEW')}
-          className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+          className={`p-4 rounded-2xl border transition-all cursor-pointer bg-white shadow-2xs ${
             statusFilter === 'UNDER_REVIEW'
-              ? 'bg-[#0f2238] border-sky-500 shadow-md ring-1 ring-sky-500/30'
-              : 'bg-white dark:bg-[#0c1e33] border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700'
+              ? 'border-sky-500 ring-2 ring-sky-500/20 bg-sky-50/20'
+              : 'border-slate-200/90 hover:border-slate-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-sky-500 dark:text-sky-400">Under Review</span>
-            <RefreshCw className="w-4 h-4 text-sky-400" />
+            <span className="text-xs font-bold text-sky-700">{t('underReview', 'Under Review')}</span>
+            <RefreshCw className="w-4 h-4 text-sky-600" />
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2 font-mono">
+          <p className="text-2xl sm:text-3xl font-black text-sky-800 mt-2 font-mono">
             {underReviewCount}
           </p>
-          <span className="text-[10px] text-sky-500/80 dark:text-sky-400/70 font-medium">In active verification</span>
+          <span className="text-[10px] text-sky-600/80 font-medium">{t('inActiveVerification', 'In active verification')}</span>
         </div>
 
         {/* Resolved */}
         <div 
           onClick={() => setStatusFilter('RESOLVED')}
-          className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+          className={`p-4 rounded-2xl border transition-all cursor-pointer bg-white shadow-2xs ${
             statusFilter === 'RESOLVED'
-              ? 'bg-[#0f2d22] border-emerald-500 shadow-md ring-1 ring-emerald-500/30'
-              : 'bg-white dark:bg-[#0c1e33] border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700'
+              ? 'border-emerald-500 ring-2 ring-emerald-500/20 bg-emerald-50/20'
+              : 'border-slate-200/90 hover:border-slate-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-emerald-500 dark:text-emerald-400">Resolved</span>
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <span className="text-xs font-bold text-emerald-700">{t('resolved', 'Resolved')}</span>
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2 font-mono">
+          <p className="text-2xl sm:text-3xl font-black text-emerald-800 mt-2 font-mono">
             {resolvedCount}
           </p>
-          <span className="text-[10px] text-emerald-500/80 dark:text-emerald-400/70 font-medium">Validated complaints</span>
+          <span className="text-[10px] text-emerald-600/80 font-medium">{t('validatedComplaints', 'Validated complaints')}</span>
         </div>
 
         {/* Rejected */}
         <div 
           onClick={() => setStatusFilter('REJECTED')}
-          className={`p-4 rounded-2xl border transition-all cursor-pointer col-span-2 sm:col-span-1 ${
+          className={`p-4 rounded-2xl border transition-all cursor-pointer col-span-2 sm:col-span-1 bg-white shadow-2xs ${
             statusFilter === 'REJECTED'
-              ? 'bg-[#2d1118] border-rose-500 shadow-md ring-1 ring-rose-500/30'
-              : 'bg-white dark:bg-[#0c1e33] border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700'
+              ? 'border-rose-500 ring-2 ring-rose-500/20 bg-rose-50/20'
+              : 'border-slate-200/90 hover:border-slate-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-rose-500 dark:text-rose-400">Rejected</span>
-            <XCircle className="w-4 h-4 text-rose-400" />
+            <span className="text-xs font-bold text-rose-700">{t('rejected', 'Rejected')}</span>
+            <XCircle className="w-4 h-4 text-rose-600" />
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2 font-mono">
+          <p className="text-2xl sm:text-3xl font-black text-rose-800 mt-2 font-mono">
             {rejectedCount}
           </p>
-          <span className="text-[10px] text-rose-500/80 dark:text-rose-400/70 font-medium">Dismissed / Ineligible</span>
+          <span className="text-[10px] text-rose-600/80 font-medium">{t('dismissedIneligible', 'Dismissed / Ineligible')}</span>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white dark:bg-[#0c1e33] rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800/80 shadow-xs space-y-4">
+      <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3.5">
           {/* Search Input */}
           <div className="relative flex-1">
@@ -288,8 +299,8 @@ export const OfficerComplaints = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by Complaint ID, Product name, Customer email, or Category..."
-              className="w-full pl-10 pr-4 py-2 rounded-xl text-xs bg-slate-50 dark:bg-[#071220] text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 focus:outline-hidden focus:border-cyan-500 placeholder:text-slate-400"
+              placeholder={t('searchComplaintsOfficerPlaceholder', 'Search by Complaint ID, Product name, Customer email, or Category...')}
+              className="w-full pl-10 pr-4 py-2 rounded-xl text-xs bg-slate-50 text-slate-900 border border-slate-200 focus:outline-hidden focus:ring-2 focus:ring-cyan-500 focus:bg-white placeholder:text-slate-400 transition-all"
             />
           </div>
 
@@ -299,102 +310,77 @@ export const OfficerComplaints = () => {
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="p-2 rounded-xl text-xs bg-slate-50 dark:bg-[#071220] text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 focus:outline-hidden focus:border-cyan-500 cursor-pointer"
+              className="text-xs bg-slate-50 text-slate-700 font-semibold px-3 py-2 rounded-xl border border-slate-200 focus:outline-hidden focus:ring-2 focus:ring-cyan-500 cursor-pointer"
             >
-              <option value="ALL">All Categories</option>
-              <option value="Consumer Care Issue">Consumer Care Issue</option>
-              <option value="Missing Information">Missing Information</option>
-              <option value="Incorrect MRP">Incorrect MRP</option>
-              <option value="Incorrect Quantity">Incorrect Quantity</option>
-              <option value="Labeling Issue">Labeling Issue</option>
-              <option value="Other">Other</option>
+              <option value="ALL">{t('allCategories', 'All Categories')}</option>
+              <option value="Incorrect MRP">{t('incorrectMrp', 'Incorrect MRP')}</option>
+              <option value="Incorrect Quantity">{t('incorrectQuantity', 'Incorrect Quantity')}</option>
+              <option value="Missing Information">{t('missingInformation', 'Missing Information')}</option>
+              <option value="Labeling Issue">{t('labelingIssue', 'Labeling Issue')}</option>
+              <option value="Consumer Care Issue">{t('consumerCareIssue', 'Consumer Care Issue')}</option>
             </select>
           </div>
         </div>
 
-        {/* Status Pill Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs font-semibold scrollbar-none">
+        {/* Status Filter Pills */}
+        <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-slate-100">
           {[
-            { id: 'ALL', label: 'All Complaints', count: totalCount },
-            { id: 'SUBMITTED', label: 'Submitted', count: submittedCount },
-            { id: 'UNDER_REVIEW', label: 'Under Review', count: underReviewCount },
-            { id: 'ADDITIONAL_EVIDENCE', label: 'Evidence Requested' },
-            { id: 'RESOLVED', label: 'Resolved / Validated', count: resolvedCount },
-            { id: 'REJECTED', label: 'Rejected', count: rejectedCount },
-          ].map((tab) => {
-            const isActive = statusFilter === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setStatusFilter(tab.id)}
-                className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors cursor-pointer text-xs ${
-                  isActive
-                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-xs'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
-                }`}
-              >
-                <span>{tab.label}</span>
-                {tab.count !== undefined && (
-                  <span className={`ml-1.5 px-1.5 py-0.2 rounded text-[10px] font-mono ${
-                    isActive ? 'bg-slate-950/20 text-slate-950 font-bold' : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
-                  }`}>
-                    {tab.count}
-                  </span>
-                )}
-              </button>
-            );
-          })}
+            { key: 'ALL', label: t('allComplaints', 'All Complaints'), count: totalCount },
+            { key: 'SUBMITTED', label: t('submitted', 'Submitted'), count: submittedCount },
+            { key: 'UNDER_REVIEW', label: t('underReview', 'Under Review'), count: underReviewCount },
+            { 
+              key: 'ADDITIONAL_EVIDENCE', 
+              label: t('evidenceRequested', 'Evidence Requested'), 
+              count: complaints.filter(c => c.status === 'ADDITIONAL_EVIDENCE_REQUIRED').length 
+            },
+            { key: 'RESOLVED', label: t('resolvedValidated', 'Resolved / Validated'), count: resolvedCount },
+            { key: 'REJECTED', label: t('rejected', 'Rejected'), count: rejectedCount },
+          ].map((pill) => (
+            <button
+              key={pill.key}
+              onClick={() => setStatusFilter(pill.key)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                statusFilter === pill.key
+                  ? 'bg-slate-900 text-white shadow-xs'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+            >
+              <span>{pill.label}</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                statusFilter === pill.key ? 'bg-slate-800 text-cyan-400' : 'bg-slate-200 text-slate-600'
+              }`}>
+                {pill.count}
+              </span>
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Main Table / Cards View */}
-      <div className="bg-white dark:bg-[#0c1e33] rounded-2xl border border-slate-200 dark:border-slate-800/80 shadow-xs overflow-hidden">
-        {filteredComplaints.length === 0 ? (
-          /* Empty State */
-          <div className="p-12 text-center space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto text-slate-400">
-              <AlertCircle className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="font-bold text-slate-900 dark:text-white text-sm">No complaints found</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mt-1">
-                {searchQuery || statusFilter !== 'ALL' || categoryFilter !== 'ALL'
-                  ? 'Try clearing the search query or status filter to view all customer complaints.'
-                  : 'No customer grievances are currently registered in the system.'}
-              </p>
-            </div>
-            {(searchQuery || statusFilter !== 'ALL' || categoryFilter !== 'ALL') && (
-              <button
-                onClick={() => {
-                  setSearchQuery('');
-                  setStatusFilter('ALL');
-                  setCategoryFilter('ALL');
-                }}
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition-colors cursor-pointer"
-              >
-                Reset Filters
-              </button>
-            )}
+      {/* Main Complaints Table Container */}
+      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden">
+        <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/60">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold text-slate-700">{t('complaintRecords', 'Complaint Records')}</span>
+            <span className="text-[11px] font-mono text-slate-400">({filteredComplaints.length} {t('recordsFound', 'records found')})</span>
           </div>
-        ) : (
+        </div>
+
+        {filteredComplaints.length > 0 ? (
           <>
-            {/* Desktop Table View */}
-            <div className="hidden md:block overflow-x-auto">
-              <table className="w-full text-left text-xs">
-                <thead>
-                  <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/75 dark:bg-[#071220]/75 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-[10px]">
-                    <th className="py-3.5 px-4">Complaint ID</th>
-                    <th className="py-3.5 px-4">Product</th>
-                    <th className="py-3.5 px-4">Customer</th>
-                    <th className="py-3.5 px-4">Category</th>
-                    <th className="py-3.5 px-4">AI Result</th>
-                    <th className="py-3.5 px-4">Confidence</th>
-                    <th className="py-3.5 px-4">Submitted</th>
-                    <th className="py-3.5 px-4">Status</th>
-                    <th className="py-3.5 px-4 text-right">Action</th>
+            {/* Single Frame Desktop & Tablet Table (No Horizontal Scrolling) */}
+            <div className="hidden md:block w-full">
+              <table className="w-full text-left text-xs text-slate-700 border-collapse">
+                <thead className="bg-slate-50/90 text-slate-500 font-bold uppercase tracking-wider text-[10px] border-b border-slate-100">
+                  <tr>
+                    <th className="py-3.5 px-4 font-mono w-[18%]">{t('complaintId', 'Complaint ID')}</th>
+                    <th className="py-3.5 px-4 w-[30%]">{t('product', 'Product')} & {t('customer', 'Customer')}</th>
+                    <th className="py-3.5 px-3 w-[18%]">{t('category', 'Category')}</th>
+                    <th className="py-3.5 px-3 w-[16%]">{t('aiResult', 'AI Result')}</th>
+                    <th className="py-3.5 px-3 w-[10%] text-center">{t('status', 'Status')}</th>
+                    <th className="py-3.5 px-4 w-[8%] text-right">{t('action', 'Action')}</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 font-medium">
+                <tbody className="divide-y divide-slate-100 font-medium">
                   {filteredComplaints.map((item) => {
                     const cId = item.complaintId || item.id;
                     const pName = item.productName || item.product;
@@ -405,85 +391,75 @@ export const OfficerComplaints = () => {
                     return (
                       <tr 
                         key={cId}
-                        className="hover:bg-slate-50 dark:hover:bg-[#0f233a] transition-colors group cursor-pointer"
-                        onClick={() => navigate(`/complaints/${cId}`)}
+                        className="hover:bg-slate-50/80 transition-colors"
                       >
-                        {/* ID */}
-                        <td className="py-3.5 px-4 font-mono font-bold text-cyan-500 dark:text-cyan-400">
-                          {cId}
+                        {/* Complaint ID & Date */}
+                        <td className="py-3 px-4 align-middle">
+                          <div className="font-mono font-bold text-cyan-700 text-xs">{cId}</div>
+                          <div className="text-[10px] text-slate-400 mt-0.5">{item.date || '09 Sep 2026'}</div>
                         </td>
 
-                        {/* Product */}
-                        <td className="py-3.5 px-4">
+                        {/* Product & Customer Combined */}
+                        <td className="py-3 px-4 align-middle">
                           <div className="flex items-center gap-2.5">
                             <img
-                              src={item.image || item.imageUrl}
+                              src={item.image || item.imageUrl || 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=600'}
                               alt={pName}
-                              className="w-8 h-8 rounded-lg object-cover border border-slate-200 dark:border-slate-700 shrink-0"
+                              className="w-9 h-9 rounded-lg object-cover border border-slate-200 shrink-0"
                             />
-                            <span className="font-bold text-slate-900 dark:text-white truncate max-w-[150px]">
-                              {pName}
-                            </span>
-                          </div>
-                        </td>
-
-                        {/* Customer */}
-                        <td className="py-3.5 px-4">
-                          <div>
-                            <p className="font-bold text-slate-800 dark:text-slate-200">{item.customerName || 'Customer'}</p>
-                            <p className="text-[10px] text-slate-400 truncate max-w-[130px] font-mono">
-                              {item.customerEmail || 'customer@labelsetu.gov.in'}
-                            </p>
+                            <div className="min-w-0 flex-1">
+                              <p className="font-bold text-slate-900 truncate text-xs">{pName}</p>
+                              <p className="text-[11px] text-slate-400 truncate">
+                                {item.customerName || t('customer', 'Customer')} &bull; <span className="font-mono text-[10px]">{item.customerEmail || 'customer@labelsetu.gov.in'}</span>
+                              </p>
+                            </div>
                           </div>
                         </td>
 
                         {/* Category */}
-                        <td className="py-3.5 px-4 text-slate-700 dark:text-slate-300 font-medium">
-                          {item.category || 'Consumer Care Issue'}
+                        <td className="py-3 px-3 align-middle">
+                          <span className="inline-block bg-slate-100/90 text-slate-700 px-2.5 py-0.5 rounded-md text-[11px] font-medium border border-slate-200/80 truncate max-w-full">
+                            {getTranslatedCategory(item.category)}
+                          </span>
                         </td>
 
-                        {/* AI Result */}
-                        <td className="py-3.5 px-4">
-                          {hasIssue ? (
-                            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-500 dark:text-amber-400">
-                              <AlertTriangle className="w-3 h-3" /> Issue Detected
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-500 dark:text-emerald-400">
-                              <CheckCircle2 className="w-3 h-3" /> Clear
-                            </span>
-                          )}
-                        </td>
-
-                        {/* Confidence */}
-                        <td className="py-3.5 px-4 font-mono font-bold text-slate-700 dark:text-slate-300">
-                          {confidence}%
-                        </td>
-
-                        {/* Submitted */}
-                        <td className="py-3.5 px-4 text-slate-500 dark:text-slate-400 whitespace-nowrap text-[11px]">
-                          {item.date || '09 Sep 2026'}
+                        {/* AI Screening & Confidence */}
+                        <td className="py-3 px-3 align-middle">
+                          <div className="space-y-0.5">
+                            {hasIssue ? (
+                              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-700">
+                                <AlertTriangle className="w-3 h-3 text-amber-600 shrink-0" /> {t('issueDetected', 'Issue Detected')}
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
+                                <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0" /> {t('clear', 'Clear')}
+                              </span>
+                            )}
+                            <div className="text-[10px] text-slate-400 font-mono">
+                              {t('confidence', 'Confidence')}: <strong className="text-slate-700 font-semibold">{confidence}%</strong>
+                            </div>
+                          </div>
                         </td>
 
                         {/* Status */}
-                        <td className="py-3.5 px-4">
+                        <td className="py-3 px-3 align-middle text-center whitespace-nowrap">
                           {getStatusBadge(item.status)}
                         </td>
 
                         {/* Action */}
-                        <td className="py-3.5 px-4 text-right">
-                          <Link
-                            to={`/complaints/${cId}`}
-                            onClick={(e) => e.stopPropagation()}
-                            className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                        <td className="py-3 px-4 align-middle text-right whitespace-nowrap">
+                          <button
+                            type="button"
+                            onClick={() => navigate(`/complaints/${cId}`)}
+                            className={`inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer shadow-2xs ${
                               isSubmitted
-                                ? 'bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-xs'
-                                : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200'
+                                ? 'bg-cyan-600 hover:bg-cyan-700 text-white'
+                                : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200/80'
                             }`}
                           >
                             <Eye className="w-3.5 h-3.5" />
-                            <span>{isSubmitted ? 'Review' : 'View'}</span>
-                          </Link>
+                            <span>{isSubmitted ? t('review', 'Review') : t('view', 'View')}</span>
+                          </button>
                         </td>
                       </tr>
                     );
@@ -493,7 +469,7 @@ export const OfficerComplaints = () => {
             </div>
 
             {/* Mobile Card List View */}
-            <div className="md:hidden divide-y divide-slate-200 dark:divide-slate-800">
+            <div className="md:hidden divide-y divide-slate-100">
               {filteredComplaints.map((item) => {
                 const cId = item.complaintId || item.id;
                 const pName = item.productName || item.product;
@@ -501,55 +477,64 @@ export const OfficerComplaints = () => {
                 const isSubmitted = item.status?.toUpperCase() === 'SUBMITTED';
 
                 return (
-                  <div
-                    key={cId}
-                    onClick={() => navigate(`/complaints/${cId}`)}
-                    className="p-4 space-y-3 hover:bg-slate-50 dark:hover:bg-[#0f233a] transition-colors cursor-pointer"
-                  >
+                  <div key={cId} className="p-4 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono font-bold text-xs text-cyan-400">{cId}</span>
+                      <span className="font-mono font-bold text-xs text-cyan-700">{cId}</span>
                       {getStatusBadge(item.status)}
                     </div>
 
                     <div className="flex items-center gap-3">
                       <img
-                        src={item.image || item.imageUrl}
+                        src={item.image || item.imageUrl || 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=600'}
                         alt={pName}
-                        className="w-12 h-12 rounded-xl object-cover border border-slate-700 shrink-0"
+                        className="w-12 h-12 rounded-xl object-cover border border-slate-200 shrink-0"
                       />
                       <div className="min-w-0">
-                        <p className="font-bold text-sm text-slate-900 dark:text-white truncate">{pName}</p>
-                        <p className="text-xs text-slate-500 dark:text-slate-400">{item.category}</p>
+                        <p className="font-bold text-sm text-slate-900 truncate">{pName}</p>
+                        <p className="text-xs text-slate-500">{getTranslatedCategory(item.category)}</p>
                         <p className="text-[11px] text-slate-400 mt-0.5">{item.customerEmail}</p>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-100 dark:border-slate-800/80">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[11px] text-slate-400">AI Match:</span>
-                        <span className="font-mono font-bold text-emerald-400">{confidence}%</span>
+                    <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-100">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[11px] text-slate-500">{t('aiConfidence', 'AI Confidence:')}</span>
+                        <span className="font-mono font-bold text-slate-800">{confidence}%</span>
                       </div>
-                      <span className="text-[11px] text-slate-400">{item.date || '09 Sep 2026'}</span>
+                      <span className="text-[11px] text-slate-500">{item.date || '09 Sep 2026'}</span>
                     </div>
 
-                    <div className="pt-1 flex justify-end">
-                      <Link
-                        to={`/complaints/${cId}`}
-                        onClick={(e) => e.stopPropagation()}
-                        className={`w-full text-center py-2 rounded-xl text-xs font-bold transition-all ${
+                    <div className="pt-1">
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/complaints/${cId}`)}
+                        className={`w-full py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs ${
                           isSubmitted
-                            ? 'bg-cyan-500 hover:bg-cyan-400 text-slate-950'
-                            : 'bg-slate-800 text-slate-200'
+                            ? 'bg-cyan-600 hover:bg-cyan-700 text-white'
+                            : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200/80'
                         }`}
                       >
-                        {isSubmitted ? 'Start Review' : 'View Details'} &rarr;
-                      </Link>
+                        <Eye className="w-3.5 h-3.5" />
+                        <span>{isSubmitted ? t('reviewComplaint', 'Review Complaint') : t('viewDetails', 'View Details')}</span>
+                      </button>
                     </div>
                   </div>
                 );
               })}
             </div>
           </>
+        ) : (
+          <div className="p-12 text-center space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
+              <AlertCircle className="w-6 h-6" />
+            </div>
+            <h3 className="font-bold text-sm text-slate-800">{t('noComplaintsFound', 'No complaints found')}</h3>
+            <p className="text-xs text-slate-400 max-w-sm mx-auto">
+              {searchQuery || statusFilter !== 'ALL' || categoryFilter !== 'ALL'
+                ? t('adjustFilterPrompt', 'Try adjusting your search filters or status criteria.')
+                : t('noRegisteredComplaints', 'No customer complaints are currently registered in the database.')}
+            </p>
+          </div>
         )}
       </div>
     </div>

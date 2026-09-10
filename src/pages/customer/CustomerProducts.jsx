@@ -3,9 +3,11 @@ import { Package, ArrowLeft, Search, Filter } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { CUSTOMER_ATTENTION_PRODUCTS } from '../../data/customerMockData';
 import { StatusBadge } from '../../components/results/StatusBadge';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const CustomerProducts = () => {
   const { productId } = useParams();
+  const { t } = useLanguage();
 
   const allMockProducts = [
     ...CUSTOMER_ATTENTION_PRODUCTS,
@@ -36,11 +38,11 @@ export const CustomerProducts = () => {
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold text-rose-700 mb-1">
             <Link to="/customer/dashboard" className="hover:underline flex items-center gap-1">
-              <ArrowLeft className="w-3.5 h-3.5" /> Back to Dashboard
+              <ArrowLeft className="w-3.5 h-3.5" /> {t('backToDashboard', 'Back to Dashboard')}
             </Link>
           </div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-            {productId ? `Product: ${productId}` : 'My Products'}
+            {productId ? `${t('product', 'Product')}: ${productId}` : t('myProducts', 'My Products')}
           </h1>
         </div>
       </div>
@@ -52,14 +54,14 @@ export const CustomerProducts = () => {
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
             <input
               type="text"
-              placeholder="Search product name or SKU..."
+              placeholder={t('searchPlaceholder', 'Search product name or SKU...')}
               className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl border border-slate-200 bg-white focus:outline-hidden focus:ring-2 focus:ring-rose-500"
               readOnly
             />
           </div>
           <div className="flex items-center gap-2 text-xs text-slate-500">
             <Filter className="w-3.5 h-3.5 text-slate-400" />
-            <span>Filter: All Categories</span>
+            <span>{t('filterAll', 'Filter: All Categories')}</span>
           </div>
         </div>
 
@@ -87,14 +89,14 @@ export const CustomerProducts = () => {
 
               <div className="flex items-center gap-4 self-start md:self-auto text-xs">
                 <div className="text-right">
-                  <span className="text-[11px] text-slate-400 block">Inspection Score</span>
+                  <span className="text-[11px] text-slate-400 block">{t('score', 'Inspection Score')}</span>
                   <span className="font-black text-slate-900 text-sm">{prod.score}%</span>
                 </div>
                 <Link
                   to={`/customer/inspections/${prod.inspectionId}`}
                   className="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-xs transition-colors border border-rose-200/60"
                 >
-                  View Inspection
+                  {t('details', 'View Inspection')}
                 </Link>
               </div>
             </div>

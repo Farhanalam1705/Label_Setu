@@ -121,14 +121,6 @@ export const CustomerHeader = ({ onToggleSidebar }) => {
           )}
         </div>
 
-        {/* Portal Switcher Button */}
-        <Link
-          to="/dashboard"
-          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#0c1e33] hover:bg-[#132a47] text-cyan-300 border border-cyan-500/30 shadow-2xs transition-colors cursor-pointer"
-        >
-          <span>Officer Portal &rarr;</span>
-        </Link>
-
         {/* User Identity Pill */}
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg bg-[#57184a] text-white flex items-center justify-center font-bold text-xs shadow-2xs ring-1 ring-rose-300/40">
