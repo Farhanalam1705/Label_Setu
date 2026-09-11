@@ -1,29 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, AlertTriangle, CheckCircle2, Info, Check, XCircle, Bell, Clock } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle2, Info, Check, XCircle, Bell, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { CUSTOMER_RECENT_NOTIFICATIONS } from '../../data/customerMockData';
-import { getComplaintNotifications } from '../../services/complaintService';
+import { clearComplaintNotifications, getComplaintNotifications } from '../../services/complaintService';
 import { useLanguage } from '../../context/LanguageContext';
 
 export const CustomerNotifications = () => {
   const { t } = useLanguage();
-  const [notifications, setNotifications] = useState(() => {
-    const dynamicNotifs = getComplaintNotifications('customer');
-    const staticMapped = CUSTOMER_RECENT_NOTIFICATIONS.map((n) => ({
-      ...n,
-      message: n.desc,
-    }));
-    return [...dynamicNotifs, ...staticMapped];
-  });
+  const [notifications, setNotifications] = useState(() => getComplaintNotifications('customer'));
 
   useEffect(() => {
     const handler = () => {
-      const dynamicNotifs = getComplaintNotifications('customer');
-      const staticMapped = CUSTOMER_RECENT_NOTIFICATIONS.map((n) => ({
-        ...n,
-        message: n.desc,
-      }));
-      setNotifications([...dynamicNotifs, ...staticMapped]);
+      setNotifications(getComplaintNotifications('customer'));
     };
     window.addEventListener('labelsetu_notifications_updated', handler);
     return () => window.removeEventListener('labelsetu_notifications_updated', handler);
@@ -31,6 +18,11 @@ export const CustomerNotifications = () => {
 
   const handleMarkAllRead = () => {
     setNotifications((prev) => prev.map((item) => ({ ...item, unread: false })));
+  };
+
+  const handleClearAll = () => {
+    clearComplaintNotifications('customer');
+    setNotifications([]);
   };
 
   return (
@@ -51,13 +43,24 @@ export const CustomerNotifications = () => {
           </p>
         </div>
 
-        <button 
-          onClick={handleMarkAllRead}
-          className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer"
-        >
-          <Check className="w-3.5 h-3.5" />
-          <span>{t('markAllAsRead', 'Mark All as Read')}</span>
-        </button>
+        <div className="self-start sm:self-auto flex items-center gap-2">
+          <button
+            onClick={handleMarkAllRead}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer"
+          >
+            <Check className="w-3.5 h-3.5" />
+            <span>{t('markAllAsRead', 'Mark All as Read')}</span>
+          </button>
+          <button
+            type="button"
+            onClick={handleClearAll}
+            disabled={notifications.length === 0}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/70 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Trash2 className="w-3.5 h-3.5" />
+            <span>Clear All</span>
+          </button>
+        </div>
       </div>
 
       {/* Notifications Container */}

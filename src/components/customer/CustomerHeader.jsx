@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, Bell, User, LogOut, ChevronRight, CheckCircle2, AlertTriangle, Info } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { logout, getCurrentUser } from '../../services/auth';
 import { useToast } from '../common/Toast';
 import { useLanguage } from '../../context/LanguageContext';
-import { CUSTOMER_RECENT_NOTIFICATIONS } from '../../data/customerMockData';
+import { getComplaintNotifications } from '../../services/complaintService';
 
 export const CustomerHeader = ({ onToggleSidebar }) => {
   const navigate = useNavigate();
   const { addToast } = useToast();
   const { t } = useLanguage();
   const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState(() => getComplaintNotifications('customer'));
 
   const user = getCurrentUser() || {
     name: 'Customer',
@@ -29,7 +30,13 @@ export const CustomerHeader = ({ onToggleSidebar }) => {
     navigate('/login', { replace: true });
   };
 
-  const unreadCount = CUSTOMER_RECENT_NOTIFICATIONS.filter((n) => n.unread).length;
+  useEffect(() => {
+    const handleNotificationsChanged = () => setNotifications(getComplaintNotifications('customer'));
+    window.addEventListener('labelsetu_notifications_updated', handleNotificationsChanged);
+    return () => window.removeEventListener('labelsetu_notifications_updated', handleNotificationsChanged);
+  }, []);
+
+  const unreadCount = notifications.filter((n) => n.unread).length;
 
   return (
     <header className="sticky top-0 z-30 h-16 bg-white border-b border-slate-200/90 shadow-2xs flex items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -82,7 +89,9 @@ export const CustomerHeader = ({ onToggleSidebar }) => {
                 )}
               </div>
               <div className="divide-y divide-slate-100 max-h-72 overflow-y-auto">
-                {CUSTOMER_RECENT_NOTIFICATIONS.map((n) => (
+                {notifications.length === 0 ? (
+                  <div className="p-6 text-center text-xs font-medium text-slate-400">No new notifications</div>
+                ) : notifications.map((n) => (
                   <div
                     key={n.id}
                     className={`p-3 text-xs hover:bg-slate-50 transition-colors ${

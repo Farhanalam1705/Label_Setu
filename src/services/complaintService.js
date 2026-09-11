@@ -65,3 +65,8 @@ export const subscribeComplaints = (callback) => { const handler = () => callbac
 
 export const getComplaintNotifications = (recipient = 'customer') => read(NOTIFICATIONS_STORAGE_KEY, NOTIFICATIONS).filter((item) => item.recipient === recipient);
 export const addComplaintNotification = (notification) => { const items = read(NOTIFICATIONS_STORAGE_KEY, NOTIFICATIONS); const next = [{ id: `NOT-${Date.now()}`, unread: true, ...notification }, ...items]; localStorage.setItem(NOTIFICATIONS_STORAGE_KEY, JSON.stringify(next)); emit(NOTIFICATIONS_EVENT); return next[0]; };
+export const clearComplaintNotifications = (recipient = 'customer') => {
+  const retained = read(NOTIFICATIONS_STORAGE_KEY, NOTIFICATIONS).filter((item) => item.recipient !== recipient);
+  localStorage.setItem(NOTIFICATIONS_STORAGE_KEY, JSON.stringify(retained));
+  emit(NOTIFICATIONS_EVENT);
+};
