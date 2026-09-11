@@ -23,6 +23,8 @@ import {
 import { StatusBadge } from '../../components/results/StatusBadge';
 import { EvidenceViewer } from '../../components/results/EvidenceViewer';
 import { useLanguage } from '../../context/LanguageContext';
+import { CUSTOMER_RECENT_INSPECTIONS } from '../../data/customerMockData';
+import { INSPECTIONS } from '../../data/centralData';
 
 export const CustomerInspectionDetail = () => {
   const { inspectionId } = useParams();
@@ -34,6 +36,15 @@ export const CustomerInspectionDetail = () => {
   const [selectedEvidence, setSelectedEvidence] = useState(null);
 
   const displayInspectionId = inspectionId || 'INS-2026-0001';
+  const selectedInspection = CUSTOMER_RECENT_INSPECTIONS.find((item) => item.id === displayInspectionId) || CUSTOMER_RECENT_INSPECTIONS[0];
+  const inspectionRecord = INSPECTIONS.find((item) => item.inspectionId === displayInspectionId) || INSPECTIONS[0];
+  const currentInspection = {
+    inspectionId: displayInspectionId,
+    productId: inspectionRecord.productId,
+    productName: selectedInspection.product,
+    inspectionDate: selectedInspection.date,
+    inspectionStatus: selectedInspection.status,
+  };
 
   // Specific finding data with realistic Legal Metrology packaging OCR evidence
   const findingsList = [
@@ -575,13 +586,14 @@ export const CustomerInspectionDetail = () => {
           </div>
         </div>
 
-        <Link
-          to="/customer/complaints"
+        <button
+          type="button"
+          onClick={() => navigate('/customer/complaints/new', { state: currentInspection })}
           className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-md shadow-rose-900/10 transition-all active:scale-98 shrink-0 cursor-pointer"
         >
           <Sparkles className="w-4 h-4" />
           <span>{t('raiseNewComplaint', 'Raise a Complaint')}</span>
-        </Link>
+        </button>
       </div>
 
       {/* ───────────────────────────────────────────────────────── */}

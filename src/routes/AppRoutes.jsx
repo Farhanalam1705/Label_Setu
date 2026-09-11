@@ -25,6 +25,7 @@ import { CustomerProducts } from '../pages/customer/CustomerProducts';
 import { CustomerInspections } from '../pages/customer/CustomerInspections';
 import { CustomerInspectionDetail } from '../pages/customer/CustomerInspectionDetail';
 import { CustomerComplaints } from '../pages/customer/CustomerComplaints';
+import { CustomerComplaintCreate } from '../pages/customer/CustomerComplaintCreate';
 import { CustomerReports } from '../pages/customer/CustomerReports';
 import { CustomerNotifications } from '../pages/customer/CustomerNotifications';
 import { CustomerSettings } from '../pages/customer/CustomerSettings';
@@ -53,6 +54,7 @@ export const AppRoutes = () => {
         <Route path="inspections" element={<CustomerInspections />} />
         <Route path="inspections/:inspectionId" element={<CustomerInspectionDetail />} />
         <Route path="complaints" element={<CustomerComplaints />} />
+        <Route path="complaints/new" element={<CustomerComplaintCreate />} />
         <Route path="complaints/:complaintId" element={<CustomerComplaints />} />
         <Route path="reports" element={<CustomerReports />} />
         <Route path="notifications" element={<CustomerNotifications />} />

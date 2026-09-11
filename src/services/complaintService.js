@@ -20,7 +20,31 @@ const read = (key, fallback) => {
 export const getComplaints = () => read(STORAGE_KEY, INITIAL_COMPLAINTS_DATA);
 export const getComplaintById = (complaintId) => getComplaints().find((item) => item.complaintId === complaintId || item.id === complaintId) || null;
 
-const saveComplaints = (items) => { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); emit(COMPLAINTS_EVENT); return items; };
+const saveComplaints = (items) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    emit(COMPLAINTS_EVENT);
+    return items;
+  } catch (error) {
+    // Camera photos can exceed localStorage's size limit. Keep the complaint and
+    // evidence filename so the workflow remains available even without the image payload.
+    const compactItems = items.map((item) => ({
+      ...item,
+      image: '',
+      imageUrl: '',
+      evidence: (item.evidence || []).map((evidence) => ({ name: evidence.name || 'Evidence image' })),
+      additionalEvidence: (item.additionalEvidence || []).map((evidence) => ({ name: evidence.name || 'Evidence image' })),
+    }));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(compactItems));
+      emit(COMPLAINTS_EVENT);
+      return compactItems;
+    } catch (_) {
+      console.error('Unable to save complaint data.', error);
+      return items;
+    }
+  }
+};
 
 export const createComplaint = (data) => {
   const items = getComplaints();
@@ -29,14 +53,18 @@ export const createComplaint = (data) => {
   const item = {
     complaintId, id: complaintId, customerId: data.customerId || 'CUS-001', customerName: data.customerName || 'Aster Foods Pvt. Ltd.',
     customerEmail: data.customerEmail || 'customer@labelsetu.gov.in', productId: data.productId || '', productName: data.productName || data.product || 'Packaged Commodity',
-    product: data.productName || data.product || 'Packaged Commodity', inspectionId: data.inspectionId || '', category: data.category || 'Packaging Declaration',
+    product: data.productName || data.product || 'Packaged Commodity', inspectionId: data.inspectionId || '', category: data.category || 'Packaging Declaration', complaintType: data.complaintType || data.category || 'Packaging Declaration',
     description: data.description || '', image: data.image || data.imageUrl || '', imageUrl: data.image || data.imageUrl || '',
     aiConfidence: data.aiAnalysis?.confidence || 0, aiAnalysis: data.aiAnalysis || { issueDetected: true, confidence: 0, issue: 'Potential declaration discrepancy detected.' },
-    eligibility: data.eligibility || 'ELIGIBLE', status: 'SUBMITTED', officerRemarks: '', officerDecision: '', additionalEvidence: data.additionalEvidence || [],
-    submittedAt: now, updatedAt: now, date: now.slice(0, 10), timeline: [{ status: 'SUBMITTED', title: 'Complaint Submitted', date: now, note: 'Customer submitted a product-label grievance.', by: 'Customer' }],
+    eligibility: data.eligibility || 'ELIGIBLE', status: 'SUBMITTED', officerRemarks: '', officerDecision: '', additionalEvidence: data.additionalEvidence || [], evidence: data.evidence || [],
+    submittedAt: now, createdAt: now, updatedAt: now, date: now.slice(0, 10), timeline: [{ status: 'SUBMITTED', title: 'Complaint Submitted', date: now, note: 'Customer submitted a product-label grievance.', by: 'Customer' }, { status: 'AI_ANALYSIS_COMPLETED', title: 'AI Analysis Completed', date: now, note: 'AI analysis completed for officer review.', by: 'System' }, { status: 'ELIGIBILITY_CONFIRMED', title: 'Eligibility Confirmed', date: now, note: 'Complaint is eligible for officer review.', by: 'System' }],
   };
   saveComplaints([item, ...items]);
-  addComplaintNotification({ recipient: 'officer', title: 'New Complaint Received', message: `${complaintId}: ${item.productName}`, complaintId, product: item.productName, type: 'warning' });
+  try {
+    addComplaintNotification({ recipient: 'officer', title: 'New Complaint Received', message: `${complaintId}: ${item.productName}`, complaintId, product: item.productName, type: 'warning' });
+  } catch (error) {
+    console.warn('Complaint saved without a notification.', error);
+  }
   return item;
 };
 

@@ -20,7 +20,6 @@ import {
   Info, 
   ShieldCheck, 
   Edit3, 
-  X, 
   Download, 
   ExternalLink,
   Trash2,
@@ -42,6 +41,7 @@ import {
 } from '../../services/complaintService';
 import { useLanguage } from '../../context/LanguageContext';
 import { getCurrentUser } from '../../services/auth';
+import { INSPECTIONS } from '../../data/centralData';
 
 export const CustomerComplaints = () => {
   const { complaintId } = useParams();
@@ -92,10 +92,31 @@ export const CustomerComplaints = () => {
     }
   }, [complaintId, complaints]);
 
-  const handleCloseDetail = () => {
+  const handleCloseDetail = (event) => {
+    event?.preventDefault();
+    event?.stopPropagation();
     setSelectedComplaintDetail(null);
     if (complaintId) {
       navigate('/customer/complaints', { replace: true });
+    }
+  };
+
+  const handleViewInspectionReport = () => {
+    const complaint = selectedComplaintDetail;
+    const inspectionId = complaint?.inspectionId || INSPECTIONS.find((inspection) =>
+      inspection.productId === complaint?.productId ||
+      inspection.productName.toLowerCase() === (complaint?.productName || complaint?.product || '').toLowerCase()
+    )?.inspectionId;
+
+    if (inspectionId) {
+      console.log('Opening inspection:', inspectionId);
+      navigate(`/customer/inspections/${inspectionId}`);
+    } else {
+      addToast({
+        type: 'info',
+        title: 'Inspection Report Unavailable',
+        message: 'Inspection report is not available for this complaint.',
+      });
     }
   };
 
@@ -366,8 +387,13 @@ export const CustomerComplaints = () => {
     setIsSubmitting(true);
 
     setTimeout(() => {
+      const linkedInspection = INSPECTIONS.find((inspection) =>
+        inspection.productName.toLowerCase() === (productName || '').toLowerCase()
+      );
       const newRecord = createComplaint({
         productName: productName || 'Premium Basmati Rice',
+        productId: linkedInspection?.productId || '',
+        inspectionId: linkedInspection?.inspectionId || '',
         category: complaintCategory,
         description: complaintDescription,
         image: uploadedImage,
@@ -458,8 +484,13 @@ export const CustomerComplaints = () => {
       {/* FEATURE 3: COMPLAINT DETAILS & TRACKING MODAL */}
       {/* ───────────────────────────────────────────────────────── */}
       {selectedComplaintDetail && (
-        <div className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in">
-          <div className="bg-[#0f1b2d] border border-slate-700 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col text-white">
+        <div
+          className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) handleCloseDetail();
+          }}
+        >
+          <div onClick={(event) => event.stopPropagation()} className="bg-[#0f1b2d] border border-slate-700 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col text-white">
             {/* Modal Header */}
             <div className="p-5 border-b border-slate-800 flex items-center justify-between sticky top-0 bg-[#0f1b2d]/95 backdrop-blur-md z-10">
               <div className="flex items-center gap-3">
@@ -479,12 +510,6 @@ export const CustomerComplaints = () => {
                 </div>
               </div>
 
-              <button
-                onClick={handleCloseDetail}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
             </div>
 
             {/* Modal Body */}
@@ -711,10 +736,11 @@ export const CustomerComplaints = () => {
               </button>
 
               <button
-                onClick={handleCloseDetail}
+                type="button"
+                onClick={handleViewInspectionReport}
                 className="px-5 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-md transition-colors cursor-pointer"
               >
-                Close View
+                View Inspection Report
               </button>
             </div>
           </div>
