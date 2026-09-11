@@ -58,8 +58,8 @@ export const Results = () => {
   // Automatically save inspection to history when viewing results
   useEffect(() => {
     const historyRecord = {
-      inspectionId: MOCK_INSPECTION_DATA.inspectionId || 'LM-2026-00129',
-      productName: MOCK_INSPECTION_DATA.product?.name || 'ABC Premium Rice',
+      inspectionId: MOCK_INSPECTION_DATA.inspectionId || 'INS-2026-0001',
+      productName: MOCK_INSPECTION_DATA.product?.name || 'Premium Basmati Rice',
       category: 'Food Grains & Pulses',
       categoryGroup: 'Food Grains & Pulses',
       manufacturer: MOCK_INSPECTION_DATA.product?.manufacturer || 'ABC Foods Pvt. Ltd.',
@@ -111,8 +111,8 @@ export const Results = () => {
   const handleSaveReview = (reviewData) => {
     setSavedOfficerReview(reviewData);
     const historyRecord = {
-      inspectionId: MOCK_INSPECTION_DATA.inspectionId || 'LM-2026-00129',
-      productName: MOCK_INSPECTION_DATA.product?.name || 'ABC Premium Rice',
+      inspectionId: MOCK_INSPECTION_DATA.inspectionId || 'INS-2026-0001',
+      productName: MOCK_INSPECTION_DATA.product?.name || 'Premium Basmati Rice',
       category: 'Food Grains & Pulses',
       categoryGroup: 'Food Grains & Pulses',
       manufacturer: MOCK_INSPECTION_DATA.product?.manufacturer || 'ABC Foods Pvt. Ltd.',

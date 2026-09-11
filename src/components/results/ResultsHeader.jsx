@@ -4,7 +4,7 @@ import { ChevronRight, FileCheck2, Calendar, Shield } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 export const ResultsHeader = ({
-  inspectionId = 'LM-2026-00129',
+  inspectionId = 'INS-2026-0001',
   date = '05 September 2026',
 }) => {
   const { t } = useLanguage();

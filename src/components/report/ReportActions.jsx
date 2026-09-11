@@ -5,7 +5,7 @@ import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useToast } from '../common/Toast';
 
-export const ReportActions = ({ onGenerateAgain, inspectionId = 'LM-2026-00129' }) => {
+export const ReportActions = ({ onGenerateAgain, inspectionId = 'INS-2026-0001' }) => {
   const navigate = useNavigate();
   const { addToast } = useToast();
   const [isDownloading, setIsDownloading] = useState(false);

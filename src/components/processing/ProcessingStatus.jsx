@@ -123,7 +123,7 @@ export const ProcessingStatus = ({ progress = 0, onRestart = null }) => {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
         <div className="flex items-center gap-2 text-xs text-slate-500">
           <FileCheck2 className="w-4 h-4 text-cyan-700" />
-          <span>{t('inspectionId', 'Inspection ID')}: <strong className="text-slate-800 font-mono">LM-2026-00129</strong></span>
+          <span>{t('inspectionId', 'Inspection ID')}: <strong className="text-slate-800 font-mono">INS-2026-0001</strong></span>
         </div>
 
         <button

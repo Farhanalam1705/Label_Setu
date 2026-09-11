@@ -9,27 +9,7 @@ export const CustomerProducts = () => {
   const { productId } = useParams();
   const { t } = useLanguage();
 
-  const allMockProducts = [
-    ...CUSTOMER_ATTENTION_PRODUCTS,
-    {
-      id: 'prod-004',
-      name: 'XYZ Premium Atta',
-      status: 'Compliant',
-      inspectionId: 'LM-2026-00128',
-      score: 96,
-      issue: 'All statutory declarations conform with Legal Metrology rules.',
-      updatedAt: '04 Sep 2026',
-    },
-    {
-      id: 'prod-005',
-      name: 'DEF Energy Biscuits',
-      status: 'Compliant',
-      inspectionId: 'LM-2026-00125',
-      score: 94,
-      issue: 'Net weight, MRP and best before declarations validated.',
-      updatedAt: '01 Sep 2026',
-    },
-  ];
+  const allMockProducts = CUSTOMER_ATTENTION_PRODUCTS;
 
   return (
     <div className="space-y-6">

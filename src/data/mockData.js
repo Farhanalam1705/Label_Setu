@@ -1,113 +1,28 @@
-// Mock Data for LABEL SETU Enforcement Portal
+// Officer dashboard adapters derived from the shared fictional demonstration dataset.
+import { INSPECTIONS } from './centralData';
+
+const total = INSPECTIONS.length;
+const count = (status) => INSPECTIONS.filter((item) => item.status === status).length;
+const compliant = count('Compliant');
+const nonCompliant = count('Non-Compliant');
+const needsReview = count('Needs Review');
+const percentage = (value) => `${((value / total) * 100).toFixed(1)}%`;
 
 export const STATS_DATA = [
-  {
-    id: 'total',
-    title: 'Total Inspections',
-    value: '1,248',
-    change: '+14% this month',
-    trend: 'up',
-    color: 'blue',
-    icon: 'ClipboardCheck',
-    description: 'Packaged commodities evaluated',
-  },
-  {
-    id: 'compliant',
-    title: 'Compliant Products',
-    value: '934',
-    percentage: '74.8%',
-    trend: 'up',
-    color: 'emerald',
-    icon: 'ShieldCheck',
-    description: 'Satisfies all Legal Metrology mandates',
-  },
-  {
-    id: 'violations',
-    title: 'Violations',
-    value: '187',
-    percentage: '15.0%',
-    trend: 'down',
-    color: 'rose',
-    icon: 'AlertTriangle',
-    description: 'Non-compliant declarations detected',
-  },
-  {
-    id: 'review',
-    title: 'Needs Review',
-    value: '127',
-    percentage: '10.2%',
-    trend: 'neutral',
-    color: 'amber',
-    icon: 'Clock',
-    description: 'Requires officer confirmation',
-  },
+  { id: 'total', title: 'Total Inspections', value: String(total), change: 'Current demonstration records', trend: 'neutral', color: 'blue', icon: 'ClipboardCheck', description: 'Packaged commodities evaluated' },
+  { id: 'compliant', title: 'Compliant Products', value: String(compliant), percentage: percentage(compliant), trend: 'up', color: 'emerald', icon: 'ShieldCheck', description: 'Satisfies all Legal Metrology mandates' },
+  { id: 'violations', title: 'Violations', value: String(nonCompliant), percentage: percentage(nonCompliant), trend: 'down', color: 'rose', icon: 'AlertTriangle', description: 'Non-compliant declarations detected' },
+  { id: 'review', title: 'Needs Review', value: String(needsReview), percentage: percentage(needsReview), trend: 'neutral', color: 'amber', icon: 'Clock', description: 'Requires officer confirmation' },
 ];
 
 export const COMPLIANCE_CHART_DATA = [
-  { name: 'Compliant', value: 74.8, count: 934, color: '#10b981' },
-  { name: 'Violations', value: 15.0, count: 187, color: '#ef4444' },
-  { name: 'Needs Review', value: 10.2, count: 127, color: '#f59e0b' },
+  { name: 'Compliant', value: Number(((compliant / total) * 100).toFixed(1)), count: compliant, color: '#10b981' },
+  { name: 'Violations', value: Number(((nonCompliant / total) * 100).toFixed(1)), count: nonCompliant, color: '#ef4444' },
+  { name: 'Needs Review', value: Number(((needsReview / total) * 100).toFixed(1)), count: needsReview, color: '#f59e0b' },
 ];
 
-export const RECENT_INSPECTIONS = [
-  {
-    id: 'INS-2026-0894',
-    product: 'ABC Royal Premium Basmati Rice (5kg)',
-    category: 'Food & Grains',
-    date: '05 Sep 2026, 11:20 AM',
-    status: 'Compliant',
-    complianceScore: 98,
-    manufacturer: 'ABC Agro Foods Ltd.',
-    batchNo: 'B-7741',
-  },
-  {
-    id: 'INS-2026-0893',
-    product: 'XYZ Refined Mustard Cooking Oil (1L)',
-    category: 'Edible Oils',
-    date: '05 Sep 2026, 10:15 AM',
-    status: 'Violation',
-    complianceScore: 42,
-    manufacturer: 'XYZ Edible Oils Pvt Ltd',
-    batchNo: 'MO-9021',
-  },
-  {
-    id: 'INS-2026-0892',
-    product: 'DEF Energy Glucose Biscuits (200g)',
-    category: 'Bakery & Confectionery',
-    date: '04 Sep 2026, 04:45 PM',
-    status: 'Needs Review',
-    complianceScore: 76,
-    manufacturer: 'DEF Foods Consumer Corp',
-    batchNo: 'DF-3312',
-  },
-  {
-    id: 'INS-2026-0891',
-    product: 'Premium Organic Assam Tea (250g)',
-    category: 'Beverages',
-    date: '04 Sep 2026, 02:30 PM',
-    status: 'Compliant',
-    complianceScore: 100,
-    manufacturer: 'Nilgiri & Assam Plantations',
-    batchNo: 'TM-5402',
-  },
-  {
-    id: 'INS-2026-0890',
-    product: 'Heritage Pure Desi Cow Ghee (500ml)',
-    category: 'Dairy Products',
-    date: '03 Sep 2026, 06:10 PM',
-    status: 'Compliant',
-    complianceScore: 96,
-    manufacturer: 'Heritage Dairy Producer Co.',
-    batchNo: 'GH-8812',
-  },
-  {
-    id: 'INS-2026-0889',
-    product: 'Golden Chakki Fresh Atta (10kg)',
-    category: 'Food & Grains',
-    date: '03 Sep 2026, 01:25 PM',
-    status: 'Violation',
-    complianceScore: 35,
-    manufacturer: 'Golden Mills Ltd',
-    batchNo: 'GM-1099',
-  },
-];
+export const RECENT_INSPECTIONS = INSPECTIONS.slice(0, 6).map((item) => ({
+  id: item.inspectionId, product: item.productName, category: item.category, date: item.inspectionDate,
+  status: item.status === 'Non-Compliant' ? 'Violation' : item.status, complianceScore: item.complianceScore,
+  manufacturer: item.manufacturer, batchNo: item.batchNumber,
+}));

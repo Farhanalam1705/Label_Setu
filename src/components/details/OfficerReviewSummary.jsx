@@ -5,7 +5,7 @@ import { FINAL_ASSESSMENT_OPTIONS } from '../../data/mockReviewData';
 
 export const OfficerReviewSummary = ({
   officerReview = null,
-  inspectionId = 'LM-2026-00129',
+  inspectionId = 'INS-2026-0001',
 }) => {
   const navigate = useNavigate();
   const isReviewed = officerReview?.reviewStatus === 'REVIEWED';

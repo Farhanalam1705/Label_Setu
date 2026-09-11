@@ -99,7 +99,7 @@ export const OfficerReview = ({
           <div className="flex items-center gap-2.5 self-start sm:self-auto flex-wrap">
             <button
               type="button"
-              onClick={() => navigate(`/review/LM-2026-00129`)}
+              onClick={() => navigate(`/review/INS-2026-0001`)}
               className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl transition-colors shadow-2xs cursor-pointer"
             >
               <FileEdit className="w-3.5 h-3.5 text-slate-500" />
@@ -108,7 +108,7 @@ export const OfficerReview = ({
 
             <button
               type="button"
-              onClick={() => navigate(`/review/LM-2026-00129`)}
+              onClick={() => navigate(`/review/INS-2026-0001`)}
               className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-[#0c1e33] hover:bg-slate-800 rounded-xl transition-all shadow-xs cursor-pointer"
             >
               <MessageSquare className="w-3.5 h-3.5 text-cyan-400" />
@@ -164,7 +164,7 @@ export const OfficerReview = ({
                     Enforcement Officer Review
                   </h3>
                   <p className="text-[11px] text-slate-500">
-                    Inspection ID: LM-2026-00129
+                    Inspection ID: INS-2026-0001
                   </p>
                 </div>
               </div>

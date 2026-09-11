@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileText, Download, CheckCircle2, RefreshCw } from 'lucide-react';
 
-export const ReportSummary = ({ inspectionId = 'LM-2026-00129' }) => {
+export const ReportSummary = ({ inspectionId = 'INS-2026-0001' }) => {
   const navigate = useNavigate();
 
   return (

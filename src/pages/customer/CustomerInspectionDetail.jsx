@@ -33,7 +33,7 @@ export const CustomerInspectionDetail = () => {
   const [isEvidenceOpen, setIsEvidenceOpen] = useState(false);
   const [selectedEvidence, setSelectedEvidence] = useState(null);
 
-  const displayInspectionId = inspectionId || 'LM-2026-00129';
+  const displayInspectionId = inspectionId || 'INS-2026-0001';
 
   // Specific finding data with realistic Legal Metrology packaging OCR evidence
   const findingsList = [
@@ -250,7 +250,7 @@ export const CustomerInspectionDetail = () => {
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                 {t('productName', 'Product Name')}
               </span>
-              <p className="font-bold text-slate-900 text-sm">ABC Premium Rice</p>
+              <p className="font-bold text-slate-900 text-sm">Premium Basmati Rice</p>
             </div>
 
             <div className="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-1">

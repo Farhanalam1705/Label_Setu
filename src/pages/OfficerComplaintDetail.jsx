@@ -280,7 +280,7 @@ export const OfficerComplaintDetail = () => {
                 <h2 className="font-bold text-sm text-slate-900">{t('grievanceOverview', 'Grievance Overview')}</h2>
               </div>
               <span className="text-[11px] font-mono text-slate-500">
-                {t('inspectionRef', 'Inspection Ref')}: <strong className="text-cyan-700">{complaint.inspectionId || 'LM-2026-00129'}</strong>
+                {t('inspectionRef', 'Inspection Ref')}: <strong className="text-cyan-700">{complaint.inspectionId || 'INS-2026-0001'}</strong>
               </span>
             </div>
 

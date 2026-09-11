@@ -49,7 +49,7 @@ export const EvidenceViewer = ({
                 Evidence Reference & OCR Region
               </h3>
               <p className="text-[11px] text-slate-500">
-                Inspection ID: <span className="font-mono font-semibold text-slate-700">LM-2026-00129</span>
+                Inspection ID: <span className="font-mono font-semibold text-slate-700">INS-2026-0001</span>
               </p>
             </div>
           </div>

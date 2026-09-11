@@ -164,7 +164,7 @@ export const Processing = () => {
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 border border-slate-200 text-slate-700 text-xs rounded-lg">
             <FileCheck2 className="w-3.5 h-3.5 text-cyan-600" />
             <span>{t('inspectionId', 'Inspection ID')}:</span>
-            <strong className="font-mono text-slate-900">LM-2026-00129</strong>
+            <strong className="font-mono text-slate-900">INS-2026-0001</strong>
           </div>
         </div>
       </div>

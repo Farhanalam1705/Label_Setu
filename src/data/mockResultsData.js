@@ -1,28 +1,28 @@
 /**
  * Mock data for the Legal Metrology Compliance Results view
- * Inspection ID: LM-2026-00129
+ * Inspection ID: INS-2026-0001
  */
 
 export const MOCK_INSPECTION_DATA = {
-  inspectionId: 'LM-2026-00129',
+  inspectionId: 'INS-2026-0001',
   date: '05 September 2026',
   timestamp: '2026-09-05T14:30:00Z',
   inspector: {
-    name: 'Officer Rajesh Kumar',
+    name: 'Officer A.',
     designation: 'Enforcement Official',
-    badge: 'LM-ENF-2026-894',
+    badge: 'OFF-001',
   },
   product: {
-    name: 'ABC Premium Rice',
+    name: 'Premium Basmati Rice',
     category: 'Food Grains & Pulses (Packaged)',
     subCategory: 'Basmati / Non-Basmati Milled Rice',
     netQuantity: '5 kg',
-    mrp: '₹520',
-    batchNo: 'AR52026',
+    mrp: '₹450',
+    batchNo: 'BR260810',
     packedDate: '08/2026',
     expiryDate: '08/2027',
-    manufacturer: 'ABC Foods Pvt. Ltd.',
-    packer: 'ABC Foods Pvt. Ltd.',
+    manufacturer: 'Aster Foods Pvt. Ltd.',
+    packer: 'Aster Foods Pvt. Ltd.',
     importer: 'Not Applicable',
     consumerCare: '1800-XXX-XXXX',
   },
@@ -38,7 +38,7 @@ export const MOCK_INSPECTION_DATA = {
     {
       id: 'prod_name',
       fieldName: 'Product Name',
-      extractedValue: 'ABC Premium Rice',
+      extractedValue: 'Premium Basmati Rice',
       confidence: 98,
       status: 'COMPLIANT',
       regionId: 'reg_name',
@@ -46,7 +46,7 @@ export const MOCK_INSPECTION_DATA = {
     {
       id: 'mfg',
       fieldName: 'Manufacturer',
-      extractedValue: 'ABC Foods Pvt. Ltd.',
+      extractedValue: 'Aster Foods Pvt. Ltd.',
       confidence: 97,
       status: 'COMPLIANT',
       regionId: 'reg_mfg',
@@ -54,7 +54,7 @@ export const MOCK_INSPECTION_DATA = {
     {
       id: 'packer',
       fieldName: 'Packer',
-      extractedValue: 'ABC Foods Pvt. Ltd.',
+      extractedValue: 'Aster Foods Pvt. Ltd.',
       confidence: 97,
       status: 'COMPLIANT',
       regionId: 'reg_mfg',
@@ -78,7 +78,7 @@ export const MOCK_INSPECTION_DATA = {
     {
       id: 'mrp',
       fieldName: 'MRP',
-      extractedValue: '₹520',
+      extractedValue: '₹450',
       confidence: 94,
       status: 'NEEDS REVIEW',
       finding: 'Potential issue detected in the MRP declaration. The mandatory text "inclusive of all taxes" is partially obscured or printed below minimum statutory font ratio.',
@@ -104,7 +104,7 @@ export const MOCK_INSPECTION_DATA = {
     {
       id: 'batch_lot',
       fieldName: 'Batch/Lot',
-      extractedValue: 'AR52026',
+      extractedValue: 'BR260810',
       confidence: 95,
       status: 'COMPLIANT',
       regionId: 'reg_batch',
@@ -170,7 +170,7 @@ export const MOCK_INSPECTION_DATA = {
       confidence: 94,
       finding: 'Potential issue detected in the MRP declaration.',
       evidence: 'Region detected on product label. Clarification required whether "(incl. of all taxes)" suffix meets statutory font ratio.',
-      extractedText: 'MRP ₹520.00',
+      extractedText: 'MRP ₹450.00',
       regionId: 'reg_mrp',
     },
     {
@@ -188,7 +188,7 @@ export const MOCK_INSPECTION_DATA = {
   regions: [
     {
       id: 'reg_name',
-      label: 'Product: ABC Premium Rice',
+      label: 'Product: Premium Basmati Rice',
       field: 'Product Name',
       top: 18,
       left: 14,
@@ -196,7 +196,7 @@ export const MOCK_INSPECTION_DATA = {
       height: 14,
       color: 'emerald',
       status: 'COMPLIANT',
-      extractedText: 'ABC Premium Rice',
+      extractedText: 'Premium Basmati Rice',
       confidence: 98,
     },
     {
@@ -209,7 +209,7 @@ export const MOCK_INSPECTION_DATA = {
       height: 15,
       color: 'emerald',
       status: 'COMPLIANT',
-      extractedText: 'Mfd & Packed by: ABC Foods Pvt. Ltd., Industrial Area Phase-II, Delhi-110020',
+      extractedText: 'Mfd & Packed by: Aster Foods Pvt. Ltd., Demonstration Industrial Area',
       confidence: 97,
     },
     {
@@ -240,7 +240,7 @@ export const MOCK_INSPECTION_DATA = {
     },
     {
       id: 'reg_mrp',
-      label: 'MRP: ₹520 (Needs Review)',
+      label: 'MRP: ₹450 (Needs Review)',
       field: 'MRP Declaration',
       top: 71,
       left: 14,
@@ -248,12 +248,12 @@ export const MOCK_INSPECTION_DATA = {
       height: 12,
       color: 'amber',
       status: 'NEEDS REVIEW',
-      extractedText: 'MRP Rs. 520.00 (Taxes?)',
+      extractedText: 'MRP Rs. 450.00 (Taxes?)',
       confidence: 94,
     },
     {
       id: 'reg_batch',
-      label: 'Batch: AR52026',
+      label: 'Batch: BR260810',
       field: 'Batch Identification',
       top: 71,
       left: 56,
@@ -261,7 +261,7 @@ export const MOCK_INSPECTION_DATA = {
       height: 12,
       color: 'emerald',
       status: 'COMPLIANT',
-      extractedText: 'Batch: AR52026',
+      extractedText: 'Batch: BR260810',
       confidence: 95,
     },
     {

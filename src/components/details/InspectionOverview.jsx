@@ -3,8 +3,8 @@ import { Scale, Shield, Calendar, User, Building2, Award } from 'lucide-react';
 import { StatusBadge } from '../results/StatusBadge';
 
 export const InspectionOverview = ({
-  inspectionId = 'LM-2026-00129',
-  productName = 'ABC Premium Rice',
+  inspectionId = 'INS-2026-0001',
+  productName = 'Premium Basmati Rice',
   category = 'Food Grains & Pulses (Packaged)',
   date = '05 September 2026',
   officer = 'Officer',

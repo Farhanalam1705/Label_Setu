@@ -1,484 +1,61 @@
-/**
- * Mock data and localStorage management for Inspection History.
- * Storage key: labelsetu_inspection_history
- */
+import { INSPECTIONS, PRODUCTS } from './centralData';
 
 export const HISTORY_STORAGE_KEY = 'labelsetu_inspection_history';
 
-export const INITIAL_MOCK_INSPECTIONS = [
-  {
-    inspectionId: 'LM-2026-00129',
-    productName: 'ABC Premium Rice',
-    category: 'Food Grains & Pulses',
-    categoryGroup: 'Food Grains & Pulses',
-    manufacturer: 'ABC Foods Pvt. Ltd.',
-    netQuantity: '5 kg',
-    mrp: '₹520',
-    date: '05 Sep 2026',
-    rawDate: '2026-09-05',
-    officer: 'Officer',
-    complianceScore: 82,
-    status: 'NEEDS REVIEW',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00128',
-    productName: 'XYZ Premium Atta',
-    category: 'Food Grains & Pulses',
-    categoryGroup: 'Food Grains & Pulses',
-    manufacturer: 'XYZ Agro Mills Ltd.',
-    netQuantity: '10 kg',
-    mrp: '₹410',
-    date: '04 Sep 2026',
-    rawDate: '2026-09-04',
-    officer: 'Officer',
-    complianceScore: 96,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00127',
-    productName: 'ABC Cooking Oil',
-    category: 'Packaged Commodities',
-    categoryGroup: 'Packaged Commodities',
-    manufacturer: 'ABC Refineries Ltd.',
-    netQuantity: '1 L',
-    mrp: '₹175',
-    date: '03 Sep 2026',
-    rawDate: '2026-09-03',
-    officer: 'Officer',
-    complianceScore: 61,
-    status: 'NON-COMPLIANT',
-    hasReport: false,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00126',
-    productName: 'Fresh Sugar',
-    category: 'Packaged Commodities',
-    categoryGroup: 'Packaged Commodities',
-    manufacturer: 'National Sugar Works',
-    netQuantity: '1 kg',
-    mrp: '₹48',
-    date: '02 Sep 2026',
-    rawDate: '2026-09-02',
-    officer: 'Officer',
-    complianceScore: 89,
-    status: 'NEEDS REVIEW',
-    hasReport: false,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00125',
-    productName: 'Sunrise Turmeric Powder',
-    category: 'Food Grains & Pulses',
-    categoryGroup: 'Food Grains & Pulses',
-    manufacturer: 'Sunrise Spices Ltd.',
-    netQuantity: '500 g',
-    mrp: '₹120',
-    date: '01 Sep 2026',
-    rawDate: '2026-09-01',
-    officer: 'Officer',
-    complianceScore: 98,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00124',
-    productName: 'Golden Tea Leaf',
-    category: 'Other',
-    categoryGroup: 'Other',
-    manufacturer: 'Assam Tea Plantations',
-    netQuantity: '250 g',
-    mrp: '₹160',
-    date: '31 Aug 2026',
-    rawDate: '2026-08-31',
-    officer: 'Officer',
-    complianceScore: 95,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00123',
-    productName: 'Pure Honey Natural',
-    category: 'Packaged Commodities',
-    categoryGroup: 'Packaged Commodities',
-    manufacturer: 'Valley Apiaries',
-    netQuantity: '500 g',
-    mrp: '₹290',
-    date: '30 Aug 2026',
-    rawDate: '2026-08-30',
-    officer: 'Officer',
-    complianceScore: 58,
-    status: 'NON-COMPLIANT',
-    hasReport: false,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00122',
-    productName: 'Royal Basmati Rice',
-    category: 'Food Grains & Pulses',
-    categoryGroup: 'Food Grains & Pulses',
-    manufacturer: 'Heritage Grains Ltd.',
-    netQuantity: '5 kg',
-    mrp: '₹650',
-    date: '29 Aug 2026',
-    rawDate: '2026-08-29',
-    officer: 'Officer',
-    complianceScore: 94,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00121',
-    productName: 'Quick Clean Detergent',
-    category: 'Other',
-    categoryGroup: 'Other',
-    manufacturer: 'ChemCorp India',
-    netQuantity: '2 kg',
-    mrp: '₹240',
-    date: '28 Aug 2026',
-    rawDate: '2026-08-28',
-    officer: 'Officer',
-    complianceScore: 74,
-    status: 'NEEDS REVIEW',
-    hasReport: false,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00120',
-    productName: 'Organic Mustard Oil',
-    category: 'Packaged Commodities',
-    categoryGroup: 'Packaged Commodities',
-    manufacturer: 'Pure Naturals Ltd.',
-    netQuantity: '1 L',
-    mrp: '₹195',
-    date: '27 Aug 2026',
-    rawDate: '2026-08-27',
-    officer: 'Officer',
-    complianceScore: 97,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00119',
-    productName: 'Himalayan Pink Salt',
-    category: 'Packaged Commodities',
-    categoryGroup: 'Packaged Commodities',
-    manufacturer: 'Mineral Salts Co.',
-    netQuantity: '1 kg',
-    mrp: '₹80',
-    date: '26 Aug 2026',
-    rawDate: '2026-08-26',
-    officer: 'Officer',
-    complianceScore: 92,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00118',
-    productName: 'Digestive Biscuits',
-    category: 'Other',
-    categoryGroup: 'Other',
-    manufacturer: 'Bakes & Bites Ltd.',
-    netQuantity: '300 g',
-    mrp: '₹65',
-    date: '25 Aug 2026',
-    rawDate: '2026-08-25',
-    officer: 'Officer',
-    complianceScore: 52,
-    status: 'NON-COMPLIANT',
-    hasReport: false,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00117',
-    productName: 'Premium Moong Dal',
-    category: 'Food Grains & Pulses',
-    categoryGroup: 'Food Grains & Pulses',
-    manufacturer: 'AgriFoods India',
-    netQuantity: '1 kg',
-    mrp: '₹145',
-    date: '24 Aug 2026',
-    rawDate: '2026-08-24',
-    officer: 'Officer',
-    complianceScore: 99,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00116',
-    productName: 'Herbal Shampoo',
-    category: 'Other',
-    categoryGroup: 'Other',
-    manufacturer: 'Green Botanicals',
-    netQuantity: '400 ml',
-    mrp: '₹280',
-    date: '23 Aug 2026',
-    rawDate: '2026-08-23',
-    officer: 'Officer',
-    complianceScore: 68,
-    status: 'NON-COMPLIANT',
-    hasReport: false,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00115',
-    productName: 'Filter Coffee Powder',
-    category: 'Other',
-    categoryGroup: 'Other',
-    manufacturer: 'South Plantations',
-    netQuantity: '200 g',
-    mrp: '₹110',
-    date: '22 Aug 2026',
-    rawDate: '2026-08-22',
-    officer: 'Officer',
-    complianceScore: 95,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00114',
-    productName: 'Toor Dal Special',
-    category: 'Food Grains & Pulses',
-    categoryGroup: 'Food Grains & Pulses',
-    manufacturer: 'FarmFresh Pulses',
-    netQuantity: '2 kg',
-    mrp: '₹310',
-    date: '21 Aug 2026',
-    rawDate: '2026-08-21',
-    officer: 'Officer',
-    complianceScore: 91,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00113',
-    productName: 'Coconut Oil Pure',
-    category: 'Packaged Commodities',
-    categoryGroup: 'Packaged Commodities',
-    manufacturer: 'Kerala Mills',
-    netQuantity: '500 ml',
-    mrp: '₹130',
-    date: '20 Aug 2026',
-    rawDate: '2026-08-20',
-    officer: 'Officer',
-    complianceScore: 98,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00112',
-    productName: 'Multigrain Flour',
-    category: 'Food Grains & Pulses',
-    categoryGroup: 'Food Grains & Pulses',
-    manufacturer: 'Healthy Mills Ltd.',
-    netQuantity: '5 kg',
-    mrp: '₹290',
-    date: '19 Aug 2026',
-    rawDate: '2026-08-19',
-    officer: 'Officer',
-    complianceScore: 84,
-    status: 'NEEDS REVIEW',
-    hasReport: false,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00111',
-    productName: 'Dishwash Liquid Gel',
-    category: 'Other',
-    categoryGroup: 'Other',
-    manufacturer: 'Sparkle Chem',
-    netQuantity: '750 ml',
-    mrp: '₹155',
-    date: '18 Aug 2026',
-    rawDate: '2026-08-18',
-    officer: 'Officer',
-    complianceScore: 93,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00110',
-    productName: 'Almond Kernels',
-    category: 'Food Grains & Pulses',
-    categoryGroup: 'Food Grains & Pulses',
-    manufacturer: 'NutriNuts Imports',
-    netQuantity: '500 g',
-    mrp: '₹540',
-    date: '17 Aug 2026',
-    rawDate: '2026-08-17',
-    officer: 'Officer',
-    complianceScore: 96,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00109',
-    productName: 'Soyabean Refined Oil',
-    category: 'Packaged Commodities',
-    categoryGroup: 'Packaged Commodities',
-    manufacturer: 'Global Agro Ltd.',
-    netQuantity: '1 L',
-    mrp: '₹140',
-    date: '16 Aug 2026',
-    rawDate: '2026-08-16',
-    officer: 'Officer',
-    complianceScore: 60,
-    status: 'NON-COMPLIANT',
-    hasReport: false,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00108',
-    productName: 'Iodized Table Salt',
-    category: 'Packaged Commodities',
-    categoryGroup: 'Packaged Commodities',
-    manufacturer: 'National Salt Works',
-    netQuantity: '1 kg',
-    mrp: '₹28',
-    date: '15 Aug 2026',
-    rawDate: '2026-08-15',
-    officer: 'Officer',
-    complianceScore: 99,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00107',
-    productName: 'Chana Dal Super',
-    category: 'Food Grains & Pulses',
-    categoryGroup: 'Food Grains & Pulses',
-    manufacturer: 'AgriGrain Corp',
-    netQuantity: '1 kg',
-    mrp: '₹110',
-    date: '14 Aug 2026',
-    rawDate: '2026-08-14',
-    officer: 'Officer',
-    complianceScore: 94,
-    status: 'COMPLIANT',
-    hasReport: true,
-    hasEvidence: true,
-  },
-  {
-    inspectionId: 'LM-2026-00106',
-    productName: 'Instant Noodles Masala',
-    category: 'Other',
-    categoryGroup: 'Other',
-    manufacturer: 'FastSnacks India',
-    netQuantity: '280 g',
-    mrp: '₹60',
-    date: '13 Aug 2026',
-    rawDate: '2026-08-13',
-    officer: 'Officer',
-    complianceScore: 88,
-    status: 'PENDING REVIEW',
-    hasReport: false,
-    hasEvidence: true,
-  },
-];
+export const INITIAL_MOCK_INSPECTIONS = INSPECTIONS.map((inspection) => {
+  const product = PRODUCTS.find((item) => item.productId === inspection.productId);
+  return {
+    inspectionId: inspection.inspectionId, productName: inspection.productName, category: inspection.category,
+    categoryGroup: inspection.category, manufacturer: inspection.manufacturer, netQuantity: product?.packSize || '',
+    mrp: `₹${product?.mrp || ''}`, date: inspection.inspectionDate, rawDate: inspection.inspectionDate,
+    officer: inspection.officerName, complianceScore: inspection.complianceScore,
+    status: inspection.status.toUpperCase().replace(' ', '-'), hasReport: true, hasEvidence: true,
+  };
+});
 
-/**
- * Loads inspection history from localStorage or initializes with default mock records.
- */
 export const getInspectionHistory = () => {
   try {
     const stored = localStorage.getItem(HISTORY_STORAGE_KEY);
     if (stored !== null) {
       const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed)) {
-        return parsed;
-      }
+      if (Array.isArray(parsed)) return parsed;
     }
-  } catch (e) {
-    console.warn('Failed to load inspection history from localStorage', e);
-  }
-  // Initialize in localStorage
-  try {
     localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(INITIAL_MOCK_INSPECTIONS));
-  } catch (_) {}
+  } catch (error) {
+    console.warn('Failed to load inspection history from localStorage', error);
+  }
   return INITIAL_MOCK_INSPECTIONS;
 };
 
-/**
- * Adds or updates an inspection record in history.
- */
 export const saveInspectionToHistory = (inspection) => {
   try {
     const history = getInspectionHistory();
-    const existingIndex = history.findIndex(
-      (item) => item.inspectionId === inspection.inspectionId
-    );
-    let updated;
-    if (existingIndex >= 0) {
-      updated = [...history];
-      updated[existingIndex] = { ...updated[existingIndex], ...inspection };
-    } else {
-      updated = [inspection, ...history];
-    }
+    const existingIndex = history.findIndex((item) => item.inspectionId === inspection.inspectionId);
+    const updated = existingIndex >= 0
+      ? history.map((item, index) => index === existingIndex ? { ...item, ...inspection } : item)
+      : [inspection, ...history];
     localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updated));
     return updated;
-  } catch (e) {
-    console.error('Failed to save inspection to history', e);
+  } catch (error) {
+    console.error('Failed to save inspection to history', error);
     return getInspectionHistory();
   }
 };
 
-/**
- * Deletes a single inspection from history by ID.
- */
 export const deleteInspectionFromHistory = (inspectionId) => {
-  try {
-    const history = getInspectionHistory();
-    const updated = history.filter((item) => item.inspectionId !== inspectionId);
-    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updated));
-    return updated;
-  } catch (e) {
-    console.error('Failed to delete inspection from history', e);
-    return getInspectionHistory();
-  }
+  const updated = getInspectionHistory().filter((item) => item.inspectionId !== inspectionId);
+  localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updated));
+  return updated;
 };
 
-/**
- * Deletes multiple inspections from history.
- */
 export const deleteMultipleInspections = (inspectionIds = []) => {
-  try {
-    const history = getInspectionHistory();
-    const set = new Set(inspectionIds);
-    const updated = history.filter((item) => !set.has(item.inspectionId));
-    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updated));
-    return updated;
-  } catch (e) {
-    console.error('Failed to delete multiple inspections from history', e);
-    return getInspectionHistory();
-  }
+  const selected = new Set(inspectionIds);
+  const updated = getInspectionHistory().filter((item) => !selected.has(item.inspectionId));
+  localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updated));
+  return updated;
 };
 
-/**
- * Clears all inspection records from history.
- */
 export const clearAllInspectionHistory = () => {
-  try {
-    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify([]));
-    return [];
-  } catch (e) {
-    console.error('Failed to clear inspection history', e);
-    return [];
-  }
+  localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify([]));
+  return [];
 };
-

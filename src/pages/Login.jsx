@@ -359,6 +359,32 @@ export const Login = () => {
             )}
           </div>
 
+          {!isOfficer && (
+            <div className="text-center text-xs text-slate-500">
+              <span>New customer? </span>
+              <button
+                type="button"
+                onClick={() => navigate('/register')}
+                className="font-bold text-rose-700 hover:text-rose-800 hover:underline cursor-pointer ml-1"
+              >
+                Create an account
+              </button>
+            </div>
+          )}
+
+          {isOfficer && (
+            <div className="text-center text-xs text-slate-500">
+              <span>New officer? </span>
+              <button
+                type="button"
+                onClick={() => navigate('/officer/register')}
+                className="font-bold text-cyan-700 hover:text-cyan-800 hover:underline cursor-pointer ml-1"
+              >
+                Register as Officer
+              </button>
+            </div>
+          )}
+
           {/* Official Security Disclaimer */}
           <div className="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-[11px] text-slate-500 text-center leading-relaxed shadow-2xs">
             {isOfficer

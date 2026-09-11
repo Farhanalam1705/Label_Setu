@@ -1,6 +1,8 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from '../pages/Login';
+import { Register } from '../pages/Register';
+import { OfficerRegister } from '../pages/OfficerRegister';
 import { Dashboard } from '../pages/Dashboard';
 import { Scanner } from '../pages/Scanner';
 import { Processing } from '../pages/Processing';
@@ -32,6 +34,8 @@ export const AppRoutes = () => {
     <Routes>
       {/* Public Route: Login */}
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/officer/register" element={<OfficerRegister />} />
 
       {/* Customer Portal Protected Routes */}
       <Route

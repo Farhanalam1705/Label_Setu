@@ -3,7 +3,7 @@ import { Package, Building, Calendar, Phone, Hash, DollarSign } from 'lucide-rea
 
 export const ProductInformation = ({ product = {} }) => {
   const infoItems = [
-    { label: 'Product Name', value: product.name || 'ABC Premium Rice', bold: true },
+    { label: 'Product Name', value: product.name || 'Premium Basmati Rice', bold: true },
     { label: 'Manufacturer', value: product.manufacturer || 'ABC Foods Pvt. Ltd.' },
     { label: 'Packer', value: product.packer || 'ABC Foods Pvt. Ltd.' },
     { label: 'Importer', value: product.importer || 'Not Applicable' },

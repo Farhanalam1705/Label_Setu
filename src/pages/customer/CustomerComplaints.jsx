@@ -41,6 +41,7 @@ import {
   subscribeComplaints 
 } from '../../services/complaintService';
 import { useLanguage } from '../../context/LanguageContext';
+import { getCurrentUser } from '../../services/auth';
 
 export const CustomerComplaints = () => {
   const { complaintId } = useParams();
@@ -116,9 +117,11 @@ export const CustomerComplaints = () => {
   const [confirmationChecked, setConfirmationChecked] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedComplaint, setSubmittedComplaint] = useState(null);
+  const currentCustomerEmail = getCurrentUser()?.email?.toLowerCase() || 'customer@labelsetu.gov.in';
+  const customerComplaints = complaints.filter((c) => (c.customerEmail || '').toLowerCase() === currentCustomerEmail);
 
   // Filtered complaints list
-  const filteredComplaints = complaints.filter((c) => {
+  const filteredComplaints = customerComplaints.filter((c) => {
     const pName = c.productName || c.product || '';
     const cId = c.complaintId || c.id || '';
     const cat = c.category || c.issue || '';
@@ -364,7 +367,7 @@ export const CustomerComplaints = () => {
 
     setTimeout(() => {
       const newRecord = createComplaint({
-        productName: productName || 'ABC Premium Rice',
+        productName: productName || 'Premium Basmati Rice',
         category: complaintCategory,
         description: complaintDescription,
         image: uploadedImage,
@@ -765,19 +768,19 @@ export const CustomerComplaints = () => {
             <div className="bg-[#0f1b2d] p-4 rounded-xl border border-[#1e314f]">
               <span className="text-xs font-semibold text-cyan-400">{t('submitted', 'Submitted')}</span>
               <p className="text-2xl font-black text-white mt-1">
-                {complaints.filter((c) => ['SUBMITTED', 'Submitted'].includes(c.status)).length}
+                {customerComplaints.filter((c) => ['SUBMITTED', 'Submitted'].includes(c.status)).length}
               </p>
             </div>
             <div className="bg-[#0f1b2d] p-4 rounded-xl border border-[#1e314f]">
               <span className="text-xs font-semibold text-amber-400">{t('needsReview', 'Under Review')}</span>
               <p className="text-2xl font-black text-white mt-1">
-                {complaints.filter((c) => ['UNDER_REVIEW', 'Under Review', 'ADDITIONAL_EVIDENCE_REQUIRED', 'Additional Evidence Requested'].includes(c.status)).length}
+                {customerComplaints.filter((c) => ['UNDER_REVIEW', 'Under Review', 'ADDITIONAL_EVIDENCE_REQUIRED', 'Additional Evidence Requested'].includes(c.status)).length}
               </p>
             </div>
             <div className="bg-[#0f1b2d] p-4 rounded-xl border border-[#1e314f]">
               <span className="text-xs font-semibold text-emerald-400">{t('resolved', 'Resolved')}</span>
               <p className="text-2xl font-black text-white mt-1">
-                {complaints.filter((c) => ['RESOLVED', 'Resolved', 'VALIDATED'].includes(c.status)).length}
+                {customerComplaints.filter((c) => ['RESOLVED', 'Resolved', 'VALIDATED'].includes(c.status)).length}
               </p>
             </div>
           </div>
@@ -1518,7 +1521,7 @@ export const CustomerComplaints = () => {
               </div>
               <div className="flex items-center justify-between pb-2 border-b border-slate-700/60">
                 <span className="text-slate-400">{t('product', 'Product')}:</span>
-                <span className="font-bold text-white">{submittedComplaint?.product || 'ABC Premium Rice'}</span>
+                <span className="font-bold text-white">{submittedComplaint?.product || 'Premium Basmati Rice'}</span>
               </div>
               <div className="flex items-center justify-between pb-2 border-b border-slate-700/60">
                 <span className="text-slate-400">{t('category', 'Category')}:</span>

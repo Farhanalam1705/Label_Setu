@@ -16,7 +16,7 @@ import { EvidenceViewer } from '../components/results/EvidenceViewer';
 import { StatusBadge } from '../components/results/StatusBadge';
 
 export const InspectionDetailsPage = () => {
-  const { inspectionId = 'LM-2026-00129' } = useParams();
+  const { inspectionId = 'INS-2026-0001' } = useParams();
   const navigate = useNavigate();
 
   // Selected evidence for modal
