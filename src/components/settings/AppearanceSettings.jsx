@@ -177,16 +177,7 @@ export const AppearanceSettings = ({ appearance, onSaveAppearance }) => {
           </div>
         </div>
 
-        {/* Save button */}
-        <div className="flex justify-end pt-3 border-t border-slate-100">
-          <button
-            type="submit"
-            className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-[#0c1e33] hover:bg-slate-800 rounded-xl transition-all shadow-xs cursor-pointer"
-          >
-            <Save className="w-3.5 h-3.5 text-cyan-400" />
-            <span>{t('saveAppearance', 'Save Appearance')}</span>
-          </button>
-        </div>
+
       </form>
     </div>
   );

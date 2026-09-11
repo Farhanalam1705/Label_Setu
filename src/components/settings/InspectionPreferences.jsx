@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sliders, Save, FileCheck, Tag } from 'lucide-react';
+import { Sliders, FileCheck, Tag } from 'lucide-react';
 import { Toggle } from './Toggle';
 import { useToast } from '../common/Toast';
 import { useLanguage } from '../../context/LanguageContext';
@@ -9,18 +9,10 @@ export const InspectionPreferences = ({ preferences, onSavePreferences }) => {
   const { t } = useLanguage();
   const [formData, setFormData] = useState({ ...preferences });
 
-  const handleToggle = (key, val) => {
-    setFormData((prev) => ({ ...prev, [key]: val }));
-  };
-
-  const handleSave = (e) => {
-    e.preventDefault();
-    onSavePreferences(formData);
-    addToast({
-      title: t('preferencesSaved', 'Preferences Saved'),
-      message: t('preferencesSavedDesc', 'Inspection preferences saved.'),
-      type: 'success',
-    });
+  const applyChange = (key, val) => {
+    const updated = { ...formData, [key]: val };
+    setFormData(updated);
+    onSavePreferences(updated);
   };
 
   return (
@@ -37,7 +29,7 @@ export const InspectionPreferences = ({ preferences, onSavePreferences }) => {
         </div>
       </div>
 
-      <form onSubmit={handleSave} className="space-y-6">
+      <form className="space-y-6">
         {/* Toggle options */}
         <div className="space-y-3">
           <Toggle
@@ -45,7 +37,7 @@ export const InspectionPreferences = ({ preferences, onSavePreferences }) => {
             label={t('autoSave', 'Auto-save inspections')}
             description={t('autoSaveDesc', 'Automatically log scanned products and intermediate analysis states to local registry.')}
             checked={formData.autoSave}
-            onChange={(val) => handleToggle('autoSave', val)}
+            onChange={(val) => applyChange('autoSave', val)}
           />
 
           <Toggle
@@ -53,7 +45,7 @@ export const InspectionPreferences = ({ preferences, onSavePreferences }) => {
             label={t('showConfidenceScores', 'Show AI confidence scores')}
             description={t('showConfidenceScoresDesc', 'Display quantitative confidence percentages (e.g. 94%) on findings and checks.')}
             checked={formData.showConfidenceScores}
-            onChange={(val) => handleToggle('showConfidenceScores', val)}
+            onChange={(val) => applyChange('showConfidenceScores', val)}
           />
 
           <Toggle
@@ -61,7 +53,7 @@ export const InspectionPreferences = ({ preferences, onSavePreferences }) => {
             label={t('showEvidenceHighlights', 'Show evidence highlights')}
             description={t('showEvidenceHighlightsDesc', 'Overlay bounding boxes and visual region crops when reviewing target label declarations.')}
             checked={formData.showEvidenceHighlights}
-            onChange={(val) => handleToggle('showEvidenceHighlights', val)}
+            onChange={(val) => applyChange('showEvidenceHighlights', val)}
           />
 
           <Toggle
@@ -69,7 +61,7 @@ export const InspectionPreferences = ({ preferences, onSavePreferences }) => {
             label={t('requireOfficerReview', 'Require officer review before report generation')}
             description={t('requireOfficerReviewDesc', 'Enforce mandatory officer sign-off before generating official statutory compliance reports.')}
             checked={formData.requireOfficerReview}
-            onChange={(val) => handleToggle('requireOfficerReview', val)}
+            onChange={(val) => applyChange('requireOfficerReview', val)}
           />
         </div>
 
@@ -82,9 +74,7 @@ export const InspectionPreferences = ({ preferences, onSavePreferences }) => {
             </label>
             <select
               value={formData.defaultReportFormat}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, defaultReportFormat: e.target.value }))
-              }
+              onChange={(e) => applyChange('defaultReportFormat', e.target.value)}
               className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-slate-900 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 cursor-pointer"
             >
               <option value="PDF">PDF Document (.pdf)</option>
@@ -99,9 +89,7 @@ export const InspectionPreferences = ({ preferences, onSavePreferences }) => {
             </label>
             <select
               value={formData.defaultCategory}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, defaultCategory: e.target.value }))
-              }
+              onChange={(e) => applyChange('defaultCategory', e.target.value)}
               className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-slate-900 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 cursor-pointer"
             >
               <option value="Packaged Commodities">Packaged Commodities</option>
@@ -109,17 +97,6 @@ export const InspectionPreferences = ({ preferences, onSavePreferences }) => {
               <option value="Other">Other</option>
             </select>
           </div>
-        </div>
-
-        {/* Action Button */}
-        <div className="flex justify-end pt-2">
-          <button
-            type="submit"
-            className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-[#0c1e33] hover:bg-slate-800 rounded-xl transition-all shadow-xs cursor-pointer"
-          >
-            <Save className="w-3.5 h-3.5 text-cyan-400" />
-            <span>{t('savePreferences', 'Save Preferences')}</span>
-          </button>
         </div>
       </form>
     </div>

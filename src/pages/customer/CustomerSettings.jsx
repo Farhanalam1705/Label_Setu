@@ -32,13 +32,15 @@ import { CUSTOMER_PROFILE } from '../../data/customerMockData';
 import { useToast } from '../../components/common/Toast';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
+import { useRegional } from '../../context/RegionalContext';
 
 export const CustomerSettings = () => {
   const { addToast } = useToast();
   const { theme: selectedTheme, setTheme: setSelectedTheme, density, setDensity } = useTheme();
   const { language: selectedLanguage, setLanguage: setSelectedLanguage, t } = useLanguage();
+  const { dateFormat, setDateFormat, unitSystem, setUnitSystem } = useRegional();
 
-  // Active Tab: 'profile' | 'appearance' | 'language' | 'notifications' | 'security' | 'data'
+  // Active Tab
   const [activeTab, setActiveTab] = useState('appearance');
 
   // Form State: Profile & Organization
@@ -54,10 +56,6 @@ export const CustomerSettings = () => {
 
   // Appearance State
   const [animationsEnabled, setAnimationsEnabled] = useState(true);
-
-  // Language & Regional State
-  const [dateFormat, setDateFormat] = useState('DD/MM/YYYY');
-  const [unitSystem, setUnitSystem] = useState('metric_pcr');
 
   // Notification Preferences State
   const [notifEmailInspections, setNotifEmailInspections] = useState(true);
@@ -95,16 +93,8 @@ export const CustomerSettings = () => {
 
   const themeOptions = [
     {
-      id: 'plum',
-      name: 'Customer Plum (Default)',
-      desc: 'Signature Legal Metrology deep wine and rich plum theme.',
-      previewBg: 'bg-[#1b0a1a]',
-      previewAccent: 'bg-[#57184a]',
-      border: 'border-rose-400',
-    },
-    {
       id: 'light',
-      name: 'Clean Light Slate',
+      name: 'Light',
       desc: 'Crisp minimal white background with soft slate contrast.',
       previewBg: 'bg-slate-100',
       previewAccent: 'bg-rose-600',
@@ -112,19 +102,11 @@ export const CustomerSettings = () => {
     },
     {
       id: 'dark',
-      name: 'Midnight Navy',
+      name: 'Dark',
       desc: 'High-focus dark navy palette for low-light environments.',
       previewBg: 'bg-[#0a1526]',
       previewAccent: 'bg-cyan-500',
       border: 'border-cyan-500',
-    },
-    {
-      id: 'contrast',
-      name: 'High Contrast Legal',
-      desc: 'Maximum accessibility and sharp element borders.',
-      previewBg: 'bg-black',
-      previewAccent: 'bg-amber-400',
-      border: 'border-amber-400',
     },
   ];
 
@@ -146,14 +128,7 @@ export const CustomerSettings = () => {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleSaveAll}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-[#57184a] hover:bg-[#431238] text-white shadow-md shadow-purple-950/15 transition-all cursor-pointer active:scale-98 self-start sm:self-auto"
-        >
-          <Save className="w-4 h-4" />
-          <span>{t('saveChanges', 'Save Changes')}</span>
-        </button>
+
       </div>
 
       {/* Main Settings Grid */}
@@ -420,25 +395,7 @@ export const CustomerSettings = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                  <div>
-                    <span className="font-bold text-slate-900 block">{t('microAnimations', 'Micro-Animations & Transitions')}</span>
-                    <span className="text-[11px] text-slate-500">{t('microAnimationsDesc', 'Enable smooth card hovers and pipeline animations')}</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setAnimationsEnabled(!animationsEnabled)}
-                    className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer p-0.5 ${
-                      animationsEnabled ? 'bg-[#57184a]' : 'bg-slate-300'
-                    }`}
-                  >
-                    <div
-                      className={`w-5 h-5 rounded-full bg-white transition-transform ${
-                        animationsEnabled ? 'translate-x-5' : 'translate-x-0'
-                      }`}
-                    />
-                  </button>
-                </div>
+
               </div>
             </div>
           )}
@@ -585,28 +542,6 @@ export const CustomerSettings = () => {
                   </button>
                 </div>
 
-                {/* Notification Item 3 */}
-                <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="space-y-0.5 max-w-lg">
-                    <span className="font-bold text-slate-900 block">{t('urgentSmsAlerts', 'Urgent SMS Alerts for Non-Compliance Notices')}</span>
-                    <p className="text-slate-500 text-[11px]">
-                      {t('urgentSmsAlertsDesc', 'Receive direct priority SMS for any flagged packaging non-compliance needing 48-hour response.')}
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setNotifSmsAlerts(!notifSmsAlerts)}
-                    className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer p-0.5 shrink-0 ml-3 ${
-                      notifSmsAlerts ? 'bg-[#57184a]' : 'bg-slate-300'
-                    }`}
-                  >
-                    <div
-                      className={`w-5 h-5 rounded-full bg-white transition-transform ${
-                        notifSmsAlerts ? 'translate-x-5' : 'translate-x-0'
-                      }`}
-                    />
-                  </button>
-                </div>
 
                 {/* Notification Item 4 */}
                 <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-200">
@@ -644,37 +579,9 @@ export const CustomerSettings = () => {
                   <h2 className="text-base font-bold text-slate-900">{t('securityAccess', 'Security & Authentication')}</h2>
                   <p className="text-xs text-slate-500">{t('securityAccessSubtitle', 'Manage credentials, two-factor authentication, and active enterprise sessions')}</p>
                 </div>
-                <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  2FA {t('active', 'Active')}
-                </span>
               </div>
 
-              {/* 2FA Card */}
-              <div className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
-                    <Smartphone className="w-5 h-5" />
-                  </div>
-                  <div className="space-y-0.5">
-                    <h3 className="text-xs font-bold text-slate-900">{t('twoFactorAuth', 'Two-Factor Authentication (2FA)')}</h3>
-                    <p className="text-[11px] text-slate-600">{t('twoFactorAuthDesc', 'OTP required on registered mobile (+91 98765 43210)')}</p>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setTwoFactorEnabled(!twoFactorEnabled);
-                    addToast({
-                      type: twoFactorEnabled ? 'warning' : 'success',
-                      title: '2FA Status',
-                      message: twoFactorEnabled ? 'Two-Factor Authentication disabled.' : 'Two-Factor Authentication enabled.',
-                    });
-                  }}
-                  className="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white text-slate-700 border border-slate-200 shadow-2xs hover:bg-slate-50 transition-colors cursor-pointer"
-                >
-                  {twoFactorEnabled ? t('configure', 'Configure') : t('enable', 'Enable')}
-                </button>
-              </div>
+
 
               {/* Password Change Section */}
               <div className="space-y-3 pt-2">

@@ -1,33 +1,9 @@
-import React, { useState } from 'react';
-import { Info, Scale, ShieldCheck, Sparkles, CheckCircle2, Activity, RefreshCw } from 'lucide-react';
+import React from 'react';
+import { Info, Sparkles } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
-import { useToast } from '../common/Toast';
 
 export const AboutSettings = () => {
   const { t } = useLanguage();
-  const { addToast } = useToast();
-  const [isChecking, setIsChecking] = useState(false);
-  const [diagnosticResult, setDiagnosticResult] = useState(null);
-
-  const handleRunDiagnostics = () => {
-    setIsChecking(true);
-    setDiagnosticResult(null);
-
-    setTimeout(() => {
-      setIsChecking(false);
-      setDiagnosticResult({
-        status: 'Operational',
-        latency: '14ms',
-        ruleEngine: 'Active (Legal Metrology Rules 2011)',
-        ocrStatus: 'Ready (Multi-lingual OCR)',
-      });
-      addToast({
-        title: 'System Health: 100%',
-        message: t('diagnosticOk', 'All Local Inspection Services Operational'),
-        type: 'success',
-      });
-    }, 1200);
-  };
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-6 space-y-6">
@@ -81,37 +57,6 @@ export const AboutSettings = () => {
           <p className="text-xs text-cyan-800 leading-relaxed">
             {t('aiSupportDesc', 'AI-generated findings are intended to support authorized officers and do not replace official enforcement judgment.')}
           </p>
-        </div>
-
-        {/* System Diagnostics Interactive Box */}
-        <div className="p-4 bg-slate-50/80 rounded-xl border border-slate-200/80 space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Activity className="w-4 h-4 text-cyan-600" />
-              <span className="font-bold text-slate-900">System Diagnostics</span>
-            </div>
-            <button
-              type="button"
-              onClick={handleRunDiagnostics}
-              disabled={isChecking}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-800 bg-white hover:bg-slate-100 border border-slate-300 rounded-lg transition-colors cursor-pointer shadow-2xs disabled:opacity-60"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 text-cyan-600 ${isChecking ? 'animate-spin' : ''}`} />
-              <span>{isChecking ? 'Running Diagnostics...' : t('diagnosticCheck', 'Run System Diagnostics')}</span>
-            </button>
-          </div>
-
-          {diagnosticResult && (
-            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200/80 text-[11px] animate-fadeIn">
-              <div className="p-2 bg-emerald-50 text-emerald-900 rounded-lg flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span>Status: <strong>{diagnosticResult.status}</strong> ({diagnosticResult.latency})</span>
-              </div>
-              <div className="p-2 bg-slate-100 text-slate-800 rounded-lg">
-                <span>Rules: <strong>{diagnosticResult.ruleEngine}</strong></span>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Metadata Badges */}

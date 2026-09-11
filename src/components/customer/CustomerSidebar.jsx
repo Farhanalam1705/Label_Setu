@@ -65,12 +65,6 @@ export const CustomerSidebar = ({ isOpen, onClose }) => {
       badge: null,
     },
     {
-      name: t('notifications', 'Notifications'),
-      path: '/customer/notifications',
-      icon: Bell,
-      badge: null,
-    },
-    {
       name: t('settings', 'Settings'),
       path: '/customer/settings',
       icon: Settings,
