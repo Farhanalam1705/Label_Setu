@@ -35,13 +35,15 @@ import { CameraModal } from '../../components/scanner/CameraModal';
 import { 
   getComplaints, 
   createComplaint, 
-  addAdditionalEvidence, 
+  submitRequestedEvidence, 
   deleteComplaints, 
   subscribeComplaints 
 } from '../../services/complaintService';
 import { useLanguage } from '../../context/LanguageContext';
 import { getCurrentUser } from '../../services/auth';
 import { INSPECTIONS } from '../../data/centralData';
+
+const isEvidenceRequested = (status) => ['ADDITIONAL_EVIDENCE_REQUIRED', 'ADDITIONAL EVIDENCE REQUESTED', 'EVIDENCE_REQUESTED', 'EVIDENCE REQUESTED'].includes((status || '').toUpperCase());
 
 export const CustomerComplaints = () => {
   const { complaintId } = useParams();
@@ -142,7 +144,7 @@ export const CustomerComplaints = () => {
     if (statusFilter === 'ALL') return matchesSearch;
     return matchesSearch && (
       status === statusFilter.toUpperCase() ||
-      (statusFilter === 'UNDER_REVIEW' && (status === 'UNDER REVIEW' || status === 'ADDITIONAL_EVIDENCE_REQUIRED')) ||
+      (statusFilter === 'UNDER_REVIEW' && (status === 'UNDER REVIEW' || status === 'ADDITIONAL_EVIDENCE_REQUIRED' || status === 'EVIDENCE_REQUESTED')) ||
       (statusFilter === 'RESOLVED' && (status === 'RESOLVED' || status === 'VALIDATED'))
     );
   });
@@ -290,7 +292,7 @@ export const CustomerComplaints = () => {
       const reader = new FileReader();
       reader.onload = (event) => {
         const cId = selectedComplaintDetail.complaintId || selectedComplaintDetail.id;
-        const updated = addAdditionalEvidence(cId, {
+        const updated = submitRequestedEvidence(cId, {
           name: file.name,
           url: event.target.result,
           notes: 'Uploaded by customer in response to officer request.',
@@ -299,8 +301,8 @@ export const CustomerComplaints = () => {
           setSelectedComplaintDetail(updated);
           addToast({
             type: 'success',
-            title: 'Evidence Submitted',
-            message: `Supplementary evidence (${file.name}) submitted. Status updated to Under Review.`,
+            title: 'Additional Evidence Submitted Successfully',
+            message: `Supplementary evidence (${file.name}) has been submitted for officer review.`,
           });
         }
       };
@@ -424,7 +426,7 @@ export const CustomerComplaints = () => {
         </span>
       );
     }
-    if (norm === 'ADDITIONAL EVIDENCE REQUESTED' || norm === 'ADDITIONAL_EVIDENCE_REQUIRED') {
+    if (norm === 'ADDITIONAL EVIDENCE REQUESTED' || norm === 'ADDITIONAL_EVIDENCE_REQUIRED' || norm === 'EVIDENCE REQUESTED' || norm === 'EVIDENCE_REQUESTED') {
       return (
         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-500/15 text-purple-300 border border-purple-500/30">
           <Paperclip className="w-3 h-3" />
@@ -463,7 +465,7 @@ export const CustomerComplaints = () => {
         ref={modalEvidenceInputRef}
         onChange={handleModalEvidenceUpload}
         className="hidden"
-        accept="image/*"
+        accept="image/*,application/pdf"
       />
 
       {/* ───────────────────────────────────────────────────────── */}
@@ -558,7 +560,7 @@ export const CustomerComplaints = () => {
                 </div>
               )}
 
-              {(selectedComplaintDetail.status === 'ADDITIONAL_EVIDENCE_REQUIRED' || selectedComplaintDetail.status === 'Additional Evidence Requested') && (
+              {isEvidenceRequested(selectedComplaintDetail.status) && (
                 <div className="p-4 rounded-xl bg-purple-950/50 border border-purple-500/40 space-y-3">
                   <div className="flex items-center gap-2 text-purple-300 font-bold text-xs">
                     <Paperclip className="w-4 h-4" />
@@ -572,7 +574,7 @@ export const CustomerComplaints = () => {
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white shadow-md transition-colors cursor-pointer"
                   >
                     <Upload className="w-3.5 h-3.5" />
-                    <span>Upload Additional Evidence</span>
+                    <span>Upload Additional Proof</span>
                   </button>
                 </div>
               )}
@@ -650,7 +652,7 @@ export const CustomerComplaints = () => {
                   </div>
 
                   {/* Step 3: Evidence Requested if active */}
-                  {(selectedComplaintDetail.status === 'ADDITIONAL_EVIDENCE_REQUIRED' || selectedComplaintDetail.status === 'Additional Evidence Requested') && (
+                  {isEvidenceRequested(selectedComplaintDetail.status) && (
                     <div className="flex items-center gap-3">
                       <div className="w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold text-xs shrink-0 animate-pulse">
                         ⚠
@@ -803,7 +805,7 @@ export const CustomerComplaints = () => {
             <div className="bg-[#0f1b2d] p-4 rounded-xl border border-[#1e314f]">
               <span className="text-xs font-semibold text-amber-400">{t('needsReview', 'Under Review')}</span>
               <p className="text-2xl font-black text-white mt-1">
-                {customerComplaints.filter((c) => ['UNDER_REVIEW', 'Under Review', 'ADDITIONAL_EVIDENCE_REQUIRED', 'Additional Evidence Requested'].includes(c.status)).length}
+                {customerComplaints.filter((c) => ['UNDER_REVIEW', 'Under Review', 'ADDITIONAL_EVIDENCE_REQUIRED', 'Additional Evidence Requested', 'EVIDENCE_REQUESTED', 'Evidence Requested'].includes(c.status)).length}
               </p>
             </div>
             <div className="bg-[#0f1b2d] p-4 rounded-xl border border-[#1e314f]">

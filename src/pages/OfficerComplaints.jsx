@@ -53,7 +53,8 @@ export const OfficerComplaints = () => {
     (c) =>
       c.status?.toUpperCase() === 'UNDER_REVIEW' ||
       c.status?.toUpperCase() === 'UNDER REVIEW' ||
-      c.status?.toUpperCase() === 'ADDITIONAL_EVIDENCE_REQUIRED'
+      c.status?.toUpperCase() === 'ADDITIONAL_EVIDENCE_REQUIRED' ||
+      c.status?.toUpperCase() === 'EVIDENCE_REQUESTED'
   ).length;
   const resolvedCount = complaints.filter(
     (c) =>
@@ -111,6 +112,12 @@ export const OfficerComplaints = () => {
     return cat;
   };
 
+  const getComplaintEvidenceImage = (complaint) =>
+    complaint?.evidence?.find((evidence) => evidence?.url)?.url ||
+    complaint?.image ||
+    complaint?.imageUrl ||
+    null;
+
   const getStatusBadge = (statusStr) => {
     const s = (statusStr || '').toUpperCase();
     if (s === 'SUBMITTED') {
@@ -127,7 +134,7 @@ export const OfficerComplaints = () => {
         </span>
       );
     }
-    if (s === 'ADDITIONAL_EVIDENCE_REQUIRED') {
+    if (s === 'ADDITIONAL_EVIDENCE_REQUIRED' || s === 'EVIDENCE_REQUESTED') {
       return (
         <span className="inline-flex max-w-full items-center justify-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] leading-tight font-bold bg-purple-50 text-purple-700 border border-purple-200/80 whitespace-normal">
           <AlertTriangle className="w-3 h-3 text-purple-600" /> {t('evidenceRequested', 'Evidence Requested')}
@@ -395,6 +402,7 @@ export const OfficerComplaints = () => {
                     const confidence = item.aiAnalysis?.confidence ?? item.confidence ?? 88;
                     const hasIssue = item.aiAnalysis?.issueDetected ?? true;
                     const isSubmitted = item.status?.toUpperCase() === 'SUBMITTED';
+                    const evidenceImage = getComplaintEvidenceImage(item);
 
                     return (
                       <tr 
@@ -410,11 +418,7 @@ export const OfficerComplaints = () => {
                         {/* Product & Customer Combined */}
                         <td className="py-2.5 px-3 align-middle min-w-0">
                           <div className="flex min-w-0 items-center gap-2">
-                            <img
-                              src={item.image || item.imageUrl || 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=600'}
-                              alt={pName}
-                              className="w-9 h-9 rounded-lg object-cover border border-slate-200 shrink-0"
-                            />
+                            {evidenceImage ? <img src={evidenceImage} alt={`Evidence for ${pName}`} className="w-9 h-9 rounded-lg object-cover border border-slate-200 shrink-0" /> : <div className="w-9 h-9 rounded-lg border border-dashed border-slate-300 bg-slate-50 text-[8px] leading-tight text-slate-400 flex items-center justify-center text-center shrink-0">No evidence</div>}
                             <div className="min-w-0 flex-1">
                               <p className="font-bold text-slate-900 text-xs leading-snug break-words">{pName}</p>
                               <p className="mt-0.5 text-[10px] leading-snug text-slate-400 break-words">
@@ -484,6 +488,7 @@ export const OfficerComplaints = () => {
                 const pName = item.productName || item.product;
                 const confidence = item.aiAnalysis?.confidence ?? item.confidence ?? 88;
                 const isSubmitted = item.status?.toUpperCase() === 'SUBMITTED';
+                const evidenceImage = getComplaintEvidenceImage(item);
 
                 return (
                   <div key={cId} className="p-4 space-y-3">
@@ -493,11 +498,7 @@ export const OfficerComplaints = () => {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <img
-                        src={item.image || item.imageUrl || 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=600'}
-                        alt={pName}
-                        className="w-12 h-12 rounded-xl object-cover border border-slate-200 shrink-0"
-                      />
+                      {evidenceImage ? <img src={evidenceImage} alt={`Evidence for ${pName}`} className="w-12 h-12 rounded-xl object-cover border border-slate-200 shrink-0" /> : <div className="w-12 h-12 rounded-xl border border-dashed border-slate-300 bg-slate-50 text-[9px] leading-tight text-slate-400 flex items-center justify-center text-center shrink-0">No evidence<br />uploaded</div>}
                       <div className="min-w-0">
                         <p className="font-bold text-sm text-slate-900 truncate">{pName}</p>
                         <p className="text-xs text-slate-500">{getTranslatedCategory(item.category)}</p>

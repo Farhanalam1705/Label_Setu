@@ -104,7 +104,8 @@ export const OfficerComplaintDetail = () => {
   const isUnderReview = status === 'UNDER_REVIEW' || status === 'UNDER REVIEW';
   const isResolved = status === 'RESOLVED' || status === 'VALIDATED';
   const isRejected = status === 'REJECTED';
-  const isEvidenceRequired = status === 'ADDITIONAL_EVIDENCE_REQUIRED';
+  const isEvidenceRequired = status === 'EVIDENCE_REQUESTED' || status === 'ADDITIONAL_EVIDENCE_REQUIRED';
+  const evidenceImage = complaint.evidence?.find((evidence) => evidence?.url)?.url || complaint.image || complaint.imageUrl || null;
 
   const getTranslatedCategory = (cat) => {
     if (!cat) return t('consumerCareIssue', 'Consumer Care Issue');
@@ -179,7 +180,7 @@ export const OfficerComplaintDetail = () => {
     const finalEvidenceReason = (evidenceRequestReason || 'Please upload a clearer image showing the mandatory declarations.').trim();
     const updated = updateComplaintStatus(
       cId,
-      'ADDITIONAL_EVIDENCE_REQUIRED',
+      'EVIDENCE_REQUESTED',
       finalEvidenceReason,
       'Additional evidence requested.'
     );
@@ -380,7 +381,7 @@ export const OfficerComplaintDetail = () => {
                 <h3 className="font-bold text-sm text-slate-900">{t('evidenceAndMedia', 'Evidence & Scanned Product Media')}</h3>
               </div>
               <span className="text-xs text-slate-500">
-                {(complaint.additionalEvidence?.length || 0) + 1} {t('filesAttached', 'File(s) attached')}
+                {(complaint.additionalEvidence?.length || 0) + (evidenceImage ? 1 : 0)} {t('filesAttached', 'File(s) attached')}
               </span>
             </div>
 
@@ -390,22 +391,7 @@ export const OfficerComplaintDetail = () => {
                 {t('primaryEvidenceCustomer', 'Primary Evidence (Customer Upload)')}
               </span>
               <div className="relative rounded-2xl overflow-hidden bg-slate-50 border border-slate-200 max-h-96 flex items-center justify-center p-3 group">
-                <img
-                  src={complaint.image || complaint.imageUrl || 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=600'}
-                  alt="Product Evidence"
-                  className="max-h-80 w-auto object-contain rounded-xl shadow-xs transition-transform duration-200 group-hover:scale-[1.01]"
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedEvidenceImage(complaint.image || complaint.imageUrl);
-                    setIsImageModalOpen(true);
-                  }}
-                  className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900/90 hover:bg-slate-900 text-cyan-400 border border-slate-700 shadow-md backdrop-blur-xs transition-all cursor-pointer"
-                >
-                  <ZoomIn className="w-3.5 h-3.5" />
-                  <span>{t('enlargeEvidence', 'Enlarge Evidence')}</span>
-                </button>
+                {evidenceImage ? <><img src={evidenceImage} alt="Customer-submitted complaint evidence" className="max-h-80 w-auto object-contain rounded-xl shadow-xs transition-transform duration-200 group-hover:scale-[1.01]" /><button type="button" onClick={() => { setSelectedEvidenceImage(evidenceImage); setIsImageModalOpen(true); }} className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900/90 hover:bg-slate-900 text-cyan-400 border border-slate-700 shadow-md backdrop-blur-xs transition-all cursor-pointer"><ZoomIn className="w-3.5 h-3.5" /><span>{t('enlargeEvidence', 'Enlarge Evidence')}</span></button></> : <div className="py-12 text-center text-xs text-slate-400"><FileText className="mx-auto mb-2 h-7 w-7" />No evidence uploaded</div>}
               </div>
             </div>
 
@@ -421,7 +407,7 @@ export const OfficerComplaintDetail = () => {
                       key={ev.id || idx}
                       className="p-3.5 rounded-xl bg-purple-50/40 border border-purple-200 flex items-center gap-3"
                     >
-                      {ev.url ? (
+                      {ev.url && (ev.url.startsWith('data:image/') || /\.(png|jpe?g|webp|gif)$/i.test(ev.name || '')) ? (
                         <img
                           src={ev.url}
                           alt={ev.name}
@@ -741,7 +727,7 @@ export const OfficerComplaintDetail = () => {
               <X className="w-5 h-5" />
             </button>
             <img
-              src={selectedEvidenceImage || complaint.image || complaint.imageUrl}
+              src={selectedEvidenceImage || evidenceImage}
               alt={t('evidenceFullView', 'Evidence Full View')}
               className="max-h-[80vh] w-auto object-contain rounded-2xl border border-slate-700 shadow-2xl bg-slate-900"
             />

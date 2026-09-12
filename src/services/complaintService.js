@@ -51,11 +51,12 @@ export const createComplaint = (data) => {
   const items = getComplaints();
   const complaintId = data.complaintId || `CMP-2026-${String(items.length + 1).padStart(4, '0')}`;
   const now = new Date().toISOString();
+  const submittedEvidenceImage = data.evidence?.find((evidence) => evidence?.url)?.url || '';
   const item = {
     complaintId, id: complaintId, customerId: data.customerId || 'CUS-001', customerName: data.customerName || 'Aster Foods Pvt. Ltd.',
     customerEmail: data.customerEmail || 'customer@labelsetu.gov.in', productId: data.productId || '', productName: data.productName || data.product || 'Packaged Commodity',
     product: data.productName || data.product || 'Packaged Commodity', inspectionId: data.inspectionId || '', category: data.category || 'Packaging Declaration', complaintType: data.complaintType || data.category || 'Packaging Declaration',
-    description: data.description || '', image: data.image || data.imageUrl || '', imageUrl: data.image || data.imageUrl || '',
+    description: data.description || '', image: data.image || data.imageUrl || submittedEvidenceImage, imageUrl: data.image || data.imageUrl || submittedEvidenceImage,
     aiConfidence: data.aiAnalysis?.confidence || 0, aiAnalysis: data.aiAnalysis || { issueDetected: true, confidence: 0, issue: 'Potential declaration discrepancy detected.' },
     eligibility: data.eligibility || 'ELIGIBLE', status: 'SUBMITTED', officerRemarks: '', officerDecision: '', additionalEvidence: data.additionalEvidence || [], evidence: data.evidence || [],
     reportAvailable: false, reportGenerated: false, generatedReportId: null, generatedAt: null, generatedBy: null,
@@ -103,7 +104,7 @@ export const generateComplaintReport = (complaintId, officer = {}) => {
 
 export const updateComplaintStatus = (complaintId, status, officerRemarks = '', officerDecision = '') => {
   const now = new Date().toISOString();
-  const titles = { UNDER_REVIEW: 'Under Officer Review', ADDITIONAL_EVIDENCE_REQUIRED: 'Additional Evidence Requested', EVIDENCE_SUBMITTED: 'Additional Evidence Submitted', RESOLVED: 'Complaint Resolved', REJECTED: 'Complaint Rejected' };
+  const titles = { UNDER_REVIEW: 'Under Officer Review', ADDITIONAL_EVIDENCE_REQUIRED: 'Additional Evidence Requested', EVIDENCE_REQUESTED: 'Evidence Requested', EVIDENCE_SUBMITTED: 'Additional Evidence Submitted', RESOLVED: 'Complaint Resolved', REJECTED: 'Complaint Rejected' };
   const updated = getComplaints().map((item) => (item.complaintId === complaintId || item.id === complaintId) ? {
     ...item, status, officerRemarks, officerDecision, updatedAt: now,
     timeline: [...(item.timeline || []), { status, title: titles[status] || status, date: now, note: officerRemarks || titles[status] || status, by: 'Officer' }],
@@ -115,6 +116,18 @@ export const updateComplaintStatus = (complaintId, status, officerRemarks = '', 
 };
 
 export const addAdditionalEvidence = (complaintId, evidenceData) => updateComplaint(complaintId, { additionalEvidence: [...(getComplaintById(complaintId)?.additionalEvidence || []), evidenceData] });
+export const submitRequestedEvidence = (complaintId, evidenceData) => {
+  const complaint = getComplaintById(complaintId);
+  if (!complaint) return null;
+  const now = new Date().toISOString();
+  const updated = updateComplaint(complaintId, {
+    status: 'EVIDENCE_SUBMITTED',
+    additionalEvidence: [...(complaint.additionalEvidence || []), evidenceData],
+    timeline: [...(complaint.timeline || []), { status: 'EVIDENCE_SUBMITTED', title: 'Additional Evidence Submitted', date: now, note: 'Customer submitted the requested additional evidence.', by: 'Customer' }],
+  });
+  if (updated) addComplaintNotification({ recipient: 'officer', title: 'Additional Evidence Submitted', message: `${complaintId}: ${updated.productName}`, complaintId, product: updated.productName, type: 'info' });
+  return updated;
+};
 export const deleteComplaints = (ids) => saveComplaints(getComplaints().filter((item) => !ids.includes(item.complaintId || item.id)));
 export const subscribeComplaints = (callback) => { const handler = () => callback(getComplaints()); window.addEventListener(COMPLAINTS_EVENT, handler); window.addEventListener('storage', handler); return () => { window.removeEventListener(COMPLAINTS_EVENT, handler); window.removeEventListener('storage', handler); }; };
 
