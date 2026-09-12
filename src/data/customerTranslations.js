@@ -168,7 +168,7 @@ export const CUSTOMER_TRANSLATIONS = {
     "stepVerifying": "Verifying against Legal Metrology (Packaged Commodities) Rules...",
     "stepSynthesizing": "Synthesizing eligibility report...",
     "preliminaryEvaluation": "Preliminary AI Evaluation",
-    "preliminaryEvaluationSubtitle": "Automated rule check completed for label declarations",
+    "preliminaryEvaluationSubtitle": "AI-assisted rule check completed for label declarations",
     "eligibilityCheck": "Complaint Eligibility Status",
     "eligibleForSubmission": "Eligible for Grievance Submission",
     "ineligibleForSubmission": "Ineligible for Grievance Submission",

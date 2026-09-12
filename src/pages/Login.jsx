@@ -122,7 +122,7 @@ export const Login = () => {
             <div>
               <h1 className="text-3xl font-extrabold tracking-wider text-white">LABEL SETU</h1>
               <p className={`text-sm font-medium mt-0.5 ${isOfficer ? 'text-cyan-200/90' : 'text-rose-200/90'}`}>
-                AI-Powered Legal Metrology Compliance Checker
+                AI-Assisted Legal Metrology Compliance Checker
               </p>
             </div>
           </div>
@@ -157,7 +157,7 @@ export const Login = () => {
 
             <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
               {isOfficer
-                ? 'Empowering enforcement officials with automated detection of mandatory label declarations, MRP standard verification, Net Quantity accuracy, and instant statutory violation flagging.'
+                ? 'Empowering enforcement officials with AI-assisted detection of mandatory label declarations, MRP standard verification, Net Quantity accuracy, and instant statutory violation flagging.'
                 : 'Empowering manufacturers, packers, importers, and brand owners to monitor packaging declarations, view verification status, and ensure regulatory standards compliance.'}
             </p>
           </div>
@@ -179,7 +179,7 @@ export const Login = () => {
               LABEL SETU
             </span>
             <p className={`text-xs font-bold uppercase tracking-wider ${isOfficer ? 'text-cyan-800' : 'text-rose-800'}`}>
-              AI-Powered Legal Metrology Compliance Checker
+              AI-Assisted Legal Metrology Compliance Checker
             </p>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
               {isOfficer ? 'Officer Login' : 'Customer Login'}

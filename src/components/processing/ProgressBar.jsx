@@ -33,11 +33,10 @@ export const ProgressBar = ({ progress = 0, statusMessage = 'Processing product 
       {/* Progress Bar Container */}
       <div className="relative w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200/80">
         <div
-          className={`h-full rounded-full transition-all duration-500 ease-out ${
-            isComplete
+          className={`h-full rounded-full transition-all duration-500 ease-out ${isComplete
               ? 'bg-emerald-600'
               : 'bg-gradient-to-r from-cyan-600 via-teal-500 to-cyan-500'
-          }`}
+            }`}
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -57,7 +56,7 @@ export const ProgressBar = ({ progress = 0, statusMessage = 'Processing product 
         </div>
 
         <span className="text-[11px] text-slate-400 shrink-0 font-mono pl-2">
-          {isComplete ? `6 ${t('of', 'of')} 6 ${t('stagesDone', 'stages done')}` : t('automatedPipeline', 'Automated Pipeline')}
+          {isComplete ? `6 ${t('of', 'of')} 6 ${t('stagesDone', 'stages done')}` : t('automatedPipeline', 'AI-Assisted Pipeline')}
         </span>
       </div>
     </div>

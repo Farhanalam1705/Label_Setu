@@ -16,7 +16,7 @@ export const ComplianceChecklist = ({ checks = [], onSelectEvidence = null }) =>
             <span>{t('complianceChecks', 'Compliance Checks')}</span>
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
-            {t('automatedVerificationMandatory', 'Automated verification of mandatory packaging requirements')}
+            {t('automatedVerificationMandatory', 'AI-assisted verification of mandatory packaging requirements')}
           </p>
         </div>
 

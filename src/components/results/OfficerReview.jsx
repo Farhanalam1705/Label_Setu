@@ -40,7 +40,7 @@ export const OfficerReview = ({
     {
       id: 'confirm',
       title: 'Confirm Finding',
-      desc: 'Affirm the automated detection as a potential statutory non-compliance.',
+      desc: 'Affirm the AI-assisted detection as a potential statutory non-compliance.',
       color: 'border-rose-500 bg-rose-50/40 text-rose-900',
     },
     {

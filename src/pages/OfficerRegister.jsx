@@ -121,7 +121,7 @@ export const OfficerRegister = () => {
             <LabelSetuLogo className="w-16 h-16 shadow-xl ring-2 ring-cyan-400/30" />
             <div>
               <h1 className="text-3xl font-extrabold tracking-wider text-white">LABEL SETU</h1>
-              <p className="text-sm font-medium mt-0.5 text-cyan-200/90">AI-Powered Legal Metrology Compliance Checker</p>
+              <p className="text-sm font-medium mt-0.5 text-cyan-200/90">AI-Assisted Legal Metrology Compliance Checker</p>
             </div>
           </div>
           <div className="space-y-4 pt-2">
@@ -158,7 +158,7 @@ export const OfficerRegister = () => {
             <>
               <div className="space-y-2">
                 <span className="text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded border inline-block shadow-2xs text-cyan-700 bg-cyan-50 border-cyan-200">LABEL SETU</span>
-                <p className="text-xs font-bold uppercase tracking-wider text-cyan-800">AI-Powered Legal Metrology Compliance Checker</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-cyan-800">AI-Assisted Legal Metrology Compliance Checker</p>
                 <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">Officer Registration</h2>
                 <p className="text-xs sm:text-sm text-slate-500">Register an authorized Legal Metrology Officer account.</p>
               </div>

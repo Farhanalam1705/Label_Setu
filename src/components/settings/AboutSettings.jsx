@@ -33,7 +33,7 @@ export const AboutSettings = () => {
               </span>
             </div>
             <p className="text-xs text-cyan-200/90">
-              AI-Powered Legal Metrology Compliance Checker
+              AI-Assisted Legal Metrology Compliance Checker
             </p>
           </div>
         </div>

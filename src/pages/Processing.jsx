@@ -157,7 +157,7 @@ export const Processing = () => {
             <span className="text-xs font-bold text-slate-900">LABEL SETU</span>
             <span className="text-[10px] text-slate-400">|</span>
             <span className="text-[11px] text-slate-500 font-medium">
-              {t('aiPoweredChecker', 'AI-Powered Legal Metrology Compliance Checker')}
+              {t('aiPoweredChecker', 'AI-Assisted Legal Metrology Compliance Checker')}
             </span>
           </div>
 
@@ -176,7 +176,7 @@ export const Processing = () => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-600"></span>
           </span>
-          <span className="font-bold text-slate-800 tracking-tight">{t('automatedInspectionPipeline', 'Automated Inspection Pipeline')}</span>
+          <span className="font-bold text-slate-800 tracking-tight">{t('automatedInspectionPipeline', 'AI-Assisted Inspection Pipeline')}</span>
           <span className="text-slate-400 text-[11px] font-medium">({t('legalMetrologySession', 'Legal Metrology Verification Session')})</span>
         </div>
 

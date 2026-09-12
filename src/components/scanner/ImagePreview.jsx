@@ -207,13 +207,13 @@ export const ImagePreview = ({ file, onReplace, onRemove }) => {
               type="button"
               onClick={handleContinueAnalysis}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-xs font-bold text-white bg-[#0c1e33] hover:bg-slate-800 rounded-xl transition-all shadow-xs hover:shadow-md active:scale-98 cursor-pointer group"
-              title={t('proceedToPipeline', 'Proceed to automated metrology analysis pipeline')}
+              title={t('proceedToPipeline', 'Proceed to AI-assisted metrology analysis pipeline')}
             >
               <span>{t('continueToAnalysis', 'Continue to Analysis')}</span>
               <ArrowRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform" />
             </button>
             <span className="text-[10px] text-slate-400 mt-1 text-center sm:text-right">
-              {t('proceedToPipeline', 'Proceed to automated metrology analysis pipeline')}
+              {t('proceedToPipeline', 'Proceed to AI-assisted metrology analysis pipeline')}
             </span>
           </div>
         </div>

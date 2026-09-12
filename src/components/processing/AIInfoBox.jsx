@@ -21,7 +21,7 @@ export const AIInfoBox = () => {
             </span>
           </div>
           <p className="text-slate-500 text-[11px] sm:text-xs leading-relaxed">
-            {t('aiInfoBoxMsg', 'This screen represents the automated analysis stage. Final findings will be presented for officer review.')}
+            {t('aiInfoBoxMsg', 'This screen represents the AI-assisted analysis stage. Final findings will be presented for officer review.')}
           </p>
         </div>
       </div>
