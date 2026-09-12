@@ -109,8 +109,7 @@ export const CustomerComplaints = () => {
     )?.inspectionId;
 
     if (inspectionId) {
-      console.log('Opening inspection:', inspectionId);
-      navigate(`/customer/inspections/${inspectionId}`);
+      navigate(`/customer/reports/${inspectionId}`);
     } else {
       addToast({
         type: 'info',
@@ -1563,23 +1562,11 @@ export const CustomerComplaints = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-              <button
-                onClick={() => {
-                  if (submittedComplaint) {
-                    setSelectedComplaintDetail(submittedComplaint);
-                  }
-                }}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-[#142237] hover:bg-[#1c304d] text-white border border-slate-700 transition-colors cursor-pointer"
-              >
-                <Eye className="w-4 h-4 text-cyan-400" />
-                <span>{t('trackComplaint', 'View Complaint')}</span>
-              </button>
-
+            {/* Return Action */}
+            <div className="flex justify-center pt-2">
               <button
                 onClick={() => setViewState('list')}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-lg transition-all cursor-pointer active:scale-98"
+                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-lg transition-all cursor-pointer active:scale-98"
               >
                 <span>{t('backToComplaints', 'View All Complaints')}</span>
                 <ArrowRight className="w-4 h-4" />

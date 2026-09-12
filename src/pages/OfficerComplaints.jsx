@@ -115,41 +115,41 @@ export const OfficerComplaints = () => {
     const s = (statusStr || '').toUpperCase();
     if (s === 'SUBMITTED') {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200/80">
+        <span className="inline-flex max-w-full items-center justify-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] leading-tight font-bold bg-amber-50 text-amber-700 border border-amber-200/80 whitespace-normal">
           <Clock className="w-3 h-3" /> {t('submitted', 'Submitted')}
         </span>
       );
     }
     if (s === 'UNDER_REVIEW' || s === 'UNDER REVIEW') {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-sky-50 text-sky-700 border border-sky-200/80">
+        <span className="inline-flex max-w-full items-center justify-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] leading-tight font-bold bg-sky-50 text-sky-700 border border-sky-200/80 whitespace-normal">
           <RefreshCw className="w-3 h-3" /> {t('underReview', 'Under Review')}
         </span>
       );
     }
     if (s === 'ADDITIONAL_EVIDENCE_REQUIRED') {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200/80">
+        <span className="inline-flex max-w-full items-center justify-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] leading-tight font-bold bg-purple-50 text-purple-700 border border-purple-200/80 whitespace-normal">
           <AlertTriangle className="w-3 h-3 text-purple-600" /> {t('evidenceRequested', 'Evidence Requested')}
         </span>
       );
     }
     if (s === 'RESOLVED' || s === 'VALIDATED') {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+        <span className="inline-flex max-w-full items-center justify-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] leading-tight font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/80 whitespace-normal">
           <CheckCircle2 className="w-3 h-3" /> {t('resolved', 'Resolved')}
         </span>
       );
     }
     if (s === 'REJECTED') {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200/80">
+        <span className="inline-flex max-w-full items-center justify-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] leading-tight font-bold bg-rose-50 text-rose-700 border border-rose-200/80 whitespace-normal">
           <XCircle className="w-3 h-3" /> {t('rejected', 'Rejected')}
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+      <span className="inline-flex max-w-full items-center justify-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] leading-tight font-bold bg-slate-100 text-slate-700 border border-slate-200 whitespace-normal">
         {statusStr}
       </span>
     );
@@ -357,7 +357,7 @@ export const OfficerComplaints = () => {
       </div>
 
       {/* Main Complaints Table Container */}
-      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden">
+      <div className="min-w-0 max-w-full bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden">
         <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/60">
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-slate-700">{t('complaintRecords', 'Complaint Records')}</span>
@@ -368,16 +368,24 @@ export const OfficerComplaints = () => {
         {filteredComplaints.length > 0 ? (
           <>
             {/* Single Frame Desktop & Tablet Table (No Horizontal Scrolling) */}
-            <div className="hidden md:block w-full">
-              <table className="w-full text-left text-xs text-slate-700 border-collapse">
+            <div className="hidden md:block min-w-0 w-full max-w-full">
+              <table className="w-full table-fixed text-left text-xs text-slate-700 border-collapse">
+                <colgroup>
+                  <col className="w-[8.75rem]" />
+                  <col />
+                  <col className="w-[9rem]" />
+                  <col className="w-[7.25rem]" />
+                  <col className="w-[7rem]" />
+                  <col className="w-[4.5rem]" />
+                </colgroup>
                 <thead className="bg-slate-50/90 text-slate-500 font-bold uppercase tracking-wider text-[10px] border-b border-slate-100">
                   <tr>
-                    <th className="py-3.5 px-4 font-mono w-[18%]">{t('complaintId', 'Complaint ID')}</th>
-                    <th className="py-3.5 px-4 w-[30%]">{t('product', 'Product')} & {t('customer', 'Customer')}</th>
-                    <th className="py-3.5 px-3 w-[18%]">{t('category', 'Category')}</th>
-                    <th className="py-3.5 px-3 w-[16%]">{t('aiResult', 'AI Result')}</th>
-                    <th className="py-3.5 px-3 w-[10%] text-center">{t('status', 'Status')}</th>
-                    <th className="py-3.5 px-4 w-[8%] text-right">{t('action', 'Action')}</th>
+                    <th className="py-3 px-3 font-mono">{t('complaintId', 'Complaint ID')}</th>
+                    <th className="py-3 px-3">{t('product', 'Product')} & {t('customer', 'Customer')}</th>
+                    <th className="py-3 px-2.5">{t('category', 'Category')}</th>
+                    <th className="py-3 px-2.5">{t('aiResult', 'AI Result')}</th>
+                    <th className="py-3 px-2 text-center">{t('status', 'Status')}</th>
+                    <th className="py-3 px-2 text-center">{t('view', 'View')}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 font-medium">
@@ -394,44 +402,44 @@ export const OfficerComplaints = () => {
                         className="hover:bg-slate-50/80 transition-colors"
                       >
                         {/* Complaint ID & Date */}
-                        <td className="py-3 px-4 align-middle">
-                          <div className="font-mono font-bold text-cyan-700 text-xs">{cId}</div>
+                        <td className="py-2.5 px-3 align-middle">
+                          <div className="font-mono font-bold text-cyan-700 text-xs whitespace-nowrap">{cId}</div>
                           <div className="text-[10px] text-slate-400 mt-0.5">{item.date || '09 Sep 2026'}</div>
                         </td>
 
                         {/* Product & Customer Combined */}
-                        <td className="py-3 px-4 align-middle">
-                          <div className="flex items-center gap-2.5">
+                        <td className="py-2.5 px-3 align-middle min-w-0">
+                          <div className="flex min-w-0 items-center gap-2">
                             <img
                               src={item.image || item.imageUrl || 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=600'}
                               alt={pName}
                               className="w-9 h-9 rounded-lg object-cover border border-slate-200 shrink-0"
                             />
                             <div className="min-w-0 flex-1">
-                              <p className="font-bold text-slate-900 truncate text-xs">{pName}</p>
-                              <p className="text-[11px] text-slate-400 truncate">
-                                {item.customerName || t('customer', 'Customer')} &bull; <span className="font-mono text-[10px]">{item.customerEmail || 'customer@labelsetu.gov.in'}</span>
+                              <p className="font-bold text-slate-900 text-xs leading-snug break-words">{pName}</p>
+                              <p className="mt-0.5 text-[10px] leading-snug text-slate-400 break-words">
+                                {item.customerName || t('customer', 'Customer')} &bull; <span className="font-mono">{item.customerEmail || 'customer@labelsetu.gov.in'}</span>
                               </p>
                             </div>
                           </div>
                         </td>
 
                         {/* Category */}
-                        <td className="py-3 px-3 align-middle">
-                          <span className="inline-block bg-slate-100/90 text-slate-700 px-2.5 py-0.5 rounded-md text-[11px] font-medium border border-slate-200/80 truncate max-w-full">
+                        <td className="py-2.5 px-2.5 align-middle">
+                          <span className="inline-block max-w-full whitespace-normal break-words bg-slate-100/90 text-slate-700 px-2 py-0.5 rounded-md text-[10px] leading-tight font-medium border border-slate-200/80">
                             {getTranslatedCategory(item.category)}
                           </span>
                         </td>
 
                         {/* AI Screening & Confidence */}
-                        <td className="py-3 px-3 align-middle">
-                          <div className="space-y-0.5">
+                        <td className="py-2.5 px-2.5 align-middle">
+                          <div className="space-y-0.5 leading-tight">
                             {hasIssue ? (
-                              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-700">
+                              <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-700">
                                 <AlertTriangle className="w-3 h-3 text-amber-600 shrink-0" /> {t('issueDetected', 'Issue Detected')}
                               </span>
                             ) : (
-                              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
+                              <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700">
                                 <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0" /> {t('clear', 'Clear')}
                               </span>
                             )}
@@ -442,23 +450,24 @@ export const OfficerComplaints = () => {
                         </td>
 
                         {/* Status */}
-                        <td className="py-3 px-3 align-middle text-center whitespace-nowrap">
+                        <td className="py-2.5 px-2 align-middle text-center">
                           {getStatusBadge(item.status)}
                         </td>
 
                         {/* Action */}
-                        <td className="py-3 px-4 align-middle text-right whitespace-nowrap">
+                        <td className="py-2.5 px-2 align-middle text-center">
                           <button
                             type="button"
                             onClick={() => navigate(`/complaints/${cId}`)}
-                            className={`inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer shadow-2xs ${
+                            title={t('viewComplaint', 'View Complaint')}
+                            aria-label={t('viewComplaint', 'View Complaint')}
+                            className={`inline-flex h-8 w-8 items-center justify-center rounded-lg transition-all cursor-pointer shadow-2xs ${
                               isSubmitted
                                 ? 'bg-cyan-600 hover:bg-cyan-700 text-white'
                                 : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200/80'
                             }`}
                           >
                             <Eye className="w-3.5 h-3.5" />
-                            <span>{isSubmitted ? t('review', 'Review') : t('view', 'View')}</span>
                           </button>
                         </td>
                       </tr>

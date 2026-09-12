@@ -17,12 +17,22 @@ export const CustomerComplaintCreate = () => {
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [analysis, setAnalysis] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittedComplaint, setSubmittedComplaint] = useState(null);
   const [error, setError] = useState('');
 
-  const inspection = state || {
-    inspectionId: 'INS-2026-0001', productId: 'PRD-001', productName: 'Premium Basmati Rice',
-    inspectionDate: '05 September 2026', inspectionStatus: 'Needs Review',
-  };
+  const inspection = state?.inspectionId ? state : null;
+
+  if (!inspection) {
+    return (
+      <div className="max-w-5xl mx-auto rounded-2xl border border-amber-200 bg-amber-50 p-6 text-center">
+        <AlertCircle className="mx-auto h-8 w-8 text-amber-600" />
+        <h1 className="mt-3 text-lg font-black text-slate-900">Inspection Required</h1>
+        <p className="mt-1 text-sm text-slate-600">Please start a complaint from the inspection you want to report.</p>
+        <Link to="/customer/inspections" className="mt-4 inline-flex rounded-xl bg-rose-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-rose-700">Back to My Inspections</Link>
+      </div>
+    );
+  }
 
   const setEvidenceFile = (file) => {
     if (!file) return;
@@ -47,7 +57,12 @@ export const CustomerComplaintCreate = () => {
   };
 
   const handleSubmit = () => {
-    if (!analysis?.eligible) return;
+    if (!description.trim()) return setError('Please describe the issue before submitting.');
+    if (!evidence) return setError('Please attach product evidence before submitting.');
+    if (!analysis?.eligible) return setError('Please complete the AI analysis before submitting.');
+
+    setError('');
+    setIsSubmitting(true);
     const user = getCurrentUser() || {};
     const complaint = createComplaint({
       customerId: user.id || 'CUS-001', customerName: user.name || 'Aster Foods Pvt. Ltd.', customerEmail: user.email || 'customer@labelsetu.gov.in',
@@ -55,7 +70,8 @@ export const CustomerComplaintCreate = () => {
       complaintType, category: complaintType, description, evidence: [evidence], image: evidence.url, imageUrl: evidence.url,
       aiAnalysis: { issueDetected: true, confidence: analysis.confidence, issue: analysis.finding }, eligibility: 'ELIGIBLE',
     });
-    navigate(`/customer/complaints/${complaint.complaintId}`, { replace: true });
+    setSubmittedComplaint(complaint);
+    setIsSubmitting(false);
   };
 
   return (
@@ -89,7 +105,27 @@ export const CustomerComplaintCreate = () => {
         <button type="button" onClick={handleAnalyze} disabled={isAnalyzing} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-[#57184a] hover:bg-[#431238] text-white disabled:opacity-60"><Sparkles className="w-4 h-4" />{isAnalyzing ? <><Loader2 className="w-4 h-4 animate-spin" />Analyzing...</> : 'Analyze with AI'}</button>
       </section>
 
-      {analysis && <section className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-5 sm:p-6 space-y-5"><div><h2 className="text-sm font-bold text-slate-900">AI Analysis</h2><div className="mt-3 p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs"><p className="font-bold text-amber-900">Potential Issue Detected</p><p className="mt-1 text-slate-700">{analysis.finding}</p><p className="mt-2 font-semibold text-amber-800">Confidence: {analysis.confidence}%</p></div><p className="mt-2 text-[11px] text-slate-500">AI analysis is advisory and requires officer verification.</p></div><div><h2 className="text-sm font-bold text-slate-900">Complaint Eligibility</h2><div className="mt-3 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs space-y-1.5 text-emerald-800"><p className="font-bold">Potential complaint detected</p><p>✓ Product is associated with an existing inspection</p><p>✓ Evidence image attached</p><p>✓ Potential compliance issue identified</p><p className="pt-1 font-black">ELIGIBLE FOR OFFICER REVIEW</p></div></div><div className="pt-1"><p className="text-xs text-slate-500 mb-3">Your complaint will be forwarded to an authorized Legal Metrology Officer for verification.</p><button type="button" onClick={handleSubmit} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white"><ShieldCheck className="w-4 h-4" />Submit Complaint</button></div></section>}
+      {analysis && <section className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-5 sm:p-6 space-y-5"><div><h2 className="text-sm font-bold text-slate-900">AI Analysis</h2><div className="mt-3 p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs"><p className="font-bold text-amber-900">Potential Issue Detected</p><p className="mt-1 text-slate-700">{analysis.finding}</p><p className="mt-2 font-semibold text-amber-800">Confidence: {analysis.confidence}%</p></div><p className="mt-2 text-[11px] text-slate-500">AI analysis is advisory and requires officer verification.</p></div><div><h2 className="text-sm font-bold text-slate-900">Complaint Eligibility</h2><div className="mt-3 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs space-y-1.5 text-emerald-800"><p className="font-bold">Potential complaint detected</p><p>✓ Product is associated with an existing inspection</p><p>✓ Evidence image attached</p><p>✓ Potential compliance issue identified</p><p className="pt-1 font-black">ELIGIBLE FOR OFFICER REVIEW</p></div></div><div className="pt-1"><p className="text-xs text-slate-500 mb-3">Your complaint will be forwarded to an authorized Legal Metrology Officer for verification.</p><button type="button" onClick={handleSubmit} disabled={isSubmitting} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white disabled:opacity-60"><ShieldCheck className="w-4 h-4" />{isSubmitting ? 'Submitting...' : 'Submit Complaint'}</button></div></section>}
+
+      {submittedComplaint && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4" role="dialog" aria-modal="true" aria-labelledby="complaint-success-title">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 text-center shadow-2xl">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+              <CheckCircle2 className="h-8 w-8" />
+            </div>
+            <h2 id="complaint-success-title" className="mt-4 text-xl font-black text-slate-900">Complaint Registered Successfully</h2>
+            <p className="mt-2 text-sm text-slate-600">Your complaint has been successfully registered and forwarded for officer verification.</p>
+            <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-3">
+              <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Complaint ID</span>
+              <span className="mt-1 block font-mono text-sm font-bold text-slate-900">{submittedComplaint.complaintId || submittedComplaint.id}</span>
+              <span className="mt-3 inline-flex rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700">Submitted</span>
+            </div>
+            <div className="mt-6 flex justify-center">
+              <button type="button" onClick={() => navigate('/customer/complaints')} className="rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-bold text-slate-700 transition-colors hover:bg-slate-50">Back to My Complaints</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

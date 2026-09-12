@@ -19,6 +19,7 @@ const read = (key, fallback) => {
 
 export const getComplaints = () => read(STORAGE_KEY, INITIAL_COMPLAINTS_DATA);
 export const getComplaintById = (complaintId) => getComplaints().find((item) => item.complaintId === complaintId || item.id === complaintId) || null;
+export const getComplaintByInspectionId = (inspectionId) => getComplaints().find((item) => item.inspectionId === inspectionId) || null;
 
 const saveComplaints = (items) => {
   try {

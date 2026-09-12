@@ -57,6 +57,7 @@ export const AppRoutes = () => {
         <Route path="complaints/new" element={<CustomerComplaintCreate />} />
         <Route path="complaints/:complaintId" element={<CustomerComplaints />} />
         <Route path="reports" element={<CustomerReports />} />
+        <Route path="reports/:inspectionId" element={<CustomerReports />} />
         <Route path="notifications" element={<CustomerNotifications />} />
         <Route path="settings" element={<CustomerSettings />} />
       </Route>

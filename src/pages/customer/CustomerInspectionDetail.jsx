@@ -558,7 +558,7 @@ export const CustomerInspectionDetail = () => {
 
           <div className="space-y-2 pt-2">
             <Link
-              to="/customer/reports"
+              to={`/customer/reports/${displayInspectionId}`}
               className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-[#57184a] hover:bg-[#431238] text-white transition-colors shadow-2xs"
             >
               <FileText className="w-4 h-4" />
