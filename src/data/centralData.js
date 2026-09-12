@@ -80,7 +80,7 @@ export const COMPLAINTS = complaintRows.map(([productIndex, status, issue, aiCon
     complaintId, id: complaintId, customerId: customer.customerId, customerName: customer.name, customerEmail: customer.email,
     productId: product.productId, productName: product.productName, product: product.productName, inspectionId: inspection.inspectionId,
     category: issue, description: `${issue} on the package of ${product.productName}.`, aiConfidence, aiAnalysis: { issueDetected: status !== 'REJECTED', confidence: aiConfidence, issue },
-    eligibility: status === 'REJECTED' ? 'REJECTED' : 'ELIGIBLE', status, officerRemarks: status === 'RESOLVED' ? 'Verification completed and the complaint has been resolved.' : '', officerDecision: '', additionalEvidence: [], submittedAt, updatedAt: submittedAt, date: submittedAt.slice(0, 10),
+    eligibility: status === 'REJECTED' ? 'REJECTED' : 'ELIGIBLE', status, officerRemarks: status === 'RESOLVED' ? 'Verification completed and the complaint has been resolved.' : '', officerDecision: '', additionalEvidence: [], reportAvailable: false, reportGenerated: false, generatedReportId: null, generatedAt: null, generatedBy: null, submittedAt, updatedAt: submittedAt, date: submittedAt.slice(0, 10),
     timeline: [{ status: 'SUBMITTED', title: 'Complaint Submitted', date: submittedAt, note: 'Customer submitted a product-label grievance.', by: 'Customer' }, ...(status === 'SUBMITTED' ? [] : [{ status, title: statusTitle(status), date: submittedAt, note: `${statusTitle(status)} for demonstration workflow.`, by: status === 'EVIDENCE_SUBMITTED' ? 'Customer' : 'Officer' }])],
   };
 });

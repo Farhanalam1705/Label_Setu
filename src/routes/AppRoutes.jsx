@@ -17,6 +17,7 @@ import { InspectionDetailsPage } from '../pages/InspectionDetailsPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { OfficerComplaints } from '../pages/OfficerComplaints';
 import { OfficerComplaintDetail } from '../pages/OfficerComplaintDetail';
+import { ComplaintReportPage } from '../pages/ComplaintReportPage';
 
 // Customer Portal Pages & Layout
 import { CustomerLayout } from '../components/customer/CustomerLayout';
@@ -56,6 +57,7 @@ export const AppRoutes = () => {
         <Route path="complaints" element={<CustomerComplaints />} />
         <Route path="complaints/new" element={<CustomerComplaintCreate />} />
         <Route path="complaints/:complaintId" element={<CustomerComplaints />} />
+        <Route path="complaints/:complaintId/report" element={<ComplaintReportPage />} />
         <Route path="reports" element={<CustomerReports />} />
         <Route path="reports/:inspectionId" element={<CustomerReports />} />
         <Route path="notifications" element={<CustomerNotifications />} />
@@ -95,6 +97,7 @@ export const AppRoutes = () => {
         
         {/* Officer Complaint Management */}
         <Route path="complaints" element={<OfficerComplaints />} />
+        <Route path="complaints/:complaintId/report" element={<ComplaintReportPage isOfficer />} />
         <Route path="complaints/:complaintId" element={<OfficerComplaintDetail />} />
 
         <Route path="settings" element={<SettingsPage />} />

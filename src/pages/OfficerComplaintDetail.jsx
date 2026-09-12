@@ -30,11 +30,13 @@ import {
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   getComplaintById, 
+  generateComplaintReport,
   updateComplaintStatus, 
   subscribeComplaints 
 } from '../services/complaintService';
 import { useToast } from '../components/common/Toast';
 import { useLanguage } from '../context/LanguageContext';
+import { getCurrentUser } from '../services/auth';
 
 export const OfficerComplaintDetail = () => {
   const { complaintId } = useParams();
@@ -190,6 +192,18 @@ export const OfficerComplaintDetail = () => {
         message: `${t('evidenceRequestedMsg', 'Evidence request sent to customer for')} ${cId}.`,
       });
     }
+  };
+
+  const handleGenerateComplaintReport = () => {
+    const reportComplaint = generateComplaintReport(cId, getCurrentUser() || {});
+    if (!reportComplaint) return;
+    setComplaint(reportComplaint);
+    addToast({
+      type: 'success',
+      title: 'Complaint Report Generated',
+      message: `${reportComplaint.generatedReportId} is now available to the customer.`,
+    });
+    navigate(`/complaints/${cId}/report`);
   };
 
   const getStatusBadge = () => {
@@ -466,6 +480,14 @@ export const OfficerComplaintDetail = () => {
 
             {/* Action Buttons based on status */}
             <div className="space-y-2.5 pt-2">
+              <button
+                type="button"
+                onClick={complaint.reportAvailable ? () => navigate(`/complaints/${cId}/report`) : handleGenerateComplaintReport}
+                className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-[#0c1e33] hover:bg-slate-800 text-white shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <FileText className="w-3.5 h-3.5 text-cyan-400" />
+                <span>{complaint.reportAvailable ? 'Preview Complaint Report' : 'Generate Complaint Report'}</span>
+              </button>
               {/* If SUBMITTED: Option to Start Review */}
               {isSubmitted && (
                 <button
